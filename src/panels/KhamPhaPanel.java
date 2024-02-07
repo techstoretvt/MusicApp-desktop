@@ -4,7 +4,19 @@
  */
 package panels;
 
+import gson.BaiHat;
+import gson.GetListBaiHat;
+import gson.ResponseDefault;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import services.ApiServiceV1;
+import services.utils;
+import view.MainJFrame;
 
 /**
  *
@@ -12,18 +24,78 @@ import javax.swing.JPanel;
  */
 public class KhamPhaPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form KhamPha
-     */
+    public static ArrayList<BaiHat> dsBaiHat;
+
     public KhamPhaPanel() {
         initComponents();
-        
-        for (int i = 0; i < 10; i++) {
-            JPanel pn = new ItemMusicPanel(i + 1, "Bai hat " + (i + 1), "Ten Ca Si " + (i + 1), "4:00");
-            PanelMusicContainer.add(pn);
-        }
-        
+
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+
+        loadTop10Music();
+        
+        ImageIcon anhKhamPha = utils.getImageBaiHat(getClass().getResource("/icon/anh-kham-pha.png").toString(),
+                600, 300);
+        lbAnhKhamPha.setIcon(anhKhamPha);
+                
+    }
+
+    public void loadTop10Music() {
+        panelListMusic.removeAll();
+
+        ApiServiceV1.apiServiceV1.getTop10MusicKhamPha(10).enqueue(new Callback<GetListBaiHat>() {
+            @Override
+            public void onResponse(Call<GetListBaiHat> call, Response<GetListBaiHat> rspns) {
+                GetListBaiHat res = rspns.body();
+                if (res != null && res.getErrCode() == 0) {
+                    dsBaiHat = res.getData();
+                    int sizeDs = dsBaiHat.size();
+                    for (int i = 0; i < sizeDs; i++) {
+                        JPanel pn = new ItemMusicPanel(res.getData().get(i), i + 1, "khampha");
+                        panelListMusic.add(pn);
+                    }
+                    System.out.println("get top 10 success");
+                } else {
+                    System.out.println("Loi ds bai hat 1");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetListBaiHat> call, Throwable thrwbl) {
+                System.out.println("Loi ds bai hat 2");
+            }
+        });
+
+    }
+
+    public void loadTop100Music() {
+        
+
+        ApiServiceV1.apiServiceV1.getTop10MusicKhamPha(100).enqueue(new Callback<GetListBaiHat>() {
+            @Override
+            public void onResponse(Call<GetListBaiHat> call, Response<GetListBaiHat> rspns) {
+                GetListBaiHat res = rspns.body();
+                if (res != null && res.getErrCode() == 0) {
+                    panelListMusic.removeAll();
+                    dsBaiHat = res.getData();
+                    int sizeDs = dsBaiHat.size();
+                    for (int i = 0; i < sizeDs; i++) {
+                        JPanel pn = new ItemMusicPanel(res.getData().get(i), i + 1, "khampha");
+                        panelListMusic.add(pn);
+                    }
+                    panelListMusic.revalidate();
+                    panelListMusic.repaint();
+                    System.out.println("get top 10 success");
+                } else {
+                    System.out.println("Loi ds bai hat 1");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetListBaiHat> call, Throwable thrwbl) {
+                System.out.println("Loi ds bai hat 2");
+            }
+        });
+
     }
 
     /**
@@ -36,32 +108,75 @@ public class KhamPhaPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        PanelMusicContainer = new javax.swing.JPanel();
+        panelContainer = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        btnTop100 = new javax.swing.JButton();
+        panelListMusic = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        lbAnhKhamPha = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 51));
         setMinimumSize(new java.awt.Dimension(100, 100));
 
-        jScrollPane1.setViewportView(PanelMusicContainer);
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setViewportView(panelContainer);
 
-        PanelMusicContainer.setBackground(new java.awt.Color(0, 0, 51));
-        PanelMusicContainer.setLayout(new javax.swing.BoxLayout(PanelMusicContainer, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPane1.setViewportView(PanelMusicContainer);
+        panelContainer.setBackground(new java.awt.Color(0, 0, 51));
+        panelContainer.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setBackground(new java.awt.Color(0, 0, 51));
+
+        btnTop100.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnTop100.setText("Xem top 100");
+        btnTop100.setFocusPainted(false);
+        btnTop100.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTop100ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnTop100);
+
+        panelContainer.add(jPanel1, java.awt.BorderLayout.PAGE_END);
+
+        panelListMusic.setBackground(new java.awt.Color(0, 0, 51));
+        panelListMusic.setLayout(new javax.swing.BoxLayout(panelListMusic, javax.swing.BoxLayout.Y_AXIS));
+        panelContainer.add(panelListMusic, java.awt.BorderLayout.CENTER);
+
+        jPanel2.setBackground(new java.awt.Color(23, 15, 35));
+        jPanel2.add(lbAnhKhamPha);
+
+        panelContainer.add(jPanel2, java.awt.BorderLayout.PAGE_START);
+
+        jScrollPane1.setViewportView(panelContainer);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnTop100ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTop100ActionPerformed
+        // TODO add your handling code here:
+        loadTop100Music();
+        btnTop100.setVisible(false);
+
+    }//GEN-LAST:event_btnTop100ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel PanelMusicContainer;
+    private javax.swing.JButton btnTop100;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbAnhKhamPha;
+    private javax.swing.JPanel panelContainer;
+    private javax.swing.JPanel panelListMusic;
     // End of variables declaration//GEN-END:variables
 }

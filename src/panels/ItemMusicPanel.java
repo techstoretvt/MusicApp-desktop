@@ -4,29 +4,57 @@
  */
 package panels;
 
+import gson.BaiHat;
+import gson.BaiHat_CaSi;
+import gson.Casi;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import services.MyMusicPlayer;
+import services.utils;
+import view.MainJFrame;
+
 /**
  *
  * @author tranv
  */
 public class ItemMusicPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ItemMusicPanel
-     */
-    public ItemMusicPanel(int stt,String tenBaiHat,String tenCaSi, String thoiGian) {
+    private BaiHat bh = null;
+    private String from_to = ""; //khampha,...
+    private int stt = 1;
+
+    public ItemMusicPanel(BaiHat bh, int stt, String from_to) {
         initComponents();
-        
+
+        this.bh = bh;
+        this.from_to = from_to;
+        this.stt = stt;
+
         lbStt.setText(String.valueOf(stt));
-        lbTenBaiHat.setText(tenBaiHat);
-        lbTenCaSi.setText(tenCaSi);
-        lbThoiGian.setText(thoiGian);
+        lbTenBaiHat.setText(bh.getTenBaiHat());
+        lbTenCaSi.setText(getStringTenCaSi());
+        lbThoiGian.setText(utils.getThoiGianBaiHat((int) bh.getThoiGian() / 1000));
+
+        ImageIcon icon = utils.getImageBaiHat(bh.getAnhBia(), 40, 40);
+        imageBaiHat.setIcon(icon);
     }
-    
-    public void initItemMusic(String stt,String tenBaiHat,String tenCaSi, String thoiGian) {
-        lbStt.setText(stt);
-        lbTenBaiHat.setText(tenBaiHat);
-        lbTenCaSi.setText(tenCaSi);
-        lbThoiGian.setText(thoiGian);
+
+    public String getStringTenCaSi() {
+        if (bh == null) {
+            return "";
+        }
+
+        String tencs = "";
+        ArrayList<BaiHat_CaSi> listcs = bh.getBaiHat_caSis();
+        for (int i = 0; i < listcs.size(); i++) {
+            Casi cs = listcs.get(i).getCasi();
+            if (cs != null) {
+                tencs += (i == 0 ? "" : ", ") + cs.getTenCaSi();
+            }
+        }
+
+        return tencs;
+
     }
 
     /**
@@ -39,7 +67,7 @@ public class ItemMusicPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         lbStt = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        imageBaiHat = new javax.swing.JLabel();
         lbTenBaiHat = new javax.swing.JLabel();
         lbTenCaSi = new javax.swing.JLabel();
         lbThoiGian = new javax.swing.JLabel();
@@ -48,17 +76,32 @@ public class ItemMusicPanel extends javax.swing.JPanel {
 
         lbStt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lbStt.setForeground(new java.awt.Color(0, 102, 255));
-        lbStt.setText("1");
+        lbStt.setText("10");
+        lbStt.setMaximumSize(new java.awt.Dimension(40, 32));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\Media\\Image\\Musicapp\\anh-bia-am-nhac2.jpg")); // NOI18N
+        imageBaiHat.setIcon(new javax.swing.ImageIcon("D:\\Media\\Image\\Musicapp\\anh-bia-am-nhac2.jpg")); // NOI18N
+        imageBaiHat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        imageBaiHat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imageBaiHatMouseClicked(evt);
+            }
+        });
 
+        lbTenBaiHat.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbTenBaiHat.setForeground(new java.awt.Color(255, 255, 255));
         lbTenBaiHat.setText("Ten bai hat");
-        lbTenBaiHat.setMaximumSize(new java.awt.Dimension(400, 16));
+        lbTenBaiHat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbTenBaiHat.setMaximumSize(new java.awt.Dimension(600, 16));
+        lbTenBaiHat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbTenBaiHatMouseClicked(evt);
+            }
+        });
 
-        lbTenCaSi.setForeground(new java.awt.Color(255, 255, 255));
+        lbTenCaSi.setForeground(new java.awt.Color(153, 153, 153));
         lbTenCaSi.setText("Ten ca si, tac gia");
-        lbTenCaSi.setMaximumSize(new java.awt.Dimension(400, 16));
+        lbTenCaSi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbTenCaSi.setMaximumSize(new java.awt.Dimension(600, 16));
 
         lbThoiGian.setForeground(new java.awt.Color(255, 255, 255));
         lbThoiGian.setText("5:33");
@@ -68,42 +111,57 @@ public class ItemMusicPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbStt)
-                .addGap(33, 33, 33)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63)
+                .addComponent(lbStt, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbTenCaSi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbTenBaiHat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
+                .addComponent(imageBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbTenBaiHat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbTenCaSi, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbThoiGian)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(lbThoiGian)
+                .addContainerGap(27, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(imageBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbStt)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
                         .addComponent(lbTenBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbTenCaSi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(lbThoiGian)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(lbStt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void imageBaiHatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageBaiHatMouseClicked
+        // TODO add your handling code here:
+        handlePlayBaiHat();
+    }//GEN-LAST:event_imageBaiHatMouseClicked
+
+    private void lbTenBaiHatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTenBaiHatMouseClicked
+        // TODO add your handling code here:
+         handlePlayBaiHat();
+    }//GEN-LAST:event_lbTenBaiHatMouseClicked
+
+    public void handlePlayBaiHat() {
+        if (from_to.equals("khampha")) {
+            MyMusicPlayer.initMusicPlayer(KhamPhaPanel.dsBaiHat, stt-1);
+            
+        }
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel imageBaiHat;
     private javax.swing.JLabel lbStt;
     private javax.swing.JLabel lbTenBaiHat;
     private javax.swing.JLabel lbTenCaSi;
