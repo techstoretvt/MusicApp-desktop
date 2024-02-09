@@ -3,7 +3,7 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-      <Color blue="33" green="0" red="0" type="rgb"/>
+      <Color blue="23" green="f" red="17" type="rgb"/>
     </Property>
   </Properties>
   <AuxValues>
@@ -29,7 +29,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="lbTenBaiHat" max="32767" attributes="0"/>
-                  <Component id="lbTenCaSi" pref="254" max="32767" attributes="0"/>
+                  <Component id="lbTenCaSi" pref="121" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lbThoiGian" min="-2" max="-2" attributes="0"/>

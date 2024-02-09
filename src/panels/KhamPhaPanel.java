@@ -115,17 +115,17 @@ public class KhamPhaPanel extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         lbAnhKhamPha = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(0, 0, 51));
+        setBackground(new java.awt.Color(23, 15, 35));
         setMinimumSize(new java.awt.Dimension(100, 100));
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setViewportView(panelContainer);
 
-        panelContainer.setBackground(new java.awt.Color(0, 0, 51));
+        panelContainer.setBackground(new java.awt.Color(23, 15, 35));
         panelContainer.setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 51));
+        jPanel1.setBackground(new java.awt.Color(23, 15, 35));
 
         btnTop100.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnTop100.setText("Xem top 100");
@@ -139,7 +139,7 @@ public class KhamPhaPanel extends javax.swing.JPanel {
 
         panelContainer.add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
-        panelListMusic.setBackground(new java.awt.Color(0, 0, 51));
+        panelListMusic.setBackground(new java.awt.Color(23, 15, 35));
         panelListMusic.setLayout(new javax.swing.BoxLayout(panelListMusic, javax.swing.BoxLayout.Y_AXIS));
         panelContainer.add(panelListMusic, java.awt.BorderLayout.CENTER);
 

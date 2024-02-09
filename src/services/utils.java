@@ -7,15 +7,16 @@ package services;
 import gson.BaiHat;
 import gson.BaiHat_CaSi;
 import gson.Casi;
+import gson.LoiBaiHat;
 import java.awt.Image;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import panels.ItemMusicPanel;
-import view.MainJFrame;
 
 /**
  *
@@ -49,9 +50,9 @@ public class utils {
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         return scaledIcon;
     }
-    
-   public static String getTenCaSi(BaiHat bh) {
-       if (bh == null) {
+
+    public static String getTenCaSi(BaiHat bh) {
+        if (bh == null) {
             return "";
         }
 
@@ -65,6 +66,28 @@ public class utils {
         }
 
         return tencs;
-   }
+    }
+
+    public static HashMap createListIndexLoiBaiHat(ArrayList<LoiBaiHat> listLoiBH) {
+
+        HashMap<String, Integer> map = new HashMap<>();
+
+        int sizeLoiBH = listLoiBH.size();
+
+        for (int i = 0; i < sizeLoiBH; i++) {
+            LoiBaiHat current = listLoiBH.get(i);
+            int tg =(int) current.getThoiGian().intValue();
+            map.put(String.valueOf(tg), i);
+           
+        }
+        
+         // Duyệt qua tất cả các cặp key/value trong HashMap
+//        for (String key : map.keySet()) {
+//            int val = map.get(key);
+//            System.out.println("Key: " + key + ", Value: " + val);
+//        }
+
+        return map;
+    }
 
 }

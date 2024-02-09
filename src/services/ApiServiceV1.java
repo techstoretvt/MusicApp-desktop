@@ -6,8 +6,13 @@ package services;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import gson.GetCaSiByID;
 import gson.GetListBaiHat;
+import gson.GetLoiBaiHat;
 import gson.ResponseDefault;
+import gson.TimKiemBaiHat;
+import gson.TimKiemCaSi;
+import gson.TimKiemMV;
 import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -53,4 +58,28 @@ public interface ApiServiceV1 {
     @GET("/api/v2/get-list-random-bai-hat")
     Call<GetListBaiHat> getListRandom(@Query("limit") int limit,
             @Query("minusId") String[] minusId);
+
+    @GET("/api/v2/get-list-loi-bai-hat")
+    Call<GetLoiBaiHat> getLoiBaiHatById(@Query("idBaiHat") String idBaiHat);
+
+    @GET("/api/v2/tim-kiem-bai-hat")
+    Call<TimKiemBaiHat> timKiemBaiHat(@Query("tenBaiHat") String tenBH,
+            @Query("offset") String offset,
+            @Query("limit") String limit);
+
+    @GET("/api/v2/tim-kiem-ca-si")
+    Call<TimKiemCaSi> timKiemCaSi(@Query("tenCaSi") String tenCS,
+            @Query("offset") String offset,
+            @Query("limit") String limit);
+
+    @GET("/api/v2/tim-kiem-mv")
+    Call<TimKiemMV> timKiemMV(
+            @Query("value") String value
+    );
+
+    @GET("/api/v2/lay-ca-si-by-id")
+    Call<GetCaSiByID> layCaSiById(@Query("idCaSi") String idCaSi);
+    
+    @GET("/api/v2/lay-bai-hat-cua-ca-si")
+    Call<GetListBaiHat> layBaiHatCuaCaSi(@Query("idCaSi") String idCaSi);
 }

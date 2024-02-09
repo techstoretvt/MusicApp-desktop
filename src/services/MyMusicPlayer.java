@@ -18,14 +18,13 @@ import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 import org.apache.commons.io.FileUtils;
 import view.MainJFrame;
-import com.sun.jna.Native;
-import com.sun.jna.ptr.IntByReference;
 import gson.GetListBaiHat;
 import java.awt.BorderLayout;
-import javax.sound.sampled.FloatControl;
+import java.awt.Color;
+import java.awt.Rectangle;
+import java.math.BigDecimal;
 import javax.swing.JPanel;
-import panels.ItemMusicPanel;
-import panels.ItemPhatKeTiep;
+import panels.KaraokePanel;
 import panels.PhatKeTiepPanel;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,6 +52,8 @@ public class MyMusicPlayer {
     public static int totalTime = 0;
     public static boolean isLoop = false;
     public static boolean isRandom = false;
+
+    public static BigDecimal timeCurrentLoiBaiHat = new BigDecimal("0.0");
 
     public static void initMusicPlayer(ArrayList<BaiHat> list, int pos) {
         try {
@@ -100,6 +101,14 @@ public class MyMusicPlayer {
             if (MainJFrame.PanelFooter != null) {
                 MainJFrame.PanelFooter.setVisible(true);
             }
+            if (MainJFrame.isKaraoke) {
+                String oldPanel = MainJFrame.oldPanel;
+                MainJFrame.ShowPanel("Karaoke", null);
+                MainJFrame.oldPanel = oldPanel;
+                ImageIcon icon = new ImageIcon(MainJFrame.class.getResource("/icon/micro-active.png"));
+                MainJFrame.btnKaraoke.setIcon(icon);
+                MainJFrame.isKaraoke = true;
+            }
 
             // add phat ke tiep
             if (MainJFrame.isMenuPhatKeTiep) {
@@ -129,7 +138,6 @@ public class MyMusicPlayer {
                 try {
                     System.out.println("play ");
                     player.play();
-                    System.out.println("Nhạc đã kết thúc!");
                 } catch (JavaLayerException e) {
                     e.printStackTrace();
                 }
@@ -139,6 +147,7 @@ public class MyMusicPlayer {
             if (MainJFrame.progessTimeBaiHat != null) {
                 MainJFrame.progessTimeBaiHat.setMaximum((int) (currentBH.getThoiGian() / 1000));
             }
+
             myThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -165,7 +174,7 @@ public class MyMusicPlayer {
                             // set progess
                             if (isPlay) {
                                 currentTime += 1;
-                                System.out.println("tg Current: " + currentTime);
+//                                System.out.println("tg Current: " + currentTime);
 
                                 if (MainJFrame.progessTimeBaiHat != null) {
                                     MainJFrame.progessTimeBaiHat.setValue(currentTime);
@@ -176,13 +185,32 @@ public class MyMusicPlayer {
                                     MainJFrame.lbThoiGianHienTai.setText(tgHienTai);
                                 }
 
+                                if (MainJFrame.isKaraoke && KaraokePanel.dsItemLoiBH != null
+                                        && KaraokePanel.dsItemLoiBH.size() != 0
+                                        && KaraokePanel.listIndexLoiBaiHat != null) {
+
+                                    Rectangle rect = new Rectangle(0, 200, 10, 10);
+
+                                    Integer indexLoiBH = KaraokePanel.listIndexLoiBaiHat.get(String.valueOf(currentTime));
+                                    if (indexLoiBH != null) {
+                                        int lastIndex = KaraokePanel.currentIndexLoiBH;
+                                        KaraokePanel.dsItemLoiBH.get(lastIndex).setForeground(Color.WHITE);
+
+                                        KaraokePanel.dsItemLoiBH.get(indexLoiBH).setForeground(Color.YELLOW);
+
+                                        KaraokePanel.dsItemLoiBH.get(indexLoiBH).scrollRectToVisible(rect);
+
+                                        KaraokePanel.currentIndexLoiBH = indexLoiBH;
+                                    }
+
+                                }
                             }
 
                             Thread.sleep(1000);
 
                         }
                     } catch (InterruptedException ex) {
-                        System.out.println("vao loi");
+                        System.out.println("vao loi thanh thoi gian");
                         Logger.getLogger(MyMusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -190,8 +218,10 @@ public class MyMusicPlayer {
             myThread.start();
 
         } catch (MalformedURLException ex) {
+            System.out.println("vao loi karaoke 2");
             Logger.getLogger(MyMusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
+            System.out.println("vao loi karaoke 3");
             Logger.getLogger(MyMusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -202,12 +232,11 @@ public class MyMusicPlayer {
                 pauseLocation = fileInputStream.available();
 
                 //test
-                System.out.println("pause: " + String.valueOf(pauseLocation) + " : " + String.valueOf(songTotalLength));
-                System.out.println("time: " + String.valueOf(songTotalLength - pauseLocation));
-
-                double tgBaiHat = dsBaiHat.get(position).getThoiGian();
-                System.out.println("tg: " + String.valueOf(tgBaiHat));
-
+//                System.out.println("pause: " + String.valueOf(pauseLocation) + " : " + String.valueOf(songTotalLength));
+//                System.out.println("time: " + String.valueOf(songTotalLength - pauseLocation));
+//
+//                double tgBaiHat = dsBaiHat.get(position).getThoiGian();
+//                System.out.println("tg: " + String.valueOf(tgBaiHat));
                 //end test
                 player.close();
                 isPlay = false;
@@ -279,11 +308,51 @@ public class MyMusicPlayer {
             currentTime = timeNext;
             long timeSkip = (long) (timeNext * 15.97 * 1000);
 
-            System.out.println("Tong tg: " + currentBH.getThoiGian() / 1000);
-            System.out.println("tg next: " + timeNext);
-            System.out.println("tong tg file: " + songTotalLength);
-            System.out.println("tg skip: " + timeSkip);
+//            System.out.println("Tong tg: " + currentBH.getThoiGian() / 1000);
+//            System.out.println("tg next: " + timeNext);
+//            System.out.println("tong tg file: " + songTotalLength);
+//            System.out.println("tg skip: " + timeSkip);
+            fileInputStream.skip(timeSkip);
 
+            player = new Player(fileInputStream);
+            isPlay = true;
+
+            if (MainJFrame.btnPlayPause != null) {
+                ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-pause.png"));
+                MainJFrame.btnPlayPause.setIcon(icon);
+            }
+
+        } catch (JavaLayerException | java.io.IOException e) {
+            e.printStackTrace();
+        }
+
+        new Thread(() -> {
+            try {
+                player.play();
+            } catch (JavaLayerException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    public static void setTimeBaiHat2(double giay) {
+        try {
+            if (player == null) {
+                return;
+            }
+            player.close();
+
+            fileInputStream = new FileInputStream(file_path_music);
+
+            BaiHat currentBH = dsBaiHat.get(position);
+            int timeNext = (int) giay;
+            currentTime = timeNext;
+            long timeSkip = (long) (timeNext * 15.97 * 1000);
+
+//            System.out.println("Tong tg: " + currentBH.getThoiGian() / 1000);
+//            System.out.println("tg next: " + timeNext);
+//            System.out.println("tong tg file: " + songTotalLength);
+//            System.out.println("tg skip: " + timeSkip);
             fileInputStream.skip(timeSkip);
 
             player = new Player(fileInputStream);
@@ -341,7 +410,7 @@ public class MyMusicPlayer {
                 if (res != null && res.getErrCode() == 0) {
                     ArrayList<BaiHat> newList = res.getData();
                     newList.addFirst(dsBaiHat.get(position));
-                    
+
                     dsBaiHat = newList;
                     position = 0;
 

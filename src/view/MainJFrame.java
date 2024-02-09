@@ -7,15 +7,18 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import panels.ChiTietCaSiPanel;
+import panels.KaraokePanel;
 import panels.KhamPhaPanel;
 import panels.LivePanel;
+import panels.NoiBatPanel;
 import panels.PhatKeTiepPanel;
 import panels.ThuVienPanel;
+import panels.TimKiemPanel;
 import services.MyMusicPlayer;
 
 /**
@@ -27,6 +30,9 @@ public class MainJFrame extends javax.swing.JFrame {
     public static JPanel cardPanel;
     public static CardLayout cardLayout;
     public static boolean isMenuPhatKeTiep = false;
+    public static boolean isKaraoke = false;
+    public static String currentPanel = "";
+    public static String oldPanel = "";
 
     /**
      * Creates new form HomeJFrame
@@ -35,9 +41,8 @@ public class MainJFrame extends javax.swing.JFrame {
         initComponents();
 
         initPanelContent();
-        
-        PanelFooter.setVisible(false);
-        
+
+//        PanelFooter.setVisible(false);
 
     }
 
@@ -46,16 +51,54 @@ public class MainJFrame extends javax.swing.JFrame {
         cardPanel = new JPanel(cardLayout);
 
         // add panel
-        cardPanel.add(new KhamPhaPanel(), "KhamPha");
+        cardPanel.add(new ChiTietCaSiPanel("017fb312-e04d-4755-9a08-d30ebbbc937a"), "ChiTietCaSi");
         cardPanel.add(new JPanel(), "ThuVien");
         cardPanel.add(new JPanel(), "Live");
+
+        currentPanel = "ChiTietCaSi";
 
         // add vao Frame
         PanelContent.add(cardPanel, BorderLayout.CENTER);
     }
 
     public static void ShowPanel(String name, JPanel pn) {
-        cardPanel.add(pn, name);
+        oldPanel = currentPanel;
+        currentPanel = name;
+        isKaraoke = false;
+
+        ImageIcon icon = new ImageIcon(MainJFrame.class.getResource("/icon/micro.png"));
+        btnKaraoke.setIcon(icon);
+
+        JPanel newPN = pn;
+        if (pn == null) {
+            switch (name) {
+                case "KhamPha":
+                    newPN = new KhamPhaPanel();
+                    break;
+                case "ThuVien":
+                    newPN = new ThuVienPanel();
+                    break;
+                case "Live":
+                    newPN = new LivePanel();
+                    break;
+                case "Karaoke":
+                    newPN = new KaraokePanel();
+                    break;
+                case "NoiBat":
+                    newPN = new NoiBatPanel();
+                    break;
+                case "TimKiem":
+                    newPN = new TimKiemPanel(TimKiemPanel.keyword);
+                    break;
+                case "ChiTietCaSi":
+                    newPN = new ChiTietCaSiPanel(ChiTietCaSiPanel.idCaSi);
+                    break;
+                default:
+                    newPN = new KhamPhaPanel();
+            }
+        }
+
+        cardPanel.add(newPN, name);
         cardLayout.show(cardPanel, name);
     }
 
@@ -76,7 +119,7 @@ public class MainJFrame extends javax.swing.JFrame {
         btnLive = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        btnNoiBat = new javax.swing.JButton();
         PanelFooter = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -99,15 +142,17 @@ public class MainJFrame extends javax.swing.JFrame {
         jButton13 = new javax.swing.JButton();
         btnMenuPhatKeTiep = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        btnKaraoke = new javax.swing.JButton();
         PannelContainer = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jButton14 = new javax.swing.JButton();
+        btnTimKiem = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
         jButton17 = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
+        ipTimKiem = new javax.swing.JTextField();
         PanelWrap = new javax.swing.JPanel();
         PanelContent = new javax.swing.JPanel();
 
@@ -184,14 +229,19 @@ public class MainJFrame extends javax.swing.JFrame {
         jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton6.setFocusPainted(false);
 
-        jButton7.setBackground(new java.awt.Color(51, 0, 51));
-        jButton7.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Nổi bật");
-        jButton7.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jButton7.setBorderPainted(false);
-        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton7.setFocusPainted(false);
+        btnNoiBat.setBackground(new java.awt.Color(51, 0, 51));
+        btnNoiBat.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        btnNoiBat.setForeground(new java.awt.Color(255, 255, 255));
+        btnNoiBat.setText("Nổi bật");
+        btnNoiBat.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnNoiBat.setBorderPainted(false);
+        btnNoiBat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNoiBat.setFocusPainted(false);
+        btnNoiBat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNoiBatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelTabBarLayout = new javax.swing.GroupLayout(PanelTabBar);
         PanelTabBar.setLayout(PanelTabBarLayout);
@@ -206,7 +256,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(16, Short.MAX_VALUE))
-            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnNoiBat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         PanelTabBarLayout.setVerticalGroup(
             PanelTabBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,7 +264,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNoiBat, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnKhamPha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -225,7 +275,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         jPanel1.add(PanelTabBar, java.awt.BorderLayout.LINE_START);
@@ -439,15 +489,27 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        btnKaraoke.setBackground(new java.awt.Color(0, 0, 0));
+        btnKaraoke.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/micro.png"))); // NOI18N
+        btnKaraoke.setBorder(null);
+        btnKaraoke.setFocusPainted(false);
+        btnKaraoke.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKaraokeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(128, Short.MAX_VALUE)
-                .addComponent(jButton13)
+                .addContainerGap(122, Short.MAX_VALUE)
+                .addComponent(btnKaraoke)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(progessVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(progessVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -459,14 +521,13 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnKaraoke)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton13)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(progessVolume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(9, 9, 9)))
-                    .addComponent(btnMenuPhatKeTiep))
+                    .addComponent(btnMenuPhatKeTiep)
+                    .addComponent(jButton13)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(progessVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8)))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -487,28 +548,29 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jPanel1.add(PanelFooter, java.awt.BorderLayout.PAGE_END);
 
-        PannelContainer.setBackground(new java.awt.Color(0, 0, 51));
+        PannelContainer.setBackground(new java.awt.Color(23, 15, 35));
 
-        jPanel9.setBackground(new java.awt.Color(0, 0, 51));
+        jPanel9.setBackground(new java.awt.Color(23, 15, 35));
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 51));
+        jButton1.setBackground(new java.awt.Color(23, 15, 35));
         jButton1.setIcon(new javax.swing.ImageIcon("D:\\Media\\Image\\Musicapp\\Icons\\icons8-left-30.png")); // NOI18N
         jButton1.setBorder(null);
         jButton1.setFocusPainted(false);
-
-        jTextField1.setToolTipText("");
-        jTextField1.setBorder(null);
-        jTextField1.setName(""); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Tìm kiếm");
 
-        jButton14.setText("Tìm");
-        jButton14.setBorder(null);
-        jButton14.setFocusPainted(false);
-        jButton14.addActionListener(new java.awt.event.ActionListener() {
+        btnTimKiem.setText("Tìm");
+        btnTimKiem.setBorder(null);
+        btnTimKiem.setFocusPainted(false);
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
+                btnTimKiemActionPerformed(evt);
             }
         });
 
@@ -516,15 +578,38 @@ public class MainJFrame extends javax.swing.JFrame {
         jButton15.setBorder(null);
         jButton15.setFocusPainted(false);
 
-        jButton16.setBackground(new java.awt.Color(0, 0, 51));
+        jButton16.setBackground(new java.awt.Color(23, 15, 35));
         jButton16.setIcon(new javax.swing.ImageIcon("D:\\Media\\Image\\Musicapp\\Icons\\icons8-setting-30.png")); // NOI18N
         jButton16.setBorder(null);
         jButton16.setFocusPainted(false);
 
-        jButton17.setBackground(new java.awt.Color(0, 0, 51));
+        jButton17.setBackground(new java.awt.Color(23, 15, 35));
         jButton17.setIcon(new javax.swing.ImageIcon("D:\\Media\\Image\\Musicapp\\Icons\\icons8-bell-30.png")); // NOI18N
         jButton17.setBorder(null);
         jButton17.setFocusPainted(false);
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+
+        ipTimKiem.setBorder(null);
+        ipTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ipTimKiemActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ipTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(ipTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -535,11 +620,11 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(47, 47, 47)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -552,15 +637,16 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel9Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel7)
-                                .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
                             .addGap(16, 16, 16)
-                            .addComponent(jButton1)))
+                            .addComponent(jButton1))
+                        .addGroup(jPanel9Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -570,10 +656,10 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        PanelWrap.setBackground(new java.awt.Color(0, 0, 51));
+        PanelWrap.setBackground(new java.awt.Color(23, 15, 35));
         PanelWrap.setLayout(new java.awt.BorderLayout());
 
-        PanelContent.setBackground(new java.awt.Color(0, 0, 51));
+        PanelContent.setBackground(new java.awt.Color(23, 15, 35));
         PanelContent.setLayout(new java.awt.BorderLayout());
         PanelWrap.add(PanelContent, java.awt.BorderLayout.CENTER);
 
@@ -729,13 +815,16 @@ public class MainJFrame extends javax.swing.JFrame {
         MyMusicPlayer.isRandom = !MyMusicPlayer.isRandom;
     }//GEN-LAST:event_btnRandomActionPerformed
 
-    
-    
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         // TODO add your handling code here:
+        String keyword = ipTimKiem.getText();
+        if (!keyword.isEmpty()) {
+            ShowPanel("TimKiem", new TimKiemPanel(keyword));
+        }
 
 
-    }//GEN-LAST:event_jButton14ActionPerformed
+    }//GEN-LAST:event_btnTimKiemActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // TODO add your handling code here:
@@ -764,10 +853,49 @@ public class MainJFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnMenuPhatKeTiepActionPerformed
 
+    private void btnKaraokeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKaraokeActionPerformed
+        // TODO add your handling code here:
+        if (isKaraoke) {
+            ShowPanel(oldPanel, null);
+            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/micro.png"));
+            btnKaraoke.setIcon(icon);
+            isKaraoke = false;
+
+        } else {
+            ShowPanel("Karaoke", new KaraokePanel());
+            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/micro-active.png"));
+            btnKaraoke.setIcon(icon);
+            isKaraoke = true;
+        }
+
+
+    }//GEN-LAST:event_btnKaraokeActionPerformed
+
+    private void btnNoiBatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoiBatActionPerformed
+        // TODO add your handling code here:
+        ShowPanel("NoiBat", null);
+        resetTabBarColor();
+        btnNoiBat.setBackground(new Color(102, 102, 102));
+    }//GEN-LAST:event_btnNoiBatActionPerformed
+
+    private void ipTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ipTimKiemActionPerformed
+        // TODO add your handling code here:
+        String keyword = ipTimKiem.getText();
+        if (!keyword.isEmpty()) {
+            ShowPanel("TimKiem", new TimKiemPanel(keyword));
+        }
+    }//GEN-LAST:event_ipTimKiemActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        ShowPanel(oldPanel, null);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public void resetTabBarColor() {
         btnKhamPha.setBackground(new Color(51, 0, 51));
         btnThuVien.setBackground(new Color(51, 0, 51));
         btnLive.setBackground(new Color(51, 0, 51));
+        btnNoiBat.setBackground(new Color(51, 0, 51));
     }
 
     /**
@@ -812,26 +940,28 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel PanelTabBar;
     public static javax.swing.JPanel PanelWrap;
     private javax.swing.JPanel PannelContainer;
+    public static javax.swing.JButton btnKaraoke;
     private javax.swing.JButton btnKhamPha;
     private javax.swing.JButton btnLive;
     private javax.swing.JButton btnLoop;
     private javax.swing.JButton btnMenuPhatKeTiep;
     private javax.swing.JButton btnMore;
     private javax.swing.JButton btnNextMusic;
+    private javax.swing.JButton btnNoiBat;
     public static javax.swing.JButton btnPlayPause;
     private javax.swing.JButton btnPrevBaiHat;
     private javax.swing.JButton btnRandom;
     private javax.swing.JButton btnThuVien;
+    private javax.swing.JButton btnTimKiem;
     public static javax.swing.JLabel imageBaiHat;
+    private javax.swing.JTextField ipTimKiem;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
@@ -840,9 +970,9 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     public static javax.swing.JLabel lbTenBaiHat;
     public static javax.swing.JLabel lbTenCaSi;
     public static javax.swing.JLabel lbThoiGianHienTai;

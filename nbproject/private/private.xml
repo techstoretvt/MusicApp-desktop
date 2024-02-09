@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/File-Code/Desktop%20App/Java/MusicApp/src/services/ApiServiceV1.java</file>
             <file>file:/E:/File-Code/Desktop%20App/Java/MusicApp/src/view/MainJFrame.java</file>
-            <file>file:/E:/File-Code/Desktop%20App/Java/MusicApp/src/services/MyMusicPlayer.java</file>
-            <file>file:/E:/File-Code/Desktop%20App/Java/MusicApp/src/panels/PhatKeTiepPanel.java</file>
+            <file>file:/E:/File-Code/Desktop%20App/Java/MusicApp/src/panels/ItemNgheSiPanel.java</file>
+            <file>file:/E:/File-Code/Desktop%20App/Java/MusicApp/src/panels/ChiTietCaSiPanel.java</file>
         </group>
     </open-files>
 </project-private>

@@ -72,7 +72,7 @@ public class ItemMusicPanel extends javax.swing.JPanel {
         lbTenCaSi = new javax.swing.JLabel();
         lbThoiGian = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(0, 0, 51));
+        setBackground(new java.awt.Color(23, 15, 35));
 
         lbStt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lbStt.setForeground(new java.awt.Color(0, 102, 255));
@@ -118,7 +118,7 @@ public class ItemMusicPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbTenBaiHat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbTenCaSi, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
+                    .addComponent(lbTenCaSi, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbThoiGian)
                 .addContainerGap())
@@ -149,13 +149,20 @@ public class ItemMusicPanel extends javax.swing.JPanel {
 
     private void lbTenBaiHatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTenBaiHatMouseClicked
         // TODO add your handling code here:
-         handlePlayBaiHat();
+        handlePlayBaiHat();
     }//GEN-LAST:event_lbTenBaiHatMouseClicked
 
     public void handlePlayBaiHat() {
         if (from_to.equals("khampha")) {
-            MyMusicPlayer.initMusicPlayer(KhamPhaPanel.dsBaiHat, stt-1);
-            
+            MyMusicPlayer.initMusicPlayer(KhamPhaPanel.dsBaiHat, stt - 1);
+
+        } else if (from_to.equals("timKiem")) {
+            MyMusicPlayer.initMusicPlayer(BaiHatSearchPanel.dsBaiHat, stt - 1);
+
+        }
+        else if (from_to.equals("caSi")) {
+            MyMusicPlayer.initMusicPlayer(ChiTietCaSiPanel.dsBaiHat, stt - 1);
+
         }
 
     }
