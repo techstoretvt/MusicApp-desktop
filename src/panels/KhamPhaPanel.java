@@ -53,6 +53,8 @@ public class KhamPhaPanel extends javax.swing.JPanel {
                         JPanel pn = new ItemMusicPanel(res.getData().get(i), i + 1, "khampha");
                         panelListMusic.add(pn);
                     }
+                    panelListMusic.revalidate();
+                    panelListMusic.repaint();
                     System.out.println("get top 10 success");
                 } else {
                     System.out.println("Loi ds bai hat 1");

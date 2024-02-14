@@ -32,7 +32,11 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
         lbTenBaiHat.setText(bh.getTenBaiHat());
         lbTenCaSi.setText(getStringTenCaSi());
 
-        ImageIcon icon = utils.getImageBaiHat(bh.getAnhBia(), 40, 40);
+        String urlAnh = bh.getAnhBia();
+        if(MyMusicPlayer.typeMusic.equals("off")){
+            urlAnh = utils.getAnhBHDownload(bh.getId());
+        }
+        ImageIcon icon = utils.getImageBaiHat(urlAnh, 40, 40);
         imageBaiHat.setIcon(icon);
         
         if(active) {
@@ -73,6 +77,7 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
         lbTenCaSi = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 102));
+        setMaximumSize(new java.awt.Dimension(32767, 70));
 
         imageBaiHat.setIcon(new javax.swing.ImageIcon("D:\\Media\\Image\\Musicapp\\anh-bia-am-nhac2.jpg")); // NOI18N
         imageBaiHat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -114,7 +119,7 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(imageBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -136,7 +141,7 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
     }//GEN-LAST:event_lbTenBaiHatMouseClicked
 
     public void handlePlayBaiHat() {
-        MyMusicPlayer.initMusicPlayer(MyMusicPlayer.dsBaiHat, index);
+        MyMusicPlayer.initMusicPlayer(MyMusicPlayer.dsBaiHat, index,MyMusicPlayer.typeMusic);
 
     }
 

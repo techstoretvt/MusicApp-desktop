@@ -4,12 +4,22 @@
  */
 package services;
 
+import bodyapi.BodyThemBHVaoDS;
+import bodyapi.BodyThemDSPhat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import gson.GetBaiHatById;
 import gson.GetCaSiByID;
+import gson.GetDSPhatById;
+import gson.GetListBHYeuThich;
 import gson.GetListBaiHat;
+import gson.GetListCSQuanTam;
+import gson.GetListPlaylist;
 import gson.GetLoiBaiHat;
+import gson.GetTaiKhoan;
 import gson.ResponseDefault;
+import gson.ThemBHVaoDS;
+import gson.ThemDSPhat;
 import gson.TimKiemBaiHat;
 import gson.TimKiemCaSi;
 import gson.TimKiemMV;
@@ -18,7 +28,12 @@ import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 /**
@@ -79,7 +94,76 @@ public interface ApiServiceV1 {
 
     @GET("/api/v2/lay-ca-si-by-id")
     Call<GetCaSiByID> layCaSiById(@Query("idCaSi") String idCaSi);
-    
+
     @GET("/api/v2/lay-bai-hat-cua-ca-si")
     Call<GetListBaiHat> layBaiHatCuaCaSi(@Query("idCaSi") String idCaSi);
+
+    @GET("/api/v2/tim-kiem-bai-hat-by-id")
+    Call<GetBaiHatById> getBaiHatById(@Query("idBaiHat") String idBaiHat);
+
+    @GET("/api/v2/get-goi-y-mv-bai-hat")
+    Call<GetListBaiHat> getGoiYMVBaiHat(
+            @Query("listIdBaiHat") String listIdBaiHat
+    );
+
+    @GET("/api/v2/lay-ds-ca-si-quan-tam")
+    Call<GetListCSQuanTam> getListCaSiQuanTam(
+            @Header("authorization") String authorization);
+
+    @GET("/api/v2/lay-danh-sach-phat")
+    Call<GetListPlaylist> getDanhSachPhat(@Header("authorization") String authorization);
+
+    @POST("/api/v2/them-danh-sach-phat")
+    Call<ThemDSPhat> themDanhSachPhat(@Body BodyThemDSPhat name, @Header("authorization") String authorization);
+
+    @GET("/api/v2/lay-bai-hat-trong-danh-sach")
+    Call<GetDSPhatById> getDanhSachPhatById(@Query("idDanhSachPhat") String idDanhSachPhat,
+            @Header("authorization") String authorization);
+
+    @PUT("/api/v2/doi-ten-danh-sach")
+    Call<ResponseDefault> doiTenDanhSach(@Query("idDanhSach") String idDS,
+            @Query("tenDanhSach") String tenDS,
+            @Header("authorization") String authorization
+    );
+
+    @DELETE("/api/v2/xoa-danh-sach-phat")
+    Call<ResponseDefault> xoaDanhSachPhatById(@Query("idDanhSachPhat") String idDanhSachPhat,
+            @Header("authorization") String authorization);
+
+    @POST("/api/v2/them-bai-hat-vao-danh-sach")
+    Call<ThemBHVaoDS> themBaiHatVaoDS(@Body BodyThemBHVaoDS body,
+            @Header("authorization") String authorization);
+
+    @DELETE("/api/v2/xoa-bai-hat-khoi-danh-sach")
+    Call<ResponseDefault> xoaBaiHatKhoiDS(@Query("idDanhSachPhat") String idDanhSachPhat,
+            @Query("idBaiHat") String idBaiHat,
+            @Header("authorization") String authorization);
+
+    @GET("/api/v2/kiem-tra-yeu-thich-bai-hat")
+    Call<ResponseDefault> kiemTraYeuThichBaiHat(@Query("idBaiHat") String idBaiHat,
+            @Header("authorization") String authorization);
+
+    @POST("/api/v2/toggle-yeu-thich-bai-hat")
+    Call<ResponseDefault> toggleLikeBaiHat(@Query("idBaiHat") String idBaiHat,
+            @Header("authorization") String authorization);
+
+    @GET("/api/v2/check-login-user")
+    Call<ResponseDefault> checkLogin(@Header("authorization") String authorization);
+    
+    @GET("/api/get-user-login")
+    Call<GetTaiKhoan> getTaiKhoan(@Header("authorization") String authorization);
+    
+    @GET("/api/v2/lay-danh-sach-bai-hat-yeu-thich")
+    Call<GetListBHYeuThich> getListBHYeuThich(@Query("order_by") String order_by,
+                                              @Query("order_type") String order_type,
+                                              @Header("authorization") String authorization);
+    
+    @POST("/api/v2/toggle-quan-tam-ca-si")
+    Call<ResponseDefault> toggleQuanTamCasi(@Query("idCaSi") String idCaSi,
+                                            @Header("authorization") String authorization);
+    
+    @GET("/api/v2/kiem-tra-quan-tam-ca-si")
+    Call<ResponseDefault> kiemTraQuanTamCaSi(@Query("idCaSi") String idCaSi,
+                                             @Header("authorization") String authorization);
+
 }

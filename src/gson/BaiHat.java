@@ -1,8 +1,9 @@
 package gson;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BaiHat {
+public class BaiHat implements Serializable{
     private String id;
     private String tenBaiHat;
     private String loiBaiHat;

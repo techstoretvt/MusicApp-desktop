@@ -12,6 +12,8 @@ import javax.swing.SwingUtilities;
  * @author tranv
  */
 public class Main {
+    
+    public static JFrame rootFrame;
 
     public static void main(String[] args) {
 //       LoginJFrame loginJFrame = new LoginJFrame();
@@ -23,6 +25,8 @@ public class Main {
             homeJFrame.setLocationRelativeTo(null);
             homeJFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             homeJFrame.setVisible(true);
+            
+            rootFrame = homeJFrame;
         });
     }
 

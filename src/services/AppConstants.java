@@ -20,4 +20,6 @@ public class AppConstants {
 
     public static String url_backend = type_env.equals("dev") ? "http://localhost:4000" : "";
     
+     public static String url_frontend = type_env.equals("dev") ? "http://localhost:3000" : "";
+    
 }

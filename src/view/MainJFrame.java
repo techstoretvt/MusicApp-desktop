@@ -4,22 +4,53 @@
  */
 package view;
 
+import com.google.gson.Gson;
+import com.teamdev.jxbrowser.browser.Browser;
+import com.teamdev.jxbrowser.engine.Engine;
+import com.teamdev.jxbrowser.engine.EngineOptions;
+import com.teamdev.jxbrowser.engine.RenderingMode;
+import com.teamdev.jxbrowser.view.swing.BrowserView;
+import gson.GetTaiKhoan;
+import gson.LoginData;
+import gson.TaiKhoan;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Stack;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import panels.ChiTietCaSiPanel;
+import panels.ChiTietMVPanel;
+import panels.ChiTietPlaylistPanel;
+import panels.DaTaiPanel;
+import panels.ItemMVPanel;
 import panels.KaraokePanel;
 import panels.KhamPhaPanel;
 import panels.LivePanel;
 import panels.NoiBatPanel;
+import panels.PanelLogin;
+import static panels.PanelLogin.dialog;
 import panels.PhatKeTiepPanel;
+import panels.SettingPanel;
 import panels.ThuVienPanel;
 import panels.TimKiemPanel;
+import panels.YeuThichPanel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import services.ApiServiceV1;
+import services.AppConstants;
+import services.LocalData;
+import services.MyCustomDialog;
 import services.MyMusicPlayer;
+import services.MySocketClient;
+import services.utils;
 
 /**
  *
@@ -31,8 +62,13 @@ public class MainJFrame extends javax.swing.JFrame {
     public static CardLayout cardLayout;
     public static boolean isMenuPhatKeTiep = false;
     public static boolean isKaraoke = false;
-    public static String currentPanel = "";
     public static String oldPanel = "";
+    public static Stack<String> historyPanel = new Stack<>(); //.pop() .peek() .push()
+    public static boolean isLogin = false;
+    public static TaiKhoan userInfo;
+
+    public static Browser browser;
+    public static Socket mSocket_DKGionNoi;
 
     /**
      * Creates new form HomeJFrame
@@ -42,8 +78,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
         initPanelContent();
 
-//        PanelFooter.setVisible(false);
+        PanelFooter.setVisible(false);
 
+        // test
+//        LocalData.removeData("accessToken");
+        utils.CheckLogin();
+
+        getUserLogin();
     }
 
     public void initPanelContent() {
@@ -51,55 +92,164 @@ public class MainJFrame extends javax.swing.JFrame {
         cardPanel = new JPanel(cardLayout);
 
         // add panel
-        cardPanel.add(new ChiTietCaSiPanel("017fb312-e04d-4755-9a08-d30ebbbc937a"), "ChiTietCaSi");
-        cardPanel.add(new JPanel(), "ThuVien");
-        cardPanel.add(new JPanel(), "Live");
-
-        currentPanel = "ChiTietCaSi";
+        ShowPanel("Setting", null);
 
         // add vao Frame
         PanelContent.add(cardPanel, BorderLayout.CENTER);
     }
 
-    public static void ShowPanel(String name, JPanel pn) {
-        oldPanel = currentPanel;
-        currentPanel = name;
-        isKaraoke = false;
+    public static void getUserLogin() {
+        String header = utils.getHeader();
 
-        ImageIcon icon = new ImageIcon(MainJFrame.class.getResource("/icon/micro.png"));
-        btnKaraoke.setIcon(icon);
+        ApiServiceV1.apiServiceV1.getTaiKhoan(header).enqueue(new Callback<GetTaiKhoan>() {
+            @Override
+            public void onResponse(Call<GetTaiKhoan> call, Response<GetTaiKhoan> rspns) {
+                GetTaiKhoan res = rspns.body();
+                if (res != null && res.getErrCode() == 0) {
+                    TaiKhoan user = res.getData();
+                    userInfo = user;
+                    String urlAnh = utils.getAnhUser(user);
+
+                    ImageIcon avatar = utils.getImageBaiHat(urlAnh, 40, 40);
+
+                    btnAvatar.setIcon(avatar);
+
+                } else {
+                    System.out.println("Khong tim thay tai khoan");
+                    ImageIcon avatar = new ImageIcon(getClass().getResource("/icon/icon-user.png"));
+                    btnAvatar.setIcon(avatar);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetTaiKhoan> call, Throwable thrwbl) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        });
+    }
+
+    public static void ShowPanel(String name, JPanel pn) {
+        if (!historyPanel.empty() && historyPanel.peek().equals(name)) {
+            resetPanel();
+            return;
+        }
+        historyPanel.push(name);
+
+        isKaraoke = false;
+        ImageIcon iconKaraoke = new ImageIcon(MainJFrame.class.getResource("/icon/micro.png"));
+        btnKaraoke.setIcon(iconKaraoke);
+
+        if (historyPanel.size() > 1) {
+            ImageIcon iconBack = new ImageIcon(MainJFrame.class.getResource("/icon/icon-arrow-back-active.png"));
+            btnBack.setIcon(iconBack);
+        } else {
+            ImageIcon iconBack = new ImageIcon(MainJFrame.class.getResource("/icon/icon-arrow-back-disable.png"));
+            btnBack.setIcon(iconBack);
+        }
 
         JPanel newPN = pn;
         if (pn == null) {
-            switch (name) {
-                case "KhamPha":
-                    newPN = new KhamPhaPanel();
-                    break;
-                case "ThuVien":
-                    newPN = new ThuVienPanel();
-                    break;
-                case "Live":
-                    newPN = new LivePanel();
-                    break;
-                case "Karaoke":
-                    newPN = new KaraokePanel();
-                    break;
-                case "NoiBat":
-                    newPN = new NoiBatPanel();
-                    break;
-                case "TimKiem":
-                    newPN = new TimKiemPanel(TimKiemPanel.keyword);
-                    break;
-                case "ChiTietCaSi":
-                    newPN = new ChiTietCaSiPanel(ChiTietCaSiPanel.idCaSi);
-                    break;
-                default:
-                    newPN = new KhamPhaPanel();
-            }
+            newPN = getPanel(name);
         }
 
         cardPanel.add(newPN, name);
         cardLayout.show(cardPanel, name);
+    }
+
+    public static JPanel getPanel(String name) {
+        JPanel newPN = null;
+        switch (name) {
+            case "KhamPha":
+                newPN = new KhamPhaPanel();
+                break;
+            case "ThuVien":
+                newPN = new ThuVienPanel();
+                break;
+            case "Live":
+                newPN = new LivePanel();
+                break;
+            case "Karaoke":
+                newPN = new KaraokePanel();
+                break;
+            case "NoiBat":
+                newPN = new NoiBatPanel();
+                break;
+            case "TimKiem":
+                newPN = new TimKiemPanel(TimKiemPanel.keyword);
+                break;
+            case "ChiTietCaSi":
+                newPN = new ChiTietCaSiPanel(ChiTietCaSiPanel.idCaSi);
+                break;
+            case "ChiTietMV":
+                newPN = new ChiTietMVPanel(ChiTietMVPanel.idMV);
+                break;
+            case "ChiTietPlaylist":
+                newPN = new ChiTietPlaylistPanel(ChiTietPlaylistPanel.idPlaylist);
+                break;
+            case "YeuThich":
+                newPN = new YeuThichPanel();
+                break;
+            case "DaTai":
+                newPN = new DaTaiPanel();
+                break;
+            case "Setting":
+                newPN = new SettingPanel();
+                break;
+            default:
+                newPN = new KhamPhaPanel();
+        }
+
+        return newPN;
+    }
+
+    public static void resetPanel() {
+
+        if (historyPanel.empty()) {
+            return;
+        }
+        String namePanel = MainJFrame.historyPanel.peek();
+
+        JPanel pn = getPanel(namePanel);
+        cardPanel.add(pn, namePanel);
+        cardLayout.show(cardPanel, namePanel);
+    }
+
+    public static void goBackPanel() {
+        String currentPanel = historyPanel.pop();
+        String oldPanel = historyPanel.peek();
+        System.out.println("goback: " + oldPanel);
+        cardLayout.show(cardPanel, oldPanel);
+
+        if (historyPanel.size() > 1) {
+            ImageIcon iconBack = new ImageIcon(MainJFrame.class.getResource("/icon/icon-arrow-back-active.png"));
+            btnBack.setIcon(iconBack);
+        } else {
+            ImageIcon iconBack = new ImageIcon(MainJFrame.class.getResource("/icon/icon-arrow-back-disable.png"));
+            btnBack.setIcon(iconBack);
+        }
+    }
+
+    public static void ToggleShowKaraoke() {
+
+        if (isKaraoke) {
+            ImageIcon icon = new ImageIcon(MainJFrame.class.getResource("/icon/micro.png"));
+            btnKaraoke.setIcon(icon);
+
+            String oldPanel = historyPanel.peek();
+            cardLayout.show(cardPanel, oldPanel);
+
+        } else {
+            ImageIcon icon = new ImageIcon(MainJFrame.class.getResource("/icon/micro-active.png"));
+            btnKaraoke.setIcon(icon);
+
+            JPanel pn = new KaraokePanel();
+
+            cardPanel.add(pn, "Karaoke");
+            cardLayout.show(cardPanel, "Karaoke");
+        }
+
+        isKaraoke = !isKaraoke;
+
     }
 
     /**
@@ -117,8 +267,8 @@ public class MainJFrame extends javax.swing.JFrame {
         btnKhamPha = new javax.swing.JButton();
         btnThuVien = new javax.swing.JButton();
         btnLive = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnDaTai = new javax.swing.JButton();
+        btnYeuThich = new javax.swing.JButton();
         btnNoiBat = new javax.swing.JButton();
         PanelFooter = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -145,12 +295,11 @@ public class MainJFrame extends javax.swing.JFrame {
         btnKaraoke = new javax.swing.JButton();
         PannelContainer = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         btnTimKiem = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
-        jButton16 = new javax.swing.JButton();
-        jButton17 = new javax.swing.JButton();
+        btnAvatar = new javax.swing.JButton();
+        btnSetting = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         ipTimKiem = new javax.swing.JTextField();
         PanelWrap = new javax.swing.JPanel();
@@ -211,23 +360,33 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(51, 0, 51));
-        jButton5.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Nhạc đã tải");
-        jButton5.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jButton5.setBorderPainted(false);
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton5.setFocusPainted(false);
+        btnDaTai.setBackground(new java.awt.Color(51, 0, 51));
+        btnDaTai.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        btnDaTai.setForeground(new java.awt.Color(255, 255, 255));
+        btnDaTai.setText("Nhạc đã tải");
+        btnDaTai.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnDaTai.setBorderPainted(false);
+        btnDaTai.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDaTai.setFocusPainted(false);
+        btnDaTai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDaTaiActionPerformed(evt);
+            }
+        });
 
-        jButton6.setBackground(new java.awt.Color(51, 0, 51));
-        jButton6.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Yêu  thích");
-        jButton6.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jButton6.setBorderPainted(false);
-        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton6.setFocusPainted(false);
+        btnYeuThich.setBackground(new java.awt.Color(51, 0, 51));
+        btnYeuThich.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        btnYeuThich.setForeground(new java.awt.Color(255, 255, 255));
+        btnYeuThich.setText("Yêu  thích");
+        btnYeuThich.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnYeuThich.setBorderPainted(false);
+        btnYeuThich.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnYeuThich.setFocusPainted(false);
+        btnYeuThich.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnYeuThichActionPerformed(evt);
+            }
+        });
 
         btnNoiBat.setBackground(new java.awt.Color(51, 0, 51));
         btnNoiBat.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
@@ -250,8 +409,8 @@ public class MainJFrame extends javax.swing.JFrame {
             .addComponent(btnKhamPha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnThuVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnLive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnDaTai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnYeuThich, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(PanelTabBarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -272,9 +431,9 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLive, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDaTai, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnYeuThich, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(60, Short.MAX_VALUE))
         );
 
@@ -552,13 +711,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jPanel9.setBackground(new java.awt.Color(23, 15, 35));
 
-        jButton1.setBackground(new java.awt.Color(23, 15, 35));
-        jButton1.setIcon(new javax.swing.ImageIcon("D:\\Media\\Image\\Musicapp\\Icons\\icons8-left-30.png")); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setFocusPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setBackground(new java.awt.Color(23, 15, 35));
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon-arrow-back-disable.png"))); // NOI18N
+        btnBack.setBorder(null);
+        btnBack.setFocusPainted(false);
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
@@ -574,19 +733,26 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton15.setIcon(new javax.swing.ImageIcon("D:\\Media\\Image\\Musicapp\\anh-bia-am-nhac2.jpg")); // NOI18N
-        jButton15.setBorder(null);
-        jButton15.setFocusPainted(false);
+        btnAvatar.setBackground(new java.awt.Color(0, 0, 51));
+        btnAvatar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon-user.png"))); // NOI18N
+        btnAvatar.setBorder(null);
+        btnAvatar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAvatar.setFocusPainted(false);
+        btnAvatar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAvatarActionPerformed(evt);
+            }
+        });
 
-        jButton16.setBackground(new java.awt.Color(23, 15, 35));
-        jButton16.setIcon(new javax.swing.ImageIcon("D:\\Media\\Image\\Musicapp\\Icons\\icons8-setting-30.png")); // NOI18N
-        jButton16.setBorder(null);
-        jButton16.setFocusPainted(false);
-
-        jButton17.setBackground(new java.awt.Color(23, 15, 35));
-        jButton17.setIcon(new javax.swing.ImageIcon("D:\\Media\\Image\\Musicapp\\Icons\\icons8-bell-30.png")); // NOI18N
-        jButton17.setBorder(null);
-        jButton17.setFocusPainted(false);
+        btnSetting.setBackground(new java.awt.Color(23, 15, 35));
+        btnSetting.setIcon(new javax.swing.ImageIcon("D:\\Media\\Image\\Musicapp\\Icons\\icons8-setting-30.png")); // NOI18N
+        btnSetting.setBorder(null);
+        btnSetting.setFocusPainted(false);
+        btnSetting.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSettingActionPerformed(evt);
+            }
+        });
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -617,19 +783,17 @@ public class MainJFrame extends javax.swing.JFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jButton1)
+                .addComponent(btnBack)
                 .addGap(47, 47, 47)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                .addComponent(btnSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -639,7 +803,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
                             .addGap(16, 16, 16)
-                            .addComponent(jButton1))
+                            .addComponent(btnBack))
                         .addGroup(jPanel9Layout.createSequentialGroup()
                             .addContainerGap()
                             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -650,9 +814,8 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(btnAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSetting, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -718,6 +881,10 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnThuVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThuVienActionPerformed
         // TODO add your handling code here:
+        if (!utils.getIsLogin()) {
+            return;
+        }
+
         ShowPanel("ThuVien", new ThuVienPanel());
         resetTabBarColor();
         btnThuVien.setBackground(new Color(102, 102, 102));
@@ -855,19 +1022,20 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnKaraokeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKaraokeActionPerformed
         // TODO add your handling code here:
-        if (isKaraoke) {
-            ShowPanel(oldPanel, null);
-            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/micro.png"));
-            btnKaraoke.setIcon(icon);
-            isKaraoke = false;
+//        if (isKaraoke) {
+//            ShowPanel(oldPanel, null);
+//            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/micro.png"));
+//            btnKaraoke.setIcon(icon);
+//            isKaraoke = false;
+//
+//        } else {
+//            ShowPanel("Karaoke", new KaraokePanel());
+//            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/micro-active.png"));
+//            btnKaraoke.setIcon(icon);
+//            isKaraoke = true;
+//        }
 
-        } else {
-            ShowPanel("Karaoke", new KaraokePanel());
-            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/micro-active.png"));
-            btnKaraoke.setIcon(icon);
-            isKaraoke = true;
-        }
-
+        ToggleShowKaraoke();
 
     }//GEN-LAST:event_btnKaraokeActionPerformed
 
@@ -886,16 +1054,68 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ipTimKiemActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        ShowPanel(oldPanel, null);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        goBackPanel();
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnAvatarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvatarActionPerformed
+        // TODO add your handling code here:
+        if (!utils.getIsLogin()) {
+            return;
+        }
+
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem option1 = new JMenuItem("Đăng xuất");
+
+        option1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LocalData.removeData("accessToken");
+                MainJFrame.isLogin = false;
+                getUserLogin();
+
+                MainJFrame.historyPanel.clear();
+                MainJFrame.ShowPanel("KhamPha", null);
+            }
+        });
+
+        popupMenu.add(option1);
+
+        popupMenu.show(btnAvatar, -30, popupMenu.getHeight() + 45);
+
+    }//GEN-LAST:event_btnAvatarActionPerformed
+
+    private void btnYeuThichActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnYeuThichActionPerformed
+        // TODO add your handling code here:
+        if (!utils.getIsLogin()) {
+            return;
+        }
+
+        ShowPanel("YeuThich", new YeuThichPanel());
+        resetTabBarColor();
+        btnYeuThich.setBackground(new Color(102, 102, 102));
+    }//GEN-LAST:event_btnYeuThichActionPerformed
+
+    private void btnDaTaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDaTaiActionPerformed
+        // TODO add your handling code here:
+        ShowPanel("DaTai", null);
+        resetTabBarColor();
+        btnDaTai.setBackground(new Color(102, 102, 102));
+    }//GEN-LAST:event_btnDaTaiActionPerformed
+
+    private void btnSettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSettingActionPerformed
+        // TODO add your handling code here:
+        ShowPanel("Setting", new SettingPanel());
+    }//GEN-LAST:event_btnSettingActionPerformed
 
     public void resetTabBarColor() {
         btnKhamPha.setBackground(new Color(51, 0, 51));
         btnThuVien.setBackground(new Color(51, 0, 51));
         btnLive.setBackground(new Color(51, 0, 51));
         btnNoiBat.setBackground(new Color(51, 0, 51));
+        btnYeuThich.setBackground(new Color(51, 0, 51));
+        btnDaTai.setBackground(new Color(51, 0, 51));
     }
 
     /**
@@ -934,12 +1154,48 @@ public class MainJFrame extends javax.swing.JFrame {
         });
     }
 
+    public static void initDKGiongNoi() {
+        Engine engine = Engine.newInstance(EngineOptions.newBuilder(RenderingMode.OFF_SCREEN)
+                .licenseKey("1BNDHFSC1G8RA8PYZSNW76QPH8UUQU4FTUIGJE23Y1HZ5EEYND8BED4IUWACS012LYXTSS").build());
+        browser = engine.newBrowser();
+        BrowserView view = BrowserView.newInstance(browser);
+
+        String key = utils.randomKeyLogin();
+        String url = AppConstants.url_frontend + "/public/music/control?key=" + key;
+        browser.navigation().loadUrlAndWait(url);
+
+        // init websocket
+        mSocket_DKGionNoi = MySocketClient.getSocket();
+
+//        mSocket_DKGionNoi.on("next-music-desktop-" + key, new Emitter.Listener() {
+//            @Override
+//            public void call(final Object... args) {
+//                // Xử lý dữ liệu từ máy chủ ở đây
+//                MyMusicPlayer.nextBaiHat();
+//            }
+//        });
+
+    }
+
+    public static void deleteDKGiongNoi() {
+        if (browser != null) {
+            browser.close();
+        }
+        if(mSocket_DKGionNoi!=null) {
+            mSocket_DKGionNoi.close();
+        }
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelContent;
     public static javax.swing.JPanel PanelFooter;
     private javax.swing.JPanel PanelTabBar;
     public static javax.swing.JPanel PanelWrap;
     private javax.swing.JPanel PannelContainer;
+    public static javax.swing.JButton btnAvatar;
+    public static javax.swing.JButton btnBack;
+    private javax.swing.JButton btnDaTai;
     public static javax.swing.JButton btnKaraoke;
     private javax.swing.JButton btnKhamPha;
     private javax.swing.JButton btnLive;
@@ -951,17 +1207,13 @@ public class MainJFrame extends javax.swing.JFrame {
     public static javax.swing.JButton btnPlayPause;
     private javax.swing.JButton btnPrevBaiHat;
     private javax.swing.JButton btnRandom;
+    private javax.swing.JButton btnSetting;
     private javax.swing.JButton btnThuVien;
     private javax.swing.JButton btnTimKiem;
+    private javax.swing.JButton btnYeuThich;
     public static javax.swing.JLabel imageBaiHat;
     private javax.swing.JTextField ipTimKiem;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;

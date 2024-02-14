@@ -1,6 +1,8 @@
 package gson;
 
-public class BaiHat_CaSi {
+import java.io.Serializable;
+
+public class BaiHat_CaSi implements Serializable{
 
     private String idCaSi, idBaiHat, id;
     private Casi casi;

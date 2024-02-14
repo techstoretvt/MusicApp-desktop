@@ -8,7 +8,10 @@ import gson.BaiHat;
 import gson.Casi;
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import services.utils;
+import view.MainJFrame;
 
 /**
  *
@@ -16,11 +19,14 @@ import services.utils;
  */
 public class ItemMVPanel extends javax.swing.JPanel {
 
+    BaiHat bh;
     /**
      * Creates new form ItemMVPanel
      */
     public ItemMVPanel(BaiHat bh) {
         initComponents();
+        
+        this.bh = bh;
         
         if(bh == null){
             setBackground(new Color(23,15,35));
@@ -63,6 +69,11 @@ public class ItemMVPanel extends javax.swing.JPanel {
         imgBaiHat.setIcon(new javax.swing.ImageIcon("D:\\Media\\Image\\Musicapp\\anh-bia-am-nhac2.jpg")); // NOI18N
         imgBaiHat.setBorder(null);
         imgBaiHat.setFocusPainted(false);
+        imgBaiHat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imgBaiHatActionPerformed(evt);
+            }
+        });
 
         imgCaSi.setIcon(new javax.swing.ImageIcon("D:\\Media\\Image\\Musicapp\\anh-bia-am-nhac2.jpg")); // NOI18N
 
@@ -104,6 +115,25 @@ public class ItemMVPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void imgBaiHatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imgBaiHatActionPerformed
+        // TODO add your handling code here:
+        if(bh != null ) {
+            System.out.println("id bai Hat: "+bh.getId());
+            System.out.println("link mv: "+bh.getLinkMV());
+            
+            if(MainJFrame.historyPanel.peek().equals("ChiTietMV")) {
+                ChiTietMVPanel.idMV = bh.getId();
+                MainJFrame.resetPanel();
+            }
+            else {
+                MainJFrame.ShowPanel("ChiTietMV", new ChiTietMVPanel(bh.getId()));
+            }
+            
+            
+        }
+        
+    }//GEN-LAST:event_imgBaiHatActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

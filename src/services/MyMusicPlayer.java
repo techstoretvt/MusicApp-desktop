@@ -55,11 +55,19 @@ public class MyMusicPlayer {
 
     public static BigDecimal timeCurrentLoiBaiHat = new BigDecimal("0.0");
 
+    public static String typeMusic = "on";
+
     public static void initMusicPlayer(ArrayList<BaiHat> list, int pos) {
+        String type = "on";
+        initMusicPlayer(list, pos, type);
+    }
+
+    public static void initMusicPlayer(ArrayList<BaiHat> list, int pos, String type) {
         try {
             dsBaiHat = list;
             position = pos;
             currentTime = 0;
+            typeMusic = type;
 
             if (myThread != null) {
                 myThread.interrupt();
@@ -68,11 +76,13 @@ public class MyMusicPlayer {
             BaiHat currentBH = dsBaiHat.get(position);
             totalTime = (int) (currentBH.getThoiGian() / 1000);
 
-            // download
-            URL songURL = new URL(currentBH.getLinkBaiHat());
+            if (type.equals("on")) {
+                // download
+                URL songURL = new URL(currentBH.getLinkBaiHat());
 
-            File destination = new File(file_path_music);
-            FileUtils.copyURLToFile(songURL, destination);
+                File destination = new File(file_path_music);
+                FileUtils.copyURLToFile(songURL, destination);
+            }
 
             // reset player
             if (player != null) {
@@ -91,7 +101,11 @@ public class MyMusicPlayer {
                 MainJFrame.lbTenCaSi.setText(utils.getTenCaSi(currentBH));
             }
             if (MainJFrame.imageBaiHat != null) {
-                ImageIcon anhBH = utils.getImageBaiHat(currentBH.getAnhBia(), 50, 50);
+                String urlAnh = currentBH.getAnhBia();
+                if (type.equals("off")) {
+                    urlAnh = utils.getAnhBHDownload(currentBH.getId());
+                }
+                ImageIcon anhBH = utils.getImageBaiHat(urlAnh, 50, 50);
                 MainJFrame.imageBaiHat.setIcon(anhBH);
             }
             if (MainJFrame.lbTongThoiGian != null) {
@@ -102,12 +116,8 @@ public class MyMusicPlayer {
                 MainJFrame.PanelFooter.setVisible(true);
             }
             if (MainJFrame.isKaraoke) {
-                String oldPanel = MainJFrame.oldPanel;
-                MainJFrame.ShowPanel("Karaoke", null);
-                MainJFrame.oldPanel = oldPanel;
-                ImageIcon icon = new ImageIcon(MainJFrame.class.getResource("/icon/micro-active.png"));
-                MainJFrame.btnKaraoke.setIcon(icon);
-                MainJFrame.isKaraoke = true;
+                MainJFrame.isKaraoke = false;
+                MainJFrame.ToggleShowKaraoke();
             }
 
             // add phat ke tiep
@@ -123,7 +133,11 @@ public class MyMusicPlayer {
 
             //play
             try {
-                fileInputStream = new FileInputStream(file_path_music);
+                String file_path = file_path_music;
+                if (type.equals("off")) {
+                    file_path = utils.getUrlBHDownload(currentBH.getId());
+                }
+                fileInputStream = new FileInputStream(file_path);
                 player = new Player(fileInputStream);
                 songTotalLength = fileInputStream.available();
             } catch (java.io.IOException e) {
@@ -224,6 +238,33 @@ public class MyMusicPlayer {
             System.out.println("vao loi karaoke 3");
             Logger.getLogger(MyMusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static void initMusicOffline(ArrayList<BaiHat> listBH, int stt) {
+        dsBaiHat = listBH;
+        position = stt;
+
+        BaiHat currentBH = listBH.get(stt);
+
+        //play
+        new Thread(() -> {
+            try {
+                String file_path = System.getProperty("user.dir")
+                        + File.separator + "src"
+                        + File.separator + "download" + File.separator + currentBH.getId() + ".mp3";
+
+                fileInputStream = new FileInputStream(file_path);
+                player = new Player(fileInputStream);
+                songTotalLength = fileInputStream.available();
+
+                player.play();
+            } catch (java.io.IOException e) {
+                e.printStackTrace();
+            } catch (JavaLayerException ex) {
+
+            }
+        }).start();
+
     }
 
     public static void pause() {
@@ -382,7 +423,8 @@ public class MyMusicPlayer {
         }
 
         position = (position + 1) % dsBaiHat.size();
-        initMusicPlayer(dsBaiHat, position);
+
+        initMusicPlayer(dsBaiHat, position, typeMusic);
     }
 
     public static void preBaiHat() {
@@ -391,7 +433,7 @@ public class MyMusicPlayer {
         }
 
         position = (position - 1 + dsBaiHat.size()) % dsBaiHat.size();
-        initMusicPlayer(dsBaiHat, position);
+        initMusicPlayer(dsBaiHat, position, typeMusic);
     }
 
     public static void getListRandom() {
@@ -435,5 +477,21 @@ public class MyMusicPlayer {
                 // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
             }
         });
+    }
+
+    public static void themBaiHat(BaiHat bh) {
+        if (dsBaiHat == null) {
+            return;
+        }
+        dsBaiHat.add(bh);
+        if (MainJFrame.isMenuPhatKeTiep) {
+
+            MainJFrame.PanelWrap.remove(1);
+            JPanel phatKeTiep = new PhatKeTiepPanel();
+            MainJFrame.PanelWrap.add(phatKeTiep, BorderLayout.EAST);
+            MainJFrame.PanelWrap.revalidate();
+            MainJFrame.PanelWrap.repaint();
+
+        }
     }
 }

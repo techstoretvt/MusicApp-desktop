@@ -8,6 +8,7 @@ import gson.BaiHat;
 import gson.Casi;
 import gson.GetCaSiByID;
 import gson.GetListBaiHat;
+import gson.ResponseDefault;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -16,6 +17,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import services.ApiServiceV1;
+import services.MyMusicPlayer;
 import services.utils;
 
 /**
@@ -23,7 +25,7 @@ import services.utils;
  * @author tranv
  */
 public class ChiTietCaSiPanel extends javax.swing.JPanel {
-    
+
     public static ArrayList<BaiHat> dsBaiHat;
     public static String idCaSi = "";
 
@@ -32,12 +34,39 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
      */
     public ChiTietCaSiPanel(String idCaSi) {
         initComponents();
-        
+
         this.idCaSi = idCaSi;
+
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
 
         handleGetCaSi(idCaSi);
         handleLayBaiHatCaSi(idCaSi);
+        checkQuamTamCS();
+    }
 
+    public void checkQuamTamCS() {
+        String header = utils.getHeader();
+
+        ApiServiceV1.apiServiceV1.kiemTraQuanTamCaSi(idCaSi, header).enqueue(new Callback<ResponseDefault>() {
+            @Override
+            public void onResponse(Call<ResponseDefault> call, Response<ResponseDefault> rspns) {
+                ResponseDefault res = rspns.body();
+                if (res != null && res.getErrCode() == 0) {
+                    if (res.getErrMessage().equals("yes")) {
+                        btnQuanTam.setText("Bỏ quan tâm");
+                    } else {
+                        btnQuanTam.setText("Quan tâm");
+                    }
+                } else {
+                    System.out.println("Loi kiem tra quan tam ca si");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseDefault> call, Throwable thrwbl) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        });
     }
 
     public void handleGetCaSi(String id) {
@@ -82,6 +111,8 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
                         JPanel bh = new ItemMusicPanel(currentBH, i + 1, "caSi");
                         PanelBaiHatCaSi.add(bh);
                     }
+                    PanelBaiHatCaSi.revalidate();
+                    PanelBaiHatCaSi.repaint();
 
                 } else {
                     System.out.println("ko tim thay ds bai hat cua ca si");
@@ -109,10 +140,10 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
         jPanel7 = new javax.swing.JPanel();
         PanelAnhCS = new javax.swing.JPanel();
         lbTenCaSi = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnPlay = new javax.swing.JButton();
         lbQuanTam = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnQuanTam = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -142,23 +173,28 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
         lbTenCaSi.setForeground(new java.awt.Color(255, 255, 255));
         lbTenCaSi.setText("jLabel1");
 
-        jButton1.setBackground(new java.awt.Color(23, 15, 35));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon-play-big.png"))); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setFocusPainted(false);
+        btnPlay.setBackground(new java.awt.Color(23, 15, 35));
+        btnPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon-play-big.png"))); // NOI18N
+        btnPlay.setBorder(null);
+        btnPlay.setFocusPainted(false);
+        btnPlay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlayActionPerformed(evt);
+            }
+        });
 
         lbQuanTam.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("người quan tâm");
 
-        jButton2.setBackground(new java.awt.Color(23, 15, 35));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Quan tâm");
-        jButton2.setFocusPainted(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnQuanTam.setBackground(new java.awt.Color(23, 15, 35));
+        btnQuanTam.setForeground(new java.awt.Color(255, 255, 255));
+        btnQuanTam.setText("Quan tâm");
+        btnQuanTam.setFocusPainted(false);
+        btnQuanTam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnQuanTamActionPerformed(evt);
             }
         });
 
@@ -177,12 +213,12 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(lbTenCaSi)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(lbQuanTam)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
+                            .addComponent(btnQuanTam)
                             .addComponent(jLabel1))))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(jSeparator1)
@@ -195,13 +231,13 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbTenCaSi)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbQuanTam)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2))
+                        .addComponent(btnQuanTam))
                     .addComponent(PanelAnhCS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -209,7 +245,7 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
         );
 
         jPanel1.setBackground(new java.awt.Color(23, 15, 35));
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel2.setBackground(new java.awt.Color(23, 15, 35));
         jPanel2.setMinimumSize(new java.awt.Dimension(50, 50));
@@ -299,16 +335,51 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnQuanTamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuanTamActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        if (!utils.getIsLogin()) {
+            return;
+        }
+        toggleQuanTamCaSi();
 
+    }//GEN-LAST:event_btnQuanTamActionPerformed
+
+    private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
+        // TODO add your handling code here:
+        MyMusicPlayer.initMusicPlayer(dsBaiHat, 0);
+    }//GEN-LAST:event_btnPlayActionPerformed
+
+    public void toggleQuanTamCaSi() {
+        String header = utils.getHeader();
+
+        ApiServiceV1.apiServiceV1.toggleQuanTamCasi(idCaSi, header).enqueue(new Callback<ResponseDefault>() {
+            @Override
+            public void onResponse(Call<ResponseDefault> call, Response<ResponseDefault> rspns) {
+                ResponseDefault res = rspns.body();
+                if (res != null && res.getErrCode() == 0) {
+                    if (res.getErrMessage().equals("yes")) {
+                        btnQuanTam.setText("Bỏ quan tâm");
+                    } else {
+                        btnQuanTam.setText("Quan tâm");
+                    }
+                    handleGetCaSi(idCaSi);
+                } else {
+                    System.out.println("Loi toggle quan tam ca si");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseDefault> call, Throwable thrwbl) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelAnhCS;
     private javax.swing.JPanel PanelBaiHatCaSi;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnPlay;
+    private javax.swing.JButton btnQuanTam;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

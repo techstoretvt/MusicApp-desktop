@@ -66,41 +66,40 @@ public class KaraokePanel extends javax.swing.JPanel {
                         la.setRows(sizeLoiBH);
                         PanelListLoiBH.setLayout(la);
 
-
                         // add ui
-                            for (int i = 0; i < sizeLoiBH; i++) {
-                                LoiBaiHat currentLoiBH = res.getData().get(i);
-                                JButton loiBH = new JButton();
-                                loiBH.setText(currentLoiBH.getLoiBaiHat());
-                                loiBH.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-                                loiBH.setForeground(Color.WHITE);
-                                loiBH.setBackground(new Color(0, 0, 0));
-                                loiBH.setFocusPainted(false);
-                                loiBH.setBorder(null);
+                        for (int i = 0; i < sizeLoiBH; i++) {
+                            LoiBaiHat currentLoiBH = res.getData().get(i);
+                            JButton loiBH = new JButton();
+                            loiBH.setText(currentLoiBH.getLoiBaiHat());
+                            loiBH.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+                            loiBH.setForeground(Color.WHITE);
+                            loiBH.setBackground(new Color(0, 0, 0));
+                            loiBH.setFocusPainted(false);
+                            loiBH.setBorder(null);
 
-                                int index = i;
+                            int index = i;
 
-                                loiBH.addMouseListener(new java.awt.event.MouseAdapter() {
-                                    @Override
-                                    public void mouseClicked(java.awt.event.MouseEvent evt) {
-                                        //xu ly khi click
-                                        loiBH.setForeground(Color.YELLOW);
-                                        Rectangle rect = new Rectangle(0, 200, 10, 10);
-                                        loiBH.scrollRectToVisible(rect);
+                            loiBH.addMouseListener(new java.awt.event.MouseAdapter() {
+                                @Override
+                                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                    //xu ly khi click
+                                    loiBH.setForeground(Color.YELLOW);
+                                    Rectangle rect = new Rectangle(0, 200, 10, 10);
+                                    loiBH.scrollRectToVisible(rect);
 
-                                        KaraokePanel.dsItemLoiBH.get(KaraokePanel.currentIndexLoiBH).setForeground(Color.WHITE);
-                                        MyMusicPlayer.setTimeBaiHat2(currentLoiBH.getThoiGian());
-                                        KaraokePanel.currentIndexLoiBH = index;
-                                        
-                                    }
-                                });
+                                    KaraokePanel.dsItemLoiBH.get(KaraokePanel.currentIndexLoiBH).setForeground(Color.WHITE);
+                                    MyMusicPlayer.setTimeBaiHat2(currentLoiBH.getThoiGian());
+                                    KaraokePanel.currentIndexLoiBH = index;
 
-                                PanelListLoiBH.add(loiBH);
+                                }
+                            });
 
-                                dsItemLoiBH.add(loiBH);
-                            }
-                            PanelListLoiBH.revalidate();
-                            PanelListLoiBH.repaint();
+                            PanelListLoiBH.add(loiBH);
+
+                            dsItemLoiBH.add(loiBH);
+                        }
+                        PanelListLoiBH.revalidate();
+                        PanelListLoiBH.repaint();
 
                     } else {
                         JButton loiBH = new JButton();
@@ -112,6 +111,8 @@ public class KaraokePanel extends javax.swing.JPanel {
                         loiBH.setBorder(null);
 
                         PanelListLoiBH.add(loiBH);
+                        PanelListLoiBH.revalidate();
+                        PanelListLoiBH.repaint();
 
                         dsItemLoiBH = null;
                     }
