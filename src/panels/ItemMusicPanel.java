@@ -263,9 +263,13 @@ public class ItemMusicPanel extends javax.swing.JPanel {
                         } else {
                             isYeuThich = false;
                         }
+                        isCheckYeuThich = true;
                         showOptions();
                     } else {
-                        System.out.println("check yeu thich: " + res.getErrMessage());
+                        isYeuThich = false;
+                        isCheckYeuThich = true;
+                        showOptions();
+                        System.out.println("err check yeu thich: " + res.getErrMessage());
 //                        JOptionPane.showMessageDialog(null, res.getErrMessage(),
 //                                "Thông báo",JOptionPane.WARNING_MESSAGE);
                     }

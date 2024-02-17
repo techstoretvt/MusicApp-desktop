@@ -23,6 +23,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.math.BigDecimal;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import panels.KaraokePanel;
 import panels.PhatKeTiepPanel;
@@ -137,6 +138,7 @@ public class MyMusicPlayer {
                 if (type.equals("off")) {
                     file_path = utils.getUrlBHDownload(currentBH.getId());
                 }
+                JOptionPane.showMessageDialog(null ,file_path);
                 fileInputStream = new FileInputStream(file_path);
                 player = new Player(fileInputStream);
                 songTotalLength = fileInputStream.available();
@@ -165,67 +167,66 @@ public class MyMusicPlayer {
             myThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        while (true) {
+                    while (true) {
 
-                            // su kien phat xong
-                            if (totalTime == currentTime) {
-                                myThread.interrupt();
-                                isPlay = false;
-                                if (MainJFrame.btnPlayPause != null) {
-                                    ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-play.png"));
-                                    MainJFrame.btnPlayPause.setIcon(icon);
-                                }
-                                player.close();
-
-                                // next nhac
-                                nextBaiHat();
-
-                                System.out.println("phat xong");
-                                break;
+                        // su kien phat xong
+                        if (totalTime == currentTime) {
+                            myThread.interrupt();
+                            isPlay = false;
+                            if (MainJFrame.btnPlayPause != null) {
+                                ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-play.png"));
+                                MainJFrame.btnPlayPause.setIcon(icon);
                             }
+                            player.close();
 
-                            // set progess
-                            if (isPlay) {
-                                currentTime += 1;
+                            // next nhac
+                            nextBaiHat();
+
+                            System.out.println("phat xong");
+                            break;
+                        }
+
+                        // set progess
+                        if (isPlay) {
+                            currentTime += 1;
 //                                System.out.println("tg Current: " + currentTime);
 
-                                if (MainJFrame.progessTimeBaiHat != null) {
-                                    MainJFrame.progessTimeBaiHat.setValue(currentTime);
-                                }
-
-                                if (MainJFrame.lbThoiGianHienTai != null) {
-                                    String tgHienTai = utils.getThoiGianBaiHat(currentTime);
-                                    MainJFrame.lbThoiGianHienTai.setText(tgHienTai);
-                                }
-
-                                if (MainJFrame.isKaraoke && KaraokePanel.dsItemLoiBH != null
-                                        && KaraokePanel.dsItemLoiBH.size() != 0
-                                        && KaraokePanel.listIndexLoiBaiHat != null) {
-
-                                    Rectangle rect = new Rectangle(0, 200, 10, 10);
-
-                                    Integer indexLoiBH = KaraokePanel.listIndexLoiBaiHat.get(String.valueOf(currentTime));
-                                    if (indexLoiBH != null) {
-                                        int lastIndex = KaraokePanel.currentIndexLoiBH;
-                                        KaraokePanel.dsItemLoiBH.get(lastIndex).setForeground(Color.WHITE);
-
-                                        KaraokePanel.dsItemLoiBH.get(indexLoiBH).setForeground(Color.YELLOW);
-
-                                        KaraokePanel.dsItemLoiBH.get(indexLoiBH).scrollRectToVisible(rect);
-
-                                        KaraokePanel.currentIndexLoiBH = indexLoiBH;
-                                    }
-
-                                }
+                            if (MainJFrame.progessTimeBaiHat != null) {
+                                MainJFrame.progessTimeBaiHat.setValue(currentTime);
                             }
 
+                            if (MainJFrame.lbThoiGianHienTai != null) {
+                                String tgHienTai = utils.getThoiGianBaiHat(currentTime);
+                                MainJFrame.lbThoiGianHienTai.setText(tgHienTai);
+                            }
+
+                            if (MainJFrame.isKaraoke && KaraokePanel.dsItemLoiBH != null
+                                    && KaraokePanel.dsItemLoiBH.size() != 0
+                                    && KaraokePanel.listIndexLoiBaiHat != null) {
+
+                                Rectangle rect = new Rectangle(0, 200, 10, 10);
+
+                                Integer indexLoiBH = KaraokePanel.listIndexLoiBaiHat.get(String.valueOf(currentTime));
+                                if (indexLoiBH != null) {
+                                    int lastIndex = KaraokePanel.currentIndexLoiBH;
+                                    KaraokePanel.dsItemLoiBH.get(lastIndex).setForeground(Color.WHITE);
+
+                                    KaraokePanel.dsItemLoiBH.get(indexLoiBH).setForeground(Color.YELLOW);
+
+                                    KaraokePanel.dsItemLoiBH.get(indexLoiBH).scrollRectToVisible(rect);
+
+                                    KaraokePanel.currentIndexLoiBH = indexLoiBH;
+                                }
+
+                            }
+                        }
+
+                        try {
                             Thread.sleep(1000);
+                        } catch (InterruptedException ex) {
 
                         }
-                    } catch (InterruptedException ex) {
-                        System.out.println("vao loi thanh thoi gian");
-                        Logger.getLogger(MyMusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
+
                     }
                 }
             });

@@ -8,8 +8,6 @@ import gson.BaiHat;
 import gson.Casi;
 import java.awt.Color;
 import javax.swing.ImageIcon;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 import services.utils;
 import view.MainJFrame;
 

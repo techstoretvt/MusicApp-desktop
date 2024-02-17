@@ -165,5 +165,6 @@ public interface ApiServiceV1 {
     @GET("/api/v2/kiem-tra-quan-tam-ca-si")
     Call<ResponseDefault> kiemTraQuanTamCaSi(@Query("idCaSi") String idCaSi,
                                              @Header("authorization") String authorization);
+    
 
 }

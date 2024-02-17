@@ -4,19 +4,7 @@
  */
 package panels;
 
-import com.teamdev.jxbrowser.browser.Browser;
-import com.teamdev.jxbrowser.browser.event.MediaStreamCaptureStarted;
-import com.teamdev.jxbrowser.engine.Engine;
-import com.teamdev.jxbrowser.engine.EngineOptions;
-import com.teamdev.jxbrowser.engine.RenderingMode;
-import com.teamdev.jxbrowser.view.swing.BrowserView;
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import services.AppConstants;
 import services.LocalData;
-import services.utils;
 import view.MainJFrame;
 
 /**

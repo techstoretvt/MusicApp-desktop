@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 import services.MyMusicPlayer;
-import static services.MyMusicPlayer.position;
 
 /**
  *

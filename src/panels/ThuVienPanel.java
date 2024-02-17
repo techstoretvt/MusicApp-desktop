@@ -21,7 +21,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import services.ApiServiceV1;
-import services.LocalData;
 import services.utils;
 
 /**

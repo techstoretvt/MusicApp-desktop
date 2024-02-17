@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import services.MyMusicPlayer;
 import services.utils;
-import view.MainJFrame;
 
 /**
  *

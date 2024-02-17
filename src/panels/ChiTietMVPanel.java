@@ -43,7 +43,7 @@ public class ChiTietMVPanel extends javax.swing.JPanel {
 
         //init browser
         Engine engine = Engine.newInstance(EngineOptions.newBuilder(RenderingMode.OFF_SCREEN)
-                .licenseKey("1BNDHFSC1G8RA8PYZSNW76QPH8UUQU4FTUIGJE23Y1HZ5EEYND8BED4IUWACS012LYXTSS").build());
+                .licenseKey(AppConstants.licenseKey_browser).build());
         browser = engine.newBrowser();
         BrowserView view = BrowserView.newInstance(browser);
         PanelVideo.add(view);

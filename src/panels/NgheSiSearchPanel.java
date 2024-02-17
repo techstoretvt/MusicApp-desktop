@@ -6,7 +6,6 @@ package panels;
 
 import gson.Casi;
 import gson.TimKiemCaSi;
-import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import retrofit2.Call;
 import retrofit2.Callback;

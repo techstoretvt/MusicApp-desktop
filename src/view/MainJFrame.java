@@ -4,14 +4,12 @@
  */
 package view;
 
-import com.google.gson.Gson;
 import com.teamdev.jxbrowser.browser.Browser;
 import com.teamdev.jxbrowser.engine.Engine;
 import com.teamdev.jxbrowser.engine.EngineOptions;
 import com.teamdev.jxbrowser.engine.RenderingMode;
 import com.teamdev.jxbrowser.view.swing.BrowserView;
 import gson.GetTaiKhoan;
-import gson.LoginData;
 import gson.TaiKhoan;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -29,13 +27,11 @@ import panels.ChiTietCaSiPanel;
 import panels.ChiTietMVPanel;
 import panels.ChiTietPlaylistPanel;
 import panels.DaTaiPanel;
-import panels.ItemMVPanel;
 import panels.KaraokePanel;
 import panels.KhamPhaPanel;
+import panels.ListLivePanel;
 import panels.LivePanel;
 import panels.NoiBatPanel;
-import panels.PanelLogin;
-import static panels.PanelLogin.dialog;
 import panels.PhatKeTiepPanel;
 import panels.SettingPanel;
 import panels.ThuVienPanel;
@@ -47,7 +43,6 @@ import retrofit2.Response;
 import services.ApiServiceV1;
 import services.AppConstants;
 import services.LocalData;
-import services.MyCustomDialog;
 import services.MyMusicPlayer;
 import services.MySocketClient;
 import services.utils;
@@ -78,13 +73,39 @@ public class MainJFrame extends javax.swing.JFrame {
 
         initPanelContent();
 
-        PanelFooter.setVisible(false);
-
+//        PanelFooter.setVisible(false);
         // test
 //        LocalData.removeData("accessToken");
         utils.CheckLogin();
 
         getUserLogin();
+
+        initSocketDkBangDienThoai();
+    }
+
+    public void initSocketDkBangDienThoai() {
+        Socket mSocket = MySocketClient.getSocket();
+
+        String key = "thoaidev";
+
+        mSocket.on("next-music-mobile-" + key, new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                // Xử lý dữ liệu từ máy chủ ở đây
+                MyMusicPlayer.nextBaiHat();
+
+            }
+        });
+
+        mSocket.on("prev-music-mobile-" + key, new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                // Xử lý dữ liệu từ máy chủ ở đây
+                MyMusicPlayer.preBaiHat();
+
+            }
+        });
+
     }
 
     public void initPanelContent() {
@@ -92,7 +113,7 @@ public class MainJFrame extends javax.swing.JFrame {
         cardPanel = new JPanel(cardLayout);
 
         // add panel
-        ShowPanel("Setting", null);
+        ShowPanel("KhamPha", null);
 
         // add vao Frame
         PanelContent.add(cardPanel, BorderLayout.CENTER);
@@ -109,6 +130,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     TaiKhoan user = res.getData();
                     userInfo = user;
                     String urlAnh = utils.getAnhUser(user);
+                    System.out.println("url anh: " + urlAnh);
 
                     ImageIcon avatar = utils.getImageBaiHat(urlAnh, 40, 40);
 
@@ -156,6 +178,20 @@ public class MainJFrame extends javax.swing.JFrame {
         cardLayout.show(cardPanel, name);
     }
 
+    public static void ShowPanelNoHistory(String name, JPanel pn) {
+        isKaraoke = false;
+        ImageIcon iconKaraoke = new ImageIcon(MainJFrame.class.getResource("/icon/micro.png"));
+        btnKaraoke.setIcon(iconKaraoke);
+
+        JPanel newPN = pn;
+        if (pn == null) {
+            newPN = getPanel(name);
+        }
+
+        cardPanel.add(newPN, name);
+        cardLayout.show(cardPanel, name);
+    }
+
     public static JPanel getPanel(String name) {
         JPanel newPN = null;
         switch (name) {
@@ -164,9 +200,6 @@ public class MainJFrame extends javax.swing.JFrame {
                 break;
             case "ThuVien":
                 newPN = new ThuVienPanel();
-                break;
-            case "Live":
-                newPN = new LivePanel();
                 break;
             case "Karaoke":
                 newPN = new KaraokePanel();
@@ -195,6 +228,9 @@ public class MainJFrame extends javax.swing.JFrame {
             case "Setting":
                 newPN = new SettingPanel();
                 break;
+            case "ListLive":
+                newPN = new ListLivePanel();
+                break;
             default:
                 newPN = new KhamPhaPanel();
         }
@@ -215,9 +251,20 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     public static void goBackPanel() {
-        String currentPanel = historyPanel.pop();
-        String oldPanel = historyPanel.peek();
-        System.out.println("goback: " + oldPanel);
+      
+        String currentPanel;
+        String oldPanel = null;
+        try {
+            currentPanel = historyPanel.pop();
+            oldPanel = historyPanel.peek();
+        } catch (Exception e) {
+            System.out.println("loi go back");
+        }
+        
+        if (oldPanel == null) {
+            return;
+        }
+
         cardLayout.show(cardPanel, oldPanel);
 
         if (historyPanel.size() > 1) {
@@ -269,7 +316,6 @@ public class MainJFrame extends javax.swing.JFrame {
         btnLive = new javax.swing.JButton();
         btnDaTai = new javax.swing.JButton();
         btnYeuThich = new javax.swing.JButton();
-        btnNoiBat = new javax.swing.JButton();
         PanelFooter = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -388,34 +434,22 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnNoiBat.setBackground(new java.awt.Color(51, 0, 51));
-        btnNoiBat.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        btnNoiBat.setForeground(new java.awt.Color(255, 255, 255));
-        btnNoiBat.setText("Nổi bật");
-        btnNoiBat.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btnNoiBat.setBorderPainted(false);
-        btnNoiBat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnNoiBat.setFocusPainted(false);
-        btnNoiBat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNoiBatActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout PanelTabBarLayout = new javax.swing.GroupLayout(PanelTabBar);
         PanelTabBar.setLayout(PanelTabBarLayout);
         PanelTabBarLayout.setHorizontalGroup(
             PanelTabBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnKhamPha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnThuVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnLive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnDaTai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnYeuThich, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(PanelTabBarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
-            .addComponent(btnNoiBat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(PanelTabBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelTabBarLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 22, Short.MAX_VALUE))
+                    .addComponent(btnKhamPha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnThuVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDaTai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnYeuThich, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         PanelTabBarLayout.setVerticalGroup(
             PanelTabBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -423,8 +457,6 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnNoiBat, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnKhamPha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnThuVien, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -434,7 +466,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(btnDaTai, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnYeuThich, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         jPanel1.add(PanelTabBar, java.awt.BorderLayout.LINE_START);
@@ -790,7 +822,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addComponent(btnSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -893,7 +925,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnLiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiveActionPerformed
         // TODO add your handling code here:
-        ShowPanel("Live", new LivePanel());
+        ShowPanel("ListLive", new ListLivePanel());
         resetTabBarColor();
         btnLive.setBackground(new Color(102, 102, 102));
 
@@ -1039,13 +1071,6 @@ public class MainJFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnKaraokeActionPerformed
 
-    private void btnNoiBatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoiBatActionPerformed
-        // TODO add your handling code here:
-        ShowPanel("NoiBat", null);
-        resetTabBarColor();
-        btnNoiBat.setBackground(new Color(102, 102, 102));
-    }//GEN-LAST:event_btnNoiBatActionPerformed
-
     private void ipTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ipTimKiemActionPerformed
         // TODO add your handling code here:
         String keyword = ipTimKiem.getText();
@@ -1082,6 +1107,20 @@ public class MainJFrame extends javax.swing.JFrame {
 
         popupMenu.add(option1);
 
+        JMenuItem option2 = new JMenuItem("Phát trực tuyến");
+
+        option2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String name = userInfo.getFirstName() + " " + userInfo.getLastName();
+
+                MainJFrame.ShowPanel("Live", new LivePanel(name, utils.getAnhUser(userInfo)));
+            }
+        });
+
+        popupMenu.add(option2);
+
         popupMenu.show(btnAvatar, -30, popupMenu.getHeight() + 45);
 
     }//GEN-LAST:event_btnAvatarActionPerformed
@@ -1113,7 +1152,6 @@ public class MainJFrame extends javax.swing.JFrame {
         btnKhamPha.setBackground(new Color(51, 0, 51));
         btnThuVien.setBackground(new Color(51, 0, 51));
         btnLive.setBackground(new Color(51, 0, 51));
-        btnNoiBat.setBackground(new Color(51, 0, 51));
         btnYeuThich.setBackground(new Color(51, 0, 51));
         btnDaTai.setBackground(new Color(51, 0, 51));
     }
@@ -1174,14 +1212,13 @@ public class MainJFrame extends javax.swing.JFrame {
 //                MyMusicPlayer.nextBaiHat();
 //            }
 //        });
-
     }
 
     public static void deleteDKGiongNoi() {
         if (browser != null) {
             browser.close();
         }
-        if(mSocket_DKGionNoi!=null) {
+        if (mSocket_DKGionNoi != null) {
             mSocket_DKGionNoi.close();
         }
 
@@ -1203,7 +1240,6 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnMenuPhatKeTiep;
     private javax.swing.JButton btnMore;
     private javax.swing.JButton btnNextMusic;
-    private javax.swing.JButton btnNoiBat;
     public static javax.swing.JButton btnPlayPause;
     private javax.swing.JButton btnPrevBaiHat;
     private javax.swing.JButton btnRandom;
