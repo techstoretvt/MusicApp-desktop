@@ -136,16 +136,18 @@ public class MyMusicPlayer {
             try {
                 String file_path = file_path_music;
                 if (type.equals("off")) {
+                    System.out.println("vao off");
                     file_path = utils.getUrlBHDownload(currentBH.getId());
                 }
-                JOptionPane.showMessageDialog(null ,file_path);
+//                JOptionPane.showMessageDialog(null ,file_path);
+
                 fileInputStream = new FileInputStream(file_path);
                 player = new Player(fileInputStream);
                 songTotalLength = fileInputStream.available();
             } catch (java.io.IOException e) {
-                e.printStackTrace();
+                System.out.println("vao loi 1");
             } catch (JavaLayerException ex) {
-
+                System.out.println("vao loi 2");
             }
 
             isPlay = true;
@@ -155,6 +157,7 @@ public class MyMusicPlayer {
                     System.out.println("play ");
                     player.play();
                 } catch (JavaLayerException e) {
+                    System.out.println("vao loi 3");
                     e.printStackTrace();
                 }
             }).start();
@@ -234,10 +237,8 @@ public class MyMusicPlayer {
 
         } catch (MalformedURLException ex) {
             System.out.println("vao loi karaoke 2");
-            Logger.getLogger(MyMusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             System.out.println("vao loi karaoke 3");
-            Logger.getLogger(MyMusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -343,9 +344,14 @@ public class MyMusicPlayer {
             }
             player.close();
 
-            fileInputStream = new FileInputStream(file_path_music);
-
             BaiHat currentBH = dsBaiHat.get(position);
+            String file_path = file_path_music;
+            if (typeMusic.equals("off")) {
+                System.out.println("vao off");
+                file_path = utils.getUrlBHDownload(currentBH.getId());
+            }
+            fileInputStream = new FileInputStream(file_path);
+
             int timeNext = (int) (currentBH.getThoiGian() / 1000 * percent);
             currentTime = timeNext;
             long timeSkip = (long) (timeNext * 15.97 * 1000);

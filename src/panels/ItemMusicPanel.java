@@ -59,14 +59,25 @@ public class ItemMusicPanel extends javax.swing.JPanel {
         lbTenCaSi.setText(getStringTenCaSi());
         lbThoiGian.setText(utils.getThoiGianBaiHat((int) bh.getThoiGian() / 1000));
 
-        String urlAnh = bh.getAnhBia();
         if (from_to.equals("DaTai")) {
-            urlAnh = utils.getAnhBHDownload(bh.getId());
-        }
-        ImageIcon icon = utils.getImageBaiHat(urlAnh, 40, 40);
-        imageBaiHat.setIcon(icon);
+            new Thread(() -> {
+                String urlAnh2 = "";
+                while (true) {
+                    urlAnh2 = utils.getAnhBHDownload(bh.getId());
+                    if (urlAnh2 != null) {
+                        break;
+                    }
+                }
+                ImageIcon icon = utils.getImageBaiHat(urlAnh2, 40, 40);
+                imageBaiHat.setIcon(icon);
+            }).start();
 
-//        handleCheckYeuThich();
+        } else {
+            String urlAnh = bh.getAnhBia();
+            ImageIcon icon = utils.getImageBaiHat(urlAnh, 40, 40);
+            imageBaiHat.setIcon(icon);
+        }
+
     }
 
     public String getStringTenCaSi() {
@@ -542,10 +553,9 @@ public class ItemMusicPanel extends javax.swing.JPanel {
         } else if (from_to.equals("YeuThich")) {
             MyMusicPlayer.initMusicPlayer(YeuThichPanel.dsBaiHat, stt - 1);
         } else if (from_to.equals("DaTai")) {
-
+            System.out.println("phat nhac offline");
             ArrayList<BaiHat> listBH = LocalData.getListDownload();
 
-//            MyMusicPlayer.initMusicOffline(listBH, stt-1);
             MyMusicPlayer.initMusicPlayer(listBH, stt - 1, "off");
         }
 

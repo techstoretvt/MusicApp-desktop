@@ -202,7 +202,13 @@ public class utils {
     }
     
     public static String getAnhBHDownload(String id) {
-        String a = MainJFrame.class.getResource("/download/"+id+".jpg").toString();
+        String a = null;
+        try {
+            a = MainJFrame.class.getResource("/download/"+id+".jpg").toString();
+        }
+        catch(Exception e) {
+            
+        }
         return a;
     }
     
