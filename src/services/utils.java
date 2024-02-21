@@ -17,6 +17,7 @@ import java.net.URL;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -217,6 +218,12 @@ public class utils {
                     + File.separator + "src"
                     + File.separator + "download" + File.separator + id +".mp3";
         return file_path;
+    }
+    
+    public static String randomKeyRemoteControl() {
+        Random rand = new Random();
+        // Tạo số ngẫu nhiên từ 100000 đến 999999 (6 chữ số)
+        return String.valueOf(rand.nextInt(900000) + 100000);
     }
 
 }

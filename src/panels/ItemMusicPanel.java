@@ -73,9 +73,12 @@ public class ItemMusicPanel extends javax.swing.JPanel {
             }).start();
 
         } else {
-            String urlAnh = bh.getAnhBia();
-            ImageIcon icon = utils.getImageBaiHat(urlAnh, 40, 40);
-            imageBaiHat.setIcon(icon);
+            new Thread(() -> {
+                String urlAnh = bh.getAnhBia();
+                ImageIcon icon = utils.getImageBaiHat(urlAnh, 40, 40);
+                imageBaiHat.setIcon(icon);
+            }).start();
+
         }
 
     }

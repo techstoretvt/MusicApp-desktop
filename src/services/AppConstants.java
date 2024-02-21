@@ -12,11 +12,11 @@ public class AppConstants {
 
     public static String type_env = "dev";
 
-    public static String url_socket = type_env.equals("dev") ? "http://localhost:4000" : "";
+    public static String url_socket = type_env.equals("dev") ? "http://localhost:4000" : "https://techstoretvtserver2.onrender.com";
 
     public static String url_login = type_env.equals("dev") ? "http://localhost:3000/account/login" : "";
 
-    public static String url_backend = type_env.equals("dev") ? "http://localhost:4000" : "";
+    public static String url_backend = type_env.equals("dev") ? "http://localhost:4000" : "https://techstoretvtserver2.onrender.com";
     
     public static String url_backend_live = type_env.equals("dev") ? "http://localhost:3030" : "";
 

@@ -31,16 +31,18 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
         lbTenBaiHat.setText(bh.getTenBaiHat());
         lbTenCaSi.setText(getStringTenCaSi());
 
-        String urlAnh = bh.getAnhBia();
-        if(MyMusicPlayer.typeMusic.equals("off")){
-            urlAnh = utils.getAnhBHDownload(bh.getId());
-        }
-        ImageIcon icon = utils.getImageBaiHat(urlAnh, 40, 40);
-        imageBaiHat.setIcon(icon);
-        
-        if(active) {
-            setBackground(new Color(204,0,204));
-            lbTenCaSi.setForeground(new Color(200,200,200));
+        new Thread(() -> {
+            String urlAnh = bh.getAnhBia();
+            if (MyMusicPlayer.typeMusic.equals("off")) {
+                urlAnh = utils.getAnhBHDownload(bh.getId());
+            }
+            ImageIcon icon = utils.getImageBaiHat(urlAnh, 40, 40);
+            imageBaiHat.setIcon(icon);
+        }).start();
+
+        if (active) {
+            setBackground(new Color(204, 0, 204));
+            lbTenCaSi.setForeground(new Color(200, 200, 200));
         }
     }
 
@@ -140,7 +142,7 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
     }//GEN-LAST:event_lbTenBaiHatMouseClicked
 
     public void handlePlayBaiHat() {
-        MyMusicPlayer.initMusicPlayer(MyMusicPlayer.dsBaiHat, index,MyMusicPlayer.typeMusic);
+        MyMusicPlayer.initMusicPlayer(MyMusicPlayer.dsBaiHat, index, MyMusicPlayer.typeMusic);
 
     }
 

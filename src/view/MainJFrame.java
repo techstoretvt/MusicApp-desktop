@@ -64,6 +64,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     public static Browser browser;
     public static Socket mSocket_DKGionNoi;
+    public static String keyRemoteControl;
 
     /**
      * Creates new form HomeJFrame
@@ -73,7 +74,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         initPanelContent();
 
-//        PanelFooter.setVisible(false);
+        PanelFooter.setVisible(false);
         // test
 //        LocalData.removeData("accessToken");
         utils.CheckLogin();
@@ -86,9 +87,9 @@ public class MainJFrame extends javax.swing.JFrame {
     public void initSocketDkBangDienThoai() {
         Socket mSocket = MySocketClient.getSocket();
 
-        String key = "thoaidev";
+        keyRemoteControl = utils.randomKeyRemoteControl();
 
-        mSocket.on("next-music-mobile-" + key, new Emitter.Listener() {
+        mSocket.on("next-music-mobile--" + keyRemoteControl, new Emitter.Listener() {
             @Override
             public void call(final Object... args) {
                 // Xử lý dữ liệu từ máy chủ ở đây
@@ -97,11 +98,29 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        mSocket.on("prev-music-mobile-" + key, new Emitter.Listener() {
+        mSocket.on("prev-music-mobile--" + keyRemoteControl, new Emitter.Listener() {
             @Override
             public void call(final Object... args) {
                 // Xử lý dữ liệu từ máy chủ ở đây
                 MyMusicPlayer.preBaiHat();
+
+            }
+        });
+        
+        mSocket.on("pause-music-mobile--" + keyRemoteControl, new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                // Xử lý dữ liệu từ máy chủ ở đây
+                MyMusicPlayer.pause();
+
+            }
+        });
+        
+         mSocket.on("resume-music-mobile--" + keyRemoteControl, new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                // Xử lý dữ liệu từ máy chủ ở đây
+                MyMusicPlayer.resume();
 
             }
         });

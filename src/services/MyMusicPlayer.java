@@ -73,6 +73,13 @@ public class MyMusicPlayer {
             if (myThread != null) {
                 myThread.interrupt();
             }
+            
+             // reset player
+            if (player != null) {
+                player.close();
+                pauseLocation = 0;
+                songTotalLength = 0;
+            }
 
             BaiHat currentBH = dsBaiHat.get(position);
             totalTime = (int) (currentBH.getThoiGian() / 1000);
@@ -85,12 +92,7 @@ public class MyMusicPlayer {
                 FileUtils.copyURLToFile(songURL, destination);
             }
 
-            // reset player
-            if (player != null) {
-                player.close();
-                pauseLocation = 0;
-                songTotalLength = 0;
-            }
+           
 
             // reset ui
             if (MainJFrame.btnPlayPause != null) {
@@ -151,6 +153,7 @@ public class MyMusicPlayer {
             }
 
             isPlay = true;
+            fileInputStream.skip(0);
 
             new Thread(() -> {
                 try {
@@ -227,7 +230,8 @@ public class MyMusicPlayer {
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException ex) {
-
+                            System.out.println("interrupt");
+                            break;
                         }
 
                     }
@@ -428,6 +432,7 @@ public class MyMusicPlayer {
         if (position == dsBaiHat.size() - 1 && isLoop == false) {
             return;
         }
+        currentTime = 0;
 
         position = (position + 1) % dsBaiHat.size();
 
@@ -438,6 +443,7 @@ public class MyMusicPlayer {
         if (position == 0 - 1 && isLoop == false) {
             return;
         }
+        currentTime = 0;
 
         position = (position - 1 + dsBaiHat.size()) % dsBaiHat.size();
         initMusicPlayer(dsBaiHat, position, typeMusic);
