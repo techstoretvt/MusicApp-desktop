@@ -302,6 +302,7 @@ public class ItemMusicPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnOptionActionPerformed
 
     public void showOptions() {
+
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem option1 = new JMenuItem("Thêm vào playlist");
         ImageIcon icon1 = new ImageIcon(getClass().getResource("/icon/icon-add-playlist-black.png"));
@@ -394,6 +395,25 @@ public class ItemMusicPanel extends javax.swing.JPanel {
         popupMenu.add(option1);
         popupMenu.add(option2);
         popupMenu.add(option3);
+
+        String linkMV = bh.getLinkMV();
+        if (!linkMV.equals("false")) {
+            JMenuItem option5 = new JMenuItem("Xem MV");
+            ImageIcon icon5 = new ImageIcon(getClass().getResource("/icon/icon-copy-link.png"));
+            option5.setIcon(icon5);
+            option5.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    MainJFrame.ShowPanel("ChiTietMV", new ChiTietMVPanel(bh.getId()));
+                }
+
+            });
+            
+            
+            
+            popupMenu.add(option5);
+        }
+
         popupMenu.add(option4);
 
         int sizeY = 120;

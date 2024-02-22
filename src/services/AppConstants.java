@@ -10,7 +10,7 @@ package services;
  */
 public class AppConstants {
 
-    public static String type_env = "dev";
+    public static String type_env = "pro";
 
     public static String url_socket = type_env.equals("dev") ? "http://localhost:4000" : "https://techstoretvtserver2.onrender.com";
 
