@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/File-Code/Desktop%20App/Java/MusicApp/src/panels/ItemMusicPanel.java</file>
-            <file>file:/E:/File-Code/Desktop%20App/Java/MusicApp/src/panels/ItemMVPanel.java</file>
+            <file>file:/E:/File-Code/Desktop%20App/Java/My%20Project/MusicApp/src/panels/PhatKeTiepPanel.java</file>
+            <file>file:/E:/File-Code/Desktop%20App/Java/My%20Project/MusicApp/src/view/MainJFrame.java</file>
+            <file>file:/E:/File-Code/Desktop%20App/Java/My%20Project/MusicApp/src/view/Main.java</file>
+            <file>file:/E:/File-Code/Desktop%20App/Java/My%20Project/MusicApp/src/view/MiniAppFrame.java</file>
+            <file>file:/E:/File-Code/Desktop%20App/Java/My%20Project/MusicApp/src/services/utils.java</file>
+            <file>file:/E:/File-Code/Desktop%20App/Java/My%20Project/MusicApp/src/services/MyMusicPlayer.java</file>
         </group>
     </open-files>
 </project-private>

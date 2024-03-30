@@ -10,6 +10,7 @@ import gson.Casi;
 import gson.LoiBaiHat;
 import gson.ResponseDefault;
 import gson.TaiKhoan;
+import java.awt.Component;
 import java.awt.Image;
 import java.io.File;
 import java.net.MalformedURLException;
@@ -21,6 +22,8 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import panels.ItemMusicPanel;
 import panels.PanelLogin;
 import retrofit2.Call;
@@ -224,6 +227,11 @@ public class utils {
         Random rand = new Random();
         // Tạo số ngẫu nhiên từ 100000 đến 999999 (6 chữ số)
         return String.valueOf(rand.nextInt(900000) + 100000);
+    }
+    
+    public static JFrame layFrameCha(Component c) {
+        JFrame frame = (MainJFrame) SwingUtilities.getWindowAncestor(c);
+        return frame;
     }
 
 }

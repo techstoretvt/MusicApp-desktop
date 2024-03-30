@@ -7,10 +7,13 @@ package panels;
 import gson.BaiHat;
 import java.awt.BorderLayout;
 import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import services.MyMusicPlayer;
 
 /**
@@ -22,11 +25,23 @@ public class PhatKeTiepPanel extends javax.swing.JPanel {
     /**
      * Creates new form PhatKeTiepPanel
      */
+    
+    public PhatKeTiepPanel(boolean showCurent) {
+        initComponents();
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        loadData();
+        setBorder(null);
+        PanelCurrent.setVisible(false);
+    }
+    
+    
     public PhatKeTiepPanel() {
         initComponents();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
         loadData();
     }
+    
+    
 
     public void loadData() {
         if (MyMusicPlayer.dsBaiHat != null) {
@@ -38,7 +53,7 @@ public class PhatKeTiepPanel extends javax.swing.JPanel {
                     BaiHat currentBH = dsBaiHat.get(MyMusicPlayer.position);
                     
                     // load current bai hat
-                    JPanel currentPhatKeTiep = new ItemPhatKeTiep(currentBH, MyMusicPlayer.position, true);
+                    JPanel currentPhatKeTiep = new ItemPhatKeTiep(currentBH, MyMusicPlayer.position, true,false);
                     PanelCurrent.removeAll();
                     PanelCurrent.add(currentPhatKeTiep, BorderLayout.CENTER);
                     PanelCurrent.revalidate();
@@ -47,7 +62,7 @@ public class PhatKeTiepPanel extends javax.swing.JPanel {
                     // load list bai hat
                     for (int i = 0; i < sizeDS; i++) {
                         boolean active = i == MyMusicPlayer.position;
-                        JPanel bh = new ItemPhatKeTiep(dsBaiHat.get(i), i, active);
+                        JPanel bh = new ItemPhatKeTiep(dsBaiHat.get(i), i, active, true);
                         
                         if (i == MyMusicPlayer.position) {
                             currentPhatKeTiep = bh;
@@ -86,7 +101,8 @@ public class PhatKeTiepPanel extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
 
-        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bài hát kế tiếp", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Segoe UI", 1, 14), new java.awt.Color(0, 102, 102))); // NOI18N
+        setMinimumSize(new java.awt.Dimension(10, 200));
         setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 102));
@@ -115,7 +131,7 @@ public class PhatKeTiepPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addContainerGap(178, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,7 +142,7 @@ public class PhatKeTiepPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE))
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);

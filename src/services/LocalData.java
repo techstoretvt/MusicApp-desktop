@@ -20,20 +20,42 @@ import java.util.Properties;
  * @author tranv
  */
 public class LocalData {
-
+    
     public static void setData(String key, String data) {
         Properties properties = new Properties();
-        properties.setProperty(key, data);
-//        properties.setProperty("key2", "value2");
         File file = new File("data.properties");
         try {
-            properties.store(new FileOutputStream(file), "Data");
+            // Đọc dữ liệu từ file vào đối tượng Properties
+            FileInputStream fileInputStream = new FileInputStream(file);
+            properties.load(fileInputStream);
+            fileInputStream.close();
+
+            // Thêm dữ liệu mới
+            properties.setProperty(key, data);
+
+            // Ghi đối tượng Properties đã cập nhật vào file
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            properties.store(fileOutputStream, "Data");
+            fileOutputStream.close();
         } catch (FileNotFoundException ex) {
-
+            ex.printStackTrace();
         } catch (IOException ex) {
-
+            ex.printStackTrace();
         }
     }
+
+//    public static void setData(String key, String data) {
+//        Properties properties = new Properties();
+//        properties.setProperty(key, data);
+//        File file = new File("data.properties");
+//        try {
+//            properties.store(new FileOutputStream(file), "Data");
+//        } catch (FileNotFoundException ex) {
+//
+//        } catch (IOException ex) {
+//
+//        }
+//    }
 
     public static String getData(String key) {
         Properties properties = new Properties();

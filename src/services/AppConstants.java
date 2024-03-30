@@ -14,13 +14,13 @@ public class AppConstants {
 
     public static String url_socket = type_env.equals("dev") ? "http://localhost:4000" : "https://techstoretvtserver2.onrender.com";
 
-    public static String url_login = type_env.equals("dev") ? "http://localhost:3000/account/login" : "";
+    public static String url_login = type_env.equals("dev") ? "http://localhost:3000/account/login" : "https://thoaitranstore.vercel.app/account/login";
 
     public static String url_backend = type_env.equals("dev") ? "http://localhost:4000" : "https://techstoretvtserver2.onrender.com";
     
     public static String url_backend_live = type_env.equals("dev") ? "http://localhost:3030" : "";
 
-    public static String url_frontend = type_env.equals("dev") ? "http://localhost:3000" : "";
+    public static String url_frontend = type_env.equals("dev") ? "http://localhost:3000" : "https://thoaitranstore.vercel.app";
     
     public static String url_livestream = type_env.equals("dev") ? "http://localhost:3030" : "";
 

@@ -17,6 +17,7 @@ import gson.GetListCSQuanTam;
 import gson.GetListPlaylist;
 import gson.GetLoiBaiHat;
 import gson.GetTaiKhoan;
+import gson.KeywordGoogle;
 import gson.ResponseDefault;
 import gson.ThemBHVaoDS;
 import gson.ThemDSPhat;
@@ -166,5 +167,7 @@ public interface ApiServiceV1 {
     Call<ResponseDefault> kiemTraQuanTamCaSi(@Query("idCaSi") String idCaSi,
                                              @Header("authorization") String authorization);
     
+    @GET("/api/v2/get-list-keyword-search-mobile")
+    Call<KeywordGoogle> getGoiYTuKhoa(@Query("value") String value);
 
 }

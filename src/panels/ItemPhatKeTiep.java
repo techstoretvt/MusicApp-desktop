@@ -7,11 +7,15 @@ package panels;
 import gson.BaiHat;
 import gson.BaiHat_CaSi;
 import gson.Casi;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import services.MyMusicPlayer;
 import services.utils;
+import view.MainJFrame;
 
 /**
  *
@@ -21,12 +25,14 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
 
     private BaiHat bh = null;
     private int index = 1;
+    boolean active = false;
 
-    public ItemPhatKeTiep(BaiHat bh, int index, boolean active) {
+    public ItemPhatKeTiep(BaiHat bh, int index, boolean active, boolean showArrow) {
         initComponents();
 
         this.bh = bh;
         this.index = index;
+        this.active = active;
 
         lbTenBaiHat.setText(bh.getTenBaiHat());
         lbTenCaSi.setText(getStringTenCaSi());
@@ -43,7 +49,20 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
         if (active) {
             setBackground(new Color(204, 0, 204));
             lbTenCaSi.setForeground(new Color(200, 200, 200));
+            btnDelete.setVisible(false);
         }
+
+        if (!showArrow) {
+            btnUp.setVisible(false);
+            btnDown.setVisible(false);
+        }
+
+        if (index == 0) {
+            btnUp.setVisible(false);
+        } else if (index == MyMusicPlayer.dsBaiHat.size() - 1) {
+            btnDown.setVisible(false);
+        }
+
     }
 
     public String getStringTenCaSi() {
@@ -73,81 +92,212 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnUp = new javax.swing.JLabel();
+        btnDown = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         imageBaiHat = new javax.swing.JLabel();
         lbTenBaiHat = new javax.swing.JLabel();
         lbTenCaSi = new javax.swing.JLabel();
+        btnDelete = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 102));
-        setMaximumSize(new java.awt.Dimension(32767, 70));
+        setMaximumSize(new java.awt.Dimension(32767, 62));
 
-        imageBaiHat.setIcon(new javax.swing.ImageIcon("D:\\Media\\Image\\Musicapp\\anh-bia-am-nhac2.jpg")); // NOI18N
-        imageBaiHat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        imageBaiHat.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-up-20.png"))); // NOI18N
+        btnUp.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                imageBaiHatMouseClicked(evt);
+                btnUpMouseClicked(evt);
             }
         });
+
+        btnDown.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-down-20.png"))); // NOI18N
+        btnDown.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDownMouseClicked(evt);
+            }
+        });
+
+        jPanel1.setBackground(null);
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
+
+        imageBaiHat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         lbTenBaiHat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbTenBaiHat.setForeground(new java.awt.Color(255, 255, 255));
         lbTenBaiHat.setText("Ten bai hat");
         lbTenBaiHat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbTenBaiHat.setMaximumSize(new java.awt.Dimension(190, 16));
-        lbTenBaiHat.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbTenBaiHatMouseClicked(evt);
-            }
-        });
 
         lbTenCaSi.setForeground(new java.awt.Color(153, 153, 153));
         lbTenCaSi.setText("Ten ca si, tac gia");
         lbTenCaSi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbTenCaSi.setMaximumSize(new java.awt.Dimension(190, 16));
 
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-delete-red.png"))); // NOI18N
+        btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeleteMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(imageBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbTenBaiHat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbTenCaSi, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(lbTenBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(8, 8, 8)
+                    .addComponent(lbTenCaSi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(imageBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(btnDelete))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(imageBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbTenBaiHat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbTenCaSi, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+                    .addComponent(btnUp)
+                    .addComponent(btnDown))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(imageBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbTenBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnUp)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbTenCaSi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(14, 14, 14))
+                        .addComponent(btnDown)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void imageBaiHatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageBaiHatMouseClicked
+    private void btnDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseClicked
         // TODO add your handling code here:
-        handlePlayBaiHat();
-    }//GEN-LAST:event_imageBaiHatMouseClicked
+        MyMusicPlayer.dsBaiHat.remove(bh);
+        setVisible(false);
+    }//GEN-LAST:event_btnDeleteMouseClicked
 
-    private void lbTenBaiHatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTenBaiHatMouseClicked
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
         // TODO add your handling code here:
-        handlePlayBaiHat();
-    }//GEN-LAST:event_lbTenBaiHatMouseClicked
+        if (SwingUtilities.isLeftMouseButton(evt)) {
+            if (!active) {
+                handlePlayBaiHat();
+            }
+        } else if (SwingUtilities.isRightMouseButton(evt)) {
+            System.out.println("Right mouse button clicked");
+        }
+    }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void btnDownMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDownMouseClicked
+        // TODO add your handling code here:
+        ArrayList<BaiHat> dsBaiHats = MyMusicPlayer.dsBaiHat;
+        BaiHat bh1 = dsBaiHats.get(index);
+        BaiHat bh2 = dsBaiHats.get(index + 1);
+
+        dsBaiHats.remove(bh1);
+        dsBaiHats.remove(bh2);
+
+        dsBaiHats.add(index, bh2);
+        dsBaiHats.add(index + 1, bh1);
+        MyMusicPlayer.dsBaiHat = dsBaiHats;
+        
+        if(index == MyMusicPlayer.position) {
+            MyMusicPlayer.position = MyMusicPlayer.position + 1;
+        }
+        else if(index + 1 == MyMusicPlayer.position) {
+            MyMusicPlayer.position = MyMusicPlayer.position - 1;
+        }
+        
+        
+        if (MainJFrame.isMenuPhatKeTiep) {
+
+            MainJFrame.PanelWrap.remove(1);
+            JPanel phatKeTiep = new PhatKeTiepPanel();
+            MainJFrame.PanelWrap.add(phatKeTiep, BorderLayout.EAST);
+            MainJFrame.PanelWrap.revalidate();
+            MainJFrame.PanelWrap.repaint();
+
+        }
+
+
+    }//GEN-LAST:event_btnDownMouseClicked
+
+    private void btnUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpMouseClicked
+        // TODO add your handling code here:
+        ArrayList<BaiHat> dsBaiHats = MyMusicPlayer.dsBaiHat;
+        BaiHat bh1 = dsBaiHats.get(index - 1);
+        BaiHat bh2 = dsBaiHats.get(index);
+
+        dsBaiHats.remove(bh1);
+        dsBaiHats.remove(bh2);
+
+        dsBaiHats.add(index -1, bh2);
+        dsBaiHats.add(index, bh1);
+        MyMusicPlayer.dsBaiHat = dsBaiHats;
+        
+        if(index == MyMusicPlayer.position) {
+            MyMusicPlayer.position = MyMusicPlayer.position - 1;
+        }
+        else if(index - 1 == MyMusicPlayer.position) {
+            MyMusicPlayer.position = MyMusicPlayer.position + 1;
+        }
+        
+        
+        if (MainJFrame.isMenuPhatKeTiep) {
+
+            MainJFrame.PanelWrap.remove(1);
+            JPanel phatKeTiep = new PhatKeTiepPanel();
+            MainJFrame.PanelWrap.add(phatKeTiep, BorderLayout.EAST);
+            MainJFrame.PanelWrap.revalidate();
+            MainJFrame.PanelWrap.repaint();
+
+        }
+    }//GEN-LAST:event_btnUpMouseClicked
 
     public void handlePlayBaiHat() {
         MyMusicPlayer.initMusicPlayer(MyMusicPlayer.dsBaiHat, index, MyMusicPlayer.typeMusic);
 
     }
+    
+    public void setIndex(int newIndex) {
+        this.index = newIndex;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnDelete;
+    private javax.swing.JLabel btnDown;
+    private javax.swing.JLabel btnUp;
     private javax.swing.JLabel imageBaiHat;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbTenBaiHat;
     private javax.swing.JLabel lbTenCaSi;
     // End of variables declaration//GEN-END:variables

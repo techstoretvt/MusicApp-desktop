@@ -21,6 +21,7 @@ public class DaTaiPanel extends javax.swing.JPanel {
      */
     public DaTaiPanel() {
         initComponents();
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
 
         getListMusic();
     }

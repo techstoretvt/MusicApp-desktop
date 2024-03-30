@@ -9,10 +9,51 @@ public class BaiHat implements Serializable{
     private String loiBaiHat;
     private String anhBia;
     private String linkBaiHat;
-    private String linkMV;
+    private String linkMV,tenNhacSi,theLoai,ngayPhatHanh,nhaCungCap;
     private ArrayList<BaiHat_CaSi> baiHat_caSis;
 
     private double thoiGian;
+    private int luotNghe;
+
+    public String getTenNhacSi() {
+        return tenNhacSi;
+    }
+
+    public void setTenNhacSi(String tenNhacSi) {
+        this.tenNhacSi = tenNhacSi;
+    }
+
+    public String getTheLoai() {
+        return theLoai;
+    }
+
+    public void setTheLoai(String theLoai) {
+        this.theLoai = theLoai;
+    }
+
+    public String getNgayPhatHanh() {
+        return ngayPhatHanh;
+    }
+
+    public void setNgayPhatHanh(String ngayPhatHanh) {
+        this.ngayPhatHanh = ngayPhatHanh;
+    }
+
+    public String getNhaCungCap() {
+        return nhaCungCap;
+    }
+
+    public void setNhaCungCap(String nhaCungCap) {
+        this.nhaCungCap = nhaCungCap;
+    }
+
+    public int getLuotNghe() {
+        return luotNghe;
+    }
+
+    public void setLuotNghe(int luotNghe) {
+        this.luotNghe = luotNghe;
+    }
 
     public BaiHat(String id, String tenBaiHat, String loiBaiHat, String anhBia, String linkBaiHat,
                   ArrayList<BaiHat_CaSi> baiHat_caSis) {

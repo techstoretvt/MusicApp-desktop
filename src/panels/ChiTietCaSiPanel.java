@@ -82,6 +82,8 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
 
                     lbTenCaSi.setText(cs.getTenCaSi());
                     lbQuanTam.setText(String.valueOf(res.getCountQuanTam()));
+                    
+                    tfMoTa.setText(cs.getMoTa());
 
                 } else {
                     System.out.println("khong tim thay ca si");
@@ -147,6 +149,8 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tfMoTa = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         PanelBaiHatCaSi = new javax.swing.JPanel();
@@ -170,7 +174,6 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
 
         lbTenCaSi.setFont(new java.awt.Font("Segoe UI", 1, 50)); // NOI18N
         lbTenCaSi.setForeground(new java.awt.Color(255, 255, 255));
-        lbTenCaSi.setText("jLabel1");
 
         btnPlay.setBackground(new java.awt.Color(23, 15, 35));
         btnPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon-play-big.png"))); // NOI18N
@@ -253,13 +256,25 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Thông tin");
 
+        jScrollPane2.setBorder(null);
+
+        tfMoTa.setBackground(new java.awt.Color(23, 15, 35));
+        tfMoTa.setColumns(20);
+        tfMoTa.setForeground(new java.awt.Color(255, 255, 255));
+        tfMoTa.setLineWrap(true);
+        tfMoTa.setRows(5);
+        tfMoTa.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(tfMoTa);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -267,7 +282,9 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(194, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel1.add(jPanel2);
@@ -388,8 +405,10 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbQuanTam;
     private javax.swing.JLabel lbTenCaSi;
+    private javax.swing.JTextArea tfMoTa;
     // End of variables declaration//GEN-END:variables
 }

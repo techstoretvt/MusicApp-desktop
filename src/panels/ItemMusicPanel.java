@@ -13,6 +13,8 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -23,6 +25,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import org.apache.commons.io.FileUtils;
 import retrofit2.Call;
@@ -302,6 +305,7 @@ public class ItemMusicPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnOptionActionPerformed
 
     public void showOptions() {
+        int sizeY = 120;
 
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem option1 = new JMenuItem("Thêm vào playlist");
@@ -393,7 +397,27 @@ public class ItemMusicPanel extends javax.swing.JPanel {
         }
 
         popupMenu.add(option1);
-        popupMenu.add(option2);
+
+        if (!kiemTraTonTai()) {
+            popupMenu.add(option2);
+        }
+
+        if (from_to.equals("DaTai")) {
+            JMenuItem optXoaDaTai = new JMenuItem("Xóa khỏi playlist");
+            ImageIcon iconRemove = new ImageIcon(getClass().getResource("/icon/icon-delete-black.png"));
+            optXoaDaTai.setIcon(iconRemove);
+
+            optXoaDaTai.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    handleXoaKhoiDaTai();
+                }
+
+            });
+
+            popupMenu.add(optXoaDaTai);
+            sizeY += 20;
+        }
         popupMenu.add(option3);
 
         String linkMV = bh.getLinkMV();
@@ -408,15 +432,12 @@ public class ItemMusicPanel extends javax.swing.JPanel {
                 }
 
             });
-            
-            
-            
+
             popupMenu.add(option5);
         }
 
         popupMenu.add(option4);
 
-        int sizeY = 120;
         if (from_to.equals("Playlist")) {
             JMenuItem optDeletePlaylist = new JMenuItem("Xóa khỏi playlist");
             ImageIcon iconRemove = new ImageIcon(getClass().getResource("/icon/icon-delete-black.png"));
@@ -431,7 +452,7 @@ public class ItemMusicPanel extends javax.swing.JPanel {
             });
 
             popupMenu.add(optDeletePlaylist);
-            sizeY = 140;
+            sizeY += 20;
         }
 
         popupMenu.show(btnOption, -90, -popupMenu.getHeight() - sizeY);
@@ -439,6 +460,12 @@ public class ItemMusicPanel extends javax.swing.JPanel {
 
     public void handleDownload() {
         try {
+            if (kiemTraTonTai()) {
+                JOptionPane.showMessageDialog(this, "Bài hát đã tồn tại.", "Download thất bại",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             String urlBH = bh.getLinkBaiHat();
 
             URL songURL = new URL(urlBH);
@@ -462,7 +489,14 @@ public class ItemMusicPanel extends javax.swing.JPanel {
             File destination = new File(file_path);
             File destination_image = new File(file_path_image);
             new Thread(() -> {
+                JPanel pnLoading = new LoadingTaiBaiHat();
+                MyCustomDialog customDialog = new MyCustomDialog(null, "Tải bài hát", pnLoading);
+
                 try {
+                    new Thread(() -> {
+                        customDialog.show(true);
+                    }).start();
+
                     FileUtils.copyURLToFile(songURL, destination);
                     FileUtils.copyURLToFile(songURLImage, destination_image);
 
@@ -470,11 +504,13 @@ public class ItemMusicPanel extends javax.swing.JPanel {
                     listBH.add(bh);
                     LocalData.saveListDownLoad(listBH);
 
-                    JOptionPane.showMessageDialog(this, "Download thành công", "Thành công",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    customDialog.show(false);
+                    LoadingTaiBaiHat.closeThread();
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(this, "Download thất bại", "Lỗi rồi",
                             JOptionPane.ERROR_MESSAGE);
+                    customDialog.show(false);
+                    LoadingTaiBaiHat.closeThread();
                     Logger.getLogger(ItemMusicPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
@@ -484,6 +520,32 @@ public class ItemMusicPanel extends javax.swing.JPanel {
             Logger.getLogger(ItemMusicPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public boolean kiemTraTonTai() {
+        ArrayList<BaiHat> listBH = LocalData.getListDownload();
+        boolean check = false;
+        for (BaiHat i : listBH) {
+            if (i.getLinkBaiHat().equals(bh.getLinkBaiHat())) {
+                check = true;
+            }
+        }
+
+        return check;
+    }
+
+    public void handleXoaKhoiDaTai() {
+        ArrayList<BaiHat> listBH = LocalData.getListDownload();
+
+        ArrayList<BaiHat> newListBH = new ArrayList<>();
+        for (BaiHat i : listBH) {
+            if (!i.getLinkBaiHat().equals(bh.getLinkBaiHat())) {
+                newListBH.add(i);
+            }
+        }
+
+        LocalData.saveListDownLoad(newListBH);
+        MainJFrame.resetPanel();
     }
 
     public void toggleYeuThich() {
