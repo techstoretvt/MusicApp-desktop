@@ -24,12 +24,12 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import panels.ItemMusicPanel;
-import panels.PanelLogin;
+import component.ItemMusicPanel;
+import component.PanelLogin;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import view.MainJFrame;
+import frame.MainJFrame;
 
 /**
  *

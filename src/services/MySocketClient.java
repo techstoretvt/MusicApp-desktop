@@ -17,7 +17,7 @@ public class MySocketClient {
             if (socket == null) {
                 socket = IO.socket(AppConstants.url_socket);
                 socket.connect();
-                System.out.println("Ket nối success");
+                System.out.println("Ket nối Socket success");
             }
            
 

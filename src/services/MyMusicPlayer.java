@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 import org.apache.commons.io.FileUtils;
-import view.MainJFrame;
+import frame.MainJFrame;
 import gson.GetListBaiHat;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,8 +25,9 @@ import java.awt.Rectangle;
 import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import panels.KaraokePanel;
-import panels.PhatKeTiepPanel;
+import component.ItemMusicPanel;
+import component.KaraokePanel;
+import component.PhatKeTiepPanel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,8 +74,8 @@ public class MyMusicPlayer {
             if (myThread != null) {
                 myThread.interrupt();
             }
-            
-             // reset player
+
+            // reset player
             if (player != null) {
                 player.close();
                 pauseLocation = 0;
@@ -92,8 +93,6 @@ public class MyMusicPlayer {
                 FileUtils.copyURLToFile(songURL, destination);
             }
 
-           
-
             // reset ui
             if (MainJFrame.btnPlayPause != null) {
                 ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-pause.png"));
@@ -104,12 +103,15 @@ public class MyMusicPlayer {
                 MainJFrame.lbTenCaSi.setText(utils.getTenCaSi(currentBH));
             }
             if (MainJFrame.imageBaiHat != null) {
-                String urlAnh = currentBH.getAnhBia();
-                if (type.equals("off")) {
-                    urlAnh = utils.getAnhBHDownload(currentBH.getId());
-                }
-                ImageIcon anhBH = utils.getImageBaiHat(urlAnh, 50, 50);
-                MainJFrame.imageBaiHat.setIcon(anhBH);
+                new Thread(() -> {
+                    String urlAnh = currentBH.getAnhBia();
+                    if (type.equals("off")) {
+                        urlAnh = utils.getAnhBHDownload(currentBH.getId());
+                    }
+                    ImageIcon anhBH = utils.getImageBaiHat(urlAnh, 50, 50);
+                    MainJFrame.imageBaiHat.setIcon(anhBH);
+                }).start();
+
             }
             if (MainJFrame.lbTongThoiGian != null) {
                 String tongTG = utils.getThoiGianBaiHat((int) (currentBH.getThoiGian() / 1000));
@@ -121,6 +123,16 @@ public class MyMusicPlayer {
             if (MainJFrame.isKaraoke) {
                 MainJFrame.isKaraoke = false;
                 MainJFrame.ToggleShowKaraoke();
+            }
+            if (ItemMusicPanel.anhNhac != null) {
+                new Thread(() -> {
+                    String urlAnh = currentBH.getAnhBia();
+                    ImageIcon anhBH = utils.getImageBaiHat(urlAnh, 50, 50);
+                    ItemMusicPanel.anhNhac.setIcon(anhBH);
+
+                    ItemMusicPanel.anhNhac = null;
+                }).start();
+
             }
 
             // add phat ke tiep
@@ -157,10 +169,9 @@ public class MyMusicPlayer {
 
             new Thread(() -> {
                 try {
-                    System.out.println("play ");
                     player.play();
                 } catch (JavaLayerException e) {
-                    System.out.println("vao loi 3");
+                    System.out.println("Loi Play");
                     e.printStackTrace();
                 }
             }).start();
@@ -188,7 +199,6 @@ public class MyMusicPlayer {
                             // next nhac
                             nextBaiHat();
 
-                            System.out.println("phat xong");
                             break;
                         }
 
@@ -230,7 +240,6 @@ public class MyMusicPlayer {
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException ex) {
-                            System.out.println("interrupt");
                             break;
                         }
 
@@ -351,7 +360,6 @@ public class MyMusicPlayer {
             BaiHat currentBH = dsBaiHat.get(position);
             String file_path = file_path_music;
             if (typeMusic.equals("off")) {
-                System.out.println("vao off");
                 file_path = utils.getUrlBHDownload(currentBH.getId());
             }
             fileInputStream = new FileInputStream(file_path);
