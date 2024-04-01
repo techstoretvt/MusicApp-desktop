@@ -4,6 +4,7 @@
  */
 package screen;
 
+import component.CustomScrollBarUI;
 import component.ItemMusicPanel;
 import gson.BaiHat;
 import gson.ChiTietDanhSachPhat;
@@ -44,6 +45,8 @@ public class ChiTietPlaylistPanel extends javax.swing.JPanel {
         initComponents();
 
         this.idPlaylist = idPlaylist;
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         //test
         getPlaylist(idPlaylist);
@@ -58,6 +61,7 @@ public class ChiTietPlaylistPanel extends javax.swing.JPanel {
             public void onResponse(Call<GetDSPhatById> call, Response<GetDSPhatById> rspns) {
                 GetDSPhatById res = rspns.body();
                 if (res != null && res.getErrCode() == 0) {
+                    PanelListMusic.removeAll();
                     playlist = res.getData();
                     ArrayList<ChiTietDanhSachPhat> listBH = playlist.getChiTietDanhSachPhats();
                     int size = listBH.size();
@@ -114,14 +118,18 @@ public class ChiTietPlaylistPanel extends javax.swing.JPanel {
         btnPhatNhac = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         PanelListMusic = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(23, 15, 35));
 
         jPanel1.setBackground(new java.awt.Color(23, 15, 35));
 
+        imgPlaylist.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imgPlaylist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/loadingBH.gif"))); // NOI18N
+
         lbTenDS.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbTenDS.setForeground(new java.awt.Color(255, 255, 255));
-        lbTenDS.setText("Ten Danh sach");
+        lbTenDS.setText("Đang tải...");
 
         btnOption.setBackground(new java.awt.Color(23, 15, 35));
         btnOption.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon-more-20.png"))); // NOI18N
@@ -181,6 +189,11 @@ public class ChiTietPlaylistPanel extends javax.swing.JPanel {
 
         PanelListMusic.setBackground(new java.awt.Color(23, 15, 35));
         PanelListMusic.setLayout(new javax.swing.BoxLayout(PanelListMusic, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setText("Đang tải...");
+        PanelListMusic.add(jLabel1);
+
         jScrollPane1.setViewportView(PanelListMusic);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -298,6 +311,7 @@ public class ChiTietPlaylistPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnOption;
     private javax.swing.JButton btnPhatNhac;
     private javax.swing.JLabel imgPlaylist;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbTenDS;

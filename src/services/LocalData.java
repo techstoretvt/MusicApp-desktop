@@ -96,9 +96,29 @@ public class LocalData {
             e.printStackTrace();
         }
     }
+    
+    public static void saveListDaNghe(ArrayList<BaiHat> listBH) {
+        String filename = "dataListDaNghe.txt";
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filename))) {
+            outputStream.writeObject(listBH);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static ArrayList<BaiHat> getListDownload() {
         String filename = "dataDownload.txt";
+        ArrayList<BaiHat> listBH = new ArrayList<>();
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filename))) {
+            listBH = (ArrayList<BaiHat>) inputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return listBH;
+    }
+    
+    public static ArrayList<BaiHat> getListDaNghe() {
+        String filename = "dataListDaNghe.txt";
         ArrayList<BaiHat> listBH = new ArrayList<>();
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filename))) {
             listBH = (ArrayList<BaiHat>) inputStream.readObject();

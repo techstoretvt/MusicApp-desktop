@@ -62,6 +62,8 @@ public class ItemPlaylistPanel extends javax.swing.JPanel {
         setBackground(new java.awt.Color(23, 15, 35));
 
         imgPlaylist.setForeground(new java.awt.Color(255, 255, 255));
+        imgPlaylist.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imgPlaylist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/loadingBH.gif"))); // NOI18N
         imgPlaylist.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         imgPlaylist.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

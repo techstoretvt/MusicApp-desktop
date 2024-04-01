@@ -69,7 +69,7 @@
                           <Component id="lblTenBaiHat" min="-2" max="-2" attributes="0"/>
                           <Component id="lblTenCaSi" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="62" max="32767" attributes="0"/>
+                      <EmptySpace pref="156" max="32767" attributes="0"/>
                       <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -106,7 +106,6 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&#x110;&#xe1;nh M&#x1ea5;t Em"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblTenCaSi">
@@ -114,7 +113,6 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Quang &#x110;&#x103;ng Tr&#x1ea7;n"/>
               </Properties>
             </Component>
             <Container class="javax.swing.JPanel" name="jPanel3">

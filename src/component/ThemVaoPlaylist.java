@@ -6,6 +6,8 @@ package component;
 
 import bodyapi.BodyThemBHVaoDS;
 import bodyapi.BodyThemDSPhat;
+import frame.MainJFrame;
+import static frame.MainJFrame.historyPanel;
 import gson.DanhSachPhat;
 import gson.GetListPlaylist;
 import gson.ThemBHVaoDS;
@@ -20,6 +22,7 @@ import javax.swing.JOptionPane;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import screen.ChiTietPlaylistPanel;
 import services.ApiServiceV1;
 import services.utils;
 
@@ -104,6 +107,13 @@ public class ThemVaoPlaylist extends javax.swing.JPanel {
                 if (res != null && res.getErrCode() == 0) {
                     JOptionPane.showMessageDialog(null, "Thêm thành công",
                             "", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    if(MainJFrame.historyPanel.peek().equals("ChiTietPlaylist")) {
+                        if (ChiTietPlaylistPanel.idPlaylist.equals(idDS)) {
+                            MainJFrame.resetPanel();
+                        }
+                    }
+                    
                 } else {
                     System.out.println("Warning: " + res.getErrMessage());
                     JOptionPane.showMessageDialog(null, res.getErrMessage(),

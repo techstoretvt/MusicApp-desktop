@@ -38,11 +38,13 @@ import services.MyCustomDialog;
 import services.MyMusicPlayer;
 import services.utils;
 import frame.MainJFrame;
+import java.awt.Color;
 import screen.BaiHatSearchPanel;
 import screen.ChiTietCaSiPanel;
 import screen.ChiTietMVPanel;
 import screen.ChiTietPlaylistPanel;
 import screen.KhamPhaPanel;
+import screen.ThuVienPanel;
 import screen.YeuThichPanel;
 
 /**
@@ -130,16 +132,35 @@ public class ItemMusicPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(23, 15, 35));
         setMaximumSize(new java.awt.Dimension(32767, 70));
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                formMouseExited(evt);
+            }
+        });
 
         lbStt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lbStt.setForeground(new java.awt.Color(0, 102, 255));
         lbStt.setText("10");
         lbStt.setMaximumSize(new java.awt.Dimension(40, 32));
 
+        imageBaiHat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/loadingBH.gif"))); // NOI18N
         imageBaiHat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        imageBaiHat.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                imageBaiHatMouseMoved(evt);
+            }
+        });
         imageBaiHat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 imageBaiHatMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                imageBaiHatMouseExited(evt);
             }
         });
 
@@ -148,9 +169,17 @@ public class ItemMusicPanel extends javax.swing.JPanel {
         lbTenBaiHat.setText("Ten bai hat");
         lbTenBaiHat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbTenBaiHat.setMaximumSize(new java.awt.Dimension(600, 16));
+        lbTenBaiHat.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                lbTenBaiHatMouseMoved(evt);
+            }
+        });
         lbTenBaiHat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbTenBaiHatMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lbTenBaiHatMouseExited(evt);
             }
         });
 
@@ -158,16 +187,24 @@ public class ItemMusicPanel extends javax.swing.JPanel {
         lbTenCaSi.setText("Ten ca si, tac gia");
         lbTenCaSi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbTenCaSi.setMaximumSize(new java.awt.Dimension(600, 16));
+        lbTenCaSi.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                lbTenCaSiMouseMoved(evt);
+            }
+        });
         lbTenCaSi.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbTenCaSiMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lbTenCaSiMouseExited(evt);
             }
         });
 
         lbThoiGian.setForeground(new java.awt.Color(255, 255, 255));
         lbThoiGian.setText("5:33");
 
-        btnOption.setBackground(new java.awt.Color(23, 15, 35));
+        btnOption.setBackground(null);
         btnOption.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon-more-20.png"))); // NOI18N
         btnOption.setBorder(null);
         btnOption.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -276,369 +313,71 @@ public class ItemMusicPanel extends javax.swing.JPanel {
 
     private void btnOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOptionActionPerformed
         // TODO add your handling code here:
-        if (!isCheckYeuThich) {
-            String header = utils.getHeader();
+        OptionBaiHat optionBaiHat = new OptionBaiHat(bh, from_to, btnOption);
+        optionBaiHat.show();
 
-            ApiServiceV1.apiServiceV1.kiemTraYeuThichBaiHat(bh.getId(), header).enqueue(new Callback<ResponseDefault>() {
-                @Override
-                public void onResponse(Call<ResponseDefault> call, Response<ResponseDefault> rspns) {
-                    ResponseDefault res = rspns.body();
-                    if (res != null && res.getErrCode() == 0) {
-                        if (res.getErrMessage().equals("like")) {
-                            isYeuThich = true;
-                        } else {
-                            isYeuThich = false;
-                        }
-                        isCheckYeuThich = true;
-                        showOptions();
-                    } else {
-                        isYeuThich = false;
-                        isCheckYeuThich = true;
-                        showOptions();
-                        System.out.println("err check yeu thich: " + res.getErrMessage());
-//                        JOptionPane.showMessageDialog(null, res.getErrMessage(),
-//                                "Thông báo",JOptionPane.WARNING_MESSAGE);
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<ResponseDefault> call, Throwable thrwbl) {
-                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-                }
-            });
-        } else {
-            showOptions();
-        }
 
     }//GEN-LAST:event_btnOptionActionPerformed
 
-    public void showOptions() {
-        int sizeY = 120;
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+        // TODO add your handling code here:
+        onHover();
+    }//GEN-LAST:event_formMouseMoved
 
-        JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem option1 = new JMenuItem("Thêm vào playlist");
-        ImageIcon icon1 = new ImageIcon(getClass().getResource("/icon/icon-add-playlist-black.png"));
-        option1.setIcon(icon1);
-        option1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!utils.getIsLogin()) {
-                    return;
-                }
-                MyCustomDialog customDialog = new MyCustomDialog(null, "Thêm vào playlist",
-                        new ThemVaoPlaylist(bh.getId()));
-                customDialog.setVisible(true);
-            }
-        });
+    private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
+        // TODO add your handling code here:
+        endHover();
+    }//GEN-LAST:event_formMouseExited
 
-        JMenuItem option2 = new JMenuItem("Tải xuống");
-        ImageIcon icon2 = new ImageIcon(getClass().getResource("/icon/icon-download.png"));
-        option2.setIcon(icon2);
-        option2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handleDownload();
-            }
-        });
+    private void imageBaiHatMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageBaiHatMouseMoved
+        // TODO add your handling code here:
+        onHover();
+    }//GEN-LAST:event_imageBaiHatMouseMoved
 
-        JMenuItem option3 = new JMenuItem("Phát tiếp theo");
-        ImageIcon icon3 = new ImageIcon(getClass().getResource("/icon/icon-add-play.png"));
-        option3.setIcon(icon3);
-        option3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MyMusicPlayer.themBaiHat(bh);
-            }
+    private void imageBaiHatMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageBaiHatMouseExited
+        // TODO add your handling code here:
+        endHover();
+    }//GEN-LAST:event_imageBaiHatMouseExited
 
-        });
+    private void lbTenBaiHatMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTenBaiHatMouseMoved
+        // TODO add your handling code here:
+        onHover();
+    }//GEN-LAST:event_lbTenBaiHatMouseMoved
 
-        JMenuItem option4 = new JMenuItem("Sao chép link");
-        ImageIcon icon4 = new ImageIcon(getClass().getResource("/icon/icon-copy-link.png"));
-        option4.setIcon(icon4);
-        option4.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String link = bh.getLinkBaiHat();
-                StringSelection stringSelection = new StringSelection(link);
+    private void lbTenBaiHatMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTenBaiHatMouseExited
+        // TODO add your handling code here:
+        endHover();
+    }//GEN-LAST:event_lbTenBaiHatMouseExited
 
-                // Lấy đối tượng Clipboard
-                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+    private void lbTenCaSiMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTenCaSiMouseMoved
+        // TODO add your handling code here:
+        onHover();
+        lbTenCaSi.setForeground(new Color(174, 104, 213));
+    }//GEN-LAST:event_lbTenCaSiMouseMoved
 
-                // Đặt dữ liệu vào clipboard
-                clipboard.setContents(stringSelection, null);
+    private void lbTenCaSiMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTenCaSiMouseExited
+        // TODO add your handling code here:
+        endHover();
+        lbTenCaSi.setForeground(new Color(153,153,153));
+    }//GEN-LAST:event_lbTenCaSiMouseExited
 
-                JOptionPane.showMessageDialog(null, "Đã copy liên kết",
-                        "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            }
-
-        });
-
-        if (isYeuThich) {
-            JMenuItem optBoYeuThich = new JMenuItem("Bỏ yêu thích");
-            ImageIcon iconBoYT = new ImageIcon(getClass().getResource("/icon/icon-heart.png"));
-            optBoYeuThich.setIcon(iconBoYT);
-            optBoYeuThich.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    toggleYeuThich();
-                }
-            });
-
-            popupMenu.add(optBoYeuThich);
-        } else {
-
-            JMenuItem optYeuThich = new JMenuItem("Yêu thích");
-            ImageIcon iconBoYT = new ImageIcon(getClass().getResource("/icon/icon-no-heart.png"));
-            optYeuThich.setIcon(iconBoYT);
-            optYeuThich.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (utils.getIsLogin()) {
-                        toggleYeuThich();
-                    }
-
-                }
-            });
-
-            popupMenu.add(optYeuThich);
-
-        }
-
-        popupMenu.add(option1);
-
-        if (!kiemTraTonTai()) {
-            popupMenu.add(option2);
-        }
-
-        if (from_to.equals("DaTai")) {
-            JMenuItem optXoaDaTai = new JMenuItem("Xóa khỏi playlist");
-            ImageIcon iconRemove = new ImageIcon(getClass().getResource("/icon/icon-delete-black.png"));
-            optXoaDaTai.setIcon(iconRemove);
-
-            optXoaDaTai.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleXoaKhoiDaTai();
-                }
-
-            });
-
-            popupMenu.add(optXoaDaTai);
-            sizeY += 20;
-        }
-        popupMenu.add(option3);
-
-        String linkMV = bh.getLinkMV();
-        if (!linkMV.equals("false")) {
-            JMenuItem option5 = new JMenuItem("Xem MV");
-            ImageIcon icon5 = new ImageIcon(getClass().getResource("/icon/icon-copy-link.png"));
-            option5.setIcon(icon5);
-            option5.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    MainJFrame.ShowPanel("ChiTietMV", new ChiTietMVPanel(bh.getId()));
-                }
-
-            });
-
-            popupMenu.add(option5);
-        }
-
-        popupMenu.add(option4);
-
-        if (from_to.equals("Playlist")) {
-            JMenuItem optDeletePlaylist = new JMenuItem("Xóa khỏi playlist");
-            ImageIcon iconRemove = new ImageIcon(getClass().getResource("/icon/icon-delete-black.png"));
-            optDeletePlaylist.setIcon(iconRemove);
-
-            optDeletePlaylist.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleXoaBHKhoiPlaylist();
-                }
-
-            });
-
-            popupMenu.add(optDeletePlaylist);
-            sizeY += 20;
-        }
-
-        popupMenu.show(btnOption, -90, -popupMenu.getHeight() - sizeY);
+    public void onHover() {
+        setBackground(new Color(47, 39, 57));
     }
 
-    public void handleDownload() {
-        try {
-            if (kiemTraTonTai()) {
-                JOptionPane.showMessageDialog(this, "Bài hát đã tồn tại.", "Download thất bại",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            String urlBH = bh.getLinkBaiHat();
-
-            URL songURL = new URL(urlBH);
-            URL songURLImage = new URL(bh.getAnhBia());
-
-            String newName = bh.getId() + ".mp3";
-
-            String file_path = System.getProperty("user.dir")
-                    + File.separator + "src"
-                    + File.separator + "download" + File.separator + newName;
-
-            String file_path_image = System.getProperty("user.dir")
-                    + File.separator + "src"
-                    + File.separator + "download" + File.separator + bh.getId() + ".jpg";
-
-            String filePathLocal = LocalData.getData("file_path_download");
-            if (filePathLocal != null) {
-                file_path = filePathLocal;
-            }
-
-            File destination = new File(file_path);
-            File destination_image = new File(file_path_image);
-            new Thread(() -> {
-                JPanel pnLoading = new LoadingTaiBaiHat();
-                MyCustomDialog customDialog = new MyCustomDialog(null, "Tải bài hát", pnLoading);
-
-                try {
-                    new Thread(() -> {
-                        customDialog.show(true);
-                    }).start();
-
-                    FileUtils.copyURLToFile(songURL, destination);
-                    FileUtils.copyURLToFile(songURLImage, destination_image);
-
-                    ArrayList<BaiHat> listBH = LocalData.getListDownload();
-                    listBH.add(bh);
-                    LocalData.saveListDownLoad(listBH);
-
-                    customDialog.show(false);
-                    LoadingTaiBaiHat.closeThread();
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(this, "Download thất bại", "Lỗi rồi",
-                            JOptionPane.ERROR_MESSAGE);
-                    customDialog.show(false);
-                    LoadingTaiBaiHat.closeThread();
-                    Logger.getLogger(ItemMusicPanel.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            }).start();
-
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(ItemMusicPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public boolean kiemTraTonTai() {
-        ArrayList<BaiHat> listBH = LocalData.getListDownload();
-        boolean check = false;
-        for (BaiHat i : listBH) {
-            if (i.getLinkBaiHat().equals(bh.getLinkBaiHat())) {
-                check = true;
-            }
-        }
-
-        return check;
-    }
-
-    public void handleXoaKhoiDaTai() {
-        ArrayList<BaiHat> listBH = LocalData.getListDownload();
-
-        ArrayList<BaiHat> newListBH = new ArrayList<>();
-        for (BaiHat i : listBH) {
-            if (!i.getLinkBaiHat().equals(bh.getLinkBaiHat())) {
-                newListBH.add(i);
-            }
-        }
-
-        LocalData.saveListDownLoad(newListBH);
-        MainJFrame.resetPanel();
-    }
-
-    public void toggleYeuThich() {
-        String header = utils.getHeader();
-
-        ApiServiceV1.apiServiceV1.toggleLikeBaiHat(bh.getId(), header).enqueue(new Callback<ResponseDefault>() {
-            @Override
-            public void onResponse(Call<ResponseDefault> call, Response<ResponseDefault> rspns) {
-                ResponseDefault res = rspns.body();
-                if (res != null && res.getErrCode() == 0) {
-                    handleCheckYeuThich();
-                } else {
-                    System.out.println("Warning: " + res.getErrMessage());
-                    JOptionPane.showMessageDialog(null, res.getErrMessage(),
-                            "Thông báo", JOptionPane.WARNING_MESSAGE);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseDefault> call, Throwable thrwbl) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
-        });
-    }
-
-    public void handleCheckYeuThich() {
-        String header = utils.getHeader();
-
-        ApiServiceV1.apiServiceV1.kiemTraYeuThichBaiHat(bh.getId(), header).enqueue(new Callback<ResponseDefault>() {
-            @Override
-            public void onResponse(Call<ResponseDefault> call, Response<ResponseDefault> rspns) {
-                ResponseDefault res = rspns.body();
-                if (res != null && res.getErrCode() == 0) {
-                    if (res.getErrMessage().equals("like")) {
-                        isYeuThich = true;
-                    } else {
-                        isYeuThich = false;
-                    }
-                } else {
-                    System.out.println("check yeu thich: " + res.getErrMessage());
-//                        JOptionPane.showMessageDialog(null, res.getErrMessage(),
-//                                "Thông báo",JOptionPane.WARNING_MESSAGE);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseDefault> call, Throwable thrwbl) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
-        });
-
-    }
-
-    public void handleXoaBHKhoiPlaylist() {
-        String header = utils.getHeader();
-
-        ApiServiceV1.apiServiceV1.xoaBaiHatKhoiDS(ChiTietPlaylistPanel.idPlaylist, bh.getId(), header).enqueue(new Callback<ResponseDefault>() {
-            @Override
-            public void onResponse(Call<ResponseDefault> call, Response<ResponseDefault> rspns) {
-                ResponseDefault res = rspns.body();
-                if (res != null && res.getErrCode() == 0) {
-                    MainJFrame.resetPanel();
-                } else {
-                    System.out.println("Warning: " + res.getErrMessage());
-                    JOptionPane.showMessageDialog(null, res.getErrMessage(),
-                            "Thông báo", JOptionPane.WARNING_MESSAGE);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseDefault> call, Throwable thrwbl) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
-        });
+    public void endHover() {
+        setBackground(new Color(23, 15, 35));
     }
 
     public void handlePlayBaiHat() {
         new Thread(() -> {
-            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/loadingBH.gif"));
-            imageBaiHat.setIcon(icon);
-            
-            anhNhac = imageBaiHat;
-            
+            if (!from_to.equals("DaTai")) {
+                ImageIcon icon = new ImageIcon(getClass().getResource("/icon/loadingBH.gif"));
+                imageBaiHat.setIcon(icon);
+
+                anhNhac = imageBaiHat;
+            }
+
         }).start();
 
         new Thread(() -> {
@@ -653,7 +392,11 @@ public class ItemMusicPanel extends javax.swing.JPanel {
                 MyMusicPlayer.initMusicPlayer(ChiTietPlaylistPanel.dsBaiHat, stt - 1);
             } else if (from_to.equals("YeuThich")) {
                 MyMusicPlayer.initMusicPlayer(YeuThichPanel.dsBaiHat, stt - 1);
-            } else if (from_to.equals("DaTai")) {
+            } 
+            else if (from_to.equals("DaNghe")) {
+                MyMusicPlayer.initMusicPlayer(ThuVienPanel.listDaNghe, stt - 1);
+            }
+            else if (from_to.equals("DaTai")) {
                 System.out.println("phat nhac offline");
                 ArrayList<BaiHat> listBH = LocalData.getListDownload();
 

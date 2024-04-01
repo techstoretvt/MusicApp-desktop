@@ -11,6 +11,7 @@ import com.teamdev.jxbrowser.engine.Engine;
 import com.teamdev.jxbrowser.engine.EngineOptions;
 import com.teamdev.jxbrowser.engine.RenderingMode;
 import com.teamdev.jxbrowser.view.swing.BrowserView;
+import component.CustomScrollBarUI;
 import gson.NewComentLive;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -50,6 +51,7 @@ public class ChiTietLivePanel extends javax.swing.JPanel {
         this.avatarRoom = avatarRoom;
 
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         new Thread(() -> {
             Engine engine = Engine.newInstance(EngineOptions.newBuilder(RenderingMode.OFF_SCREEN)

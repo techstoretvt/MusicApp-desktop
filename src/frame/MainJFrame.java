@@ -44,6 +44,8 @@ import screen.ChiTietMVPanel;
 import screen.ChiTietPlaylistPanel;
 import screen.DaTaiPanel;
 import component.KaraokePanel;
+import component.ModelHenGio;
+import component.OptionBaiHat;
 import screen.KhamPhaPanel;
 import screen.ListLivePanel;
 import screen.LivePanel;
@@ -52,6 +54,10 @@ import screen.SettingGiaoDien;
 import screen.SettingPanel;
 import component.ThemVaoPlaylist;
 import component.ThongTinBaiHat;
+import java.awt.FontMetrics;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import screen.ThuVienPanel;
 import screen.TimKiemPanel;
 import screen.YeuThichPanel;
@@ -86,6 +92,7 @@ public class MainJFrame extends javax.swing.JFrame {
     public static String keyRemoteControl;
 
     private Thread threadTimKiem;
+    private String textChuChay;
 
     /**
      * Creates new form HomeJFrame
@@ -94,6 +101,9 @@ public class MainJFrame extends javax.swing.JFrame {
 //        setUndecorated(true);
 
         initComponents();
+        setTitle("Music App - Nghe nhạc trực tuyến");
+        ImageIcon ic = new ImageIcon(getClass().getResource("/icon/anh-bia-am-nhac2.jpg"));
+        setIconImage(ic.getImage());
 
         initPanelContent();
 
@@ -108,6 +118,25 @@ public class MainJFrame extends javax.swing.JFrame {
 
         loadBackGroundColor();
 
+        loadChuChay();
+
+    }
+
+    public void loadChuChay() {
+
+        textChuChay = "Với ứng dụng nghe nhạc trực tuyến trên desktop này, bạn sẽ 'đắm chìm' trong không gian âm nhạc cực kỳ hài hước và sống động! ";
+
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(100);
+                    textChuChay = textChuChay.substring(1) + textChuChay.charAt(0);
+                    tfChuChay.setText(textChuChay);
+                } catch (InterruptedException ex) {
+
+                }
+            }
+        }).start();
     }
 
     public void loadBackGroundColor() {
@@ -225,9 +254,11 @@ public class MainJFrame extends javax.swing.JFrame {
         if (historyPanel.size() > 1) {
             ImageIcon iconBack = new ImageIcon(MainJFrame.class.getResource("/icon/icon-arrow-back-active.png"));
             btnBack.setIcon(iconBack);
+            btnBack.setEnabled(true);
         } else {
             ImageIcon iconBack = new ImageIcon(MainJFrame.class.getResource("/icon/icon-arrow-back-disable.png"));
             btnBack.setIcon(iconBack);
+            btnBack.setEnabled(false);
         }
 
         JPanel newPN = pn;
@@ -320,6 +351,7 @@ public class MainJFrame extends javax.swing.JFrame {
             oldPanel = historyPanel.peek();
         } catch (Exception e) {
             System.out.println("loi go back");
+            return;
         }
 
         if (oldPanel == null) {
@@ -331,9 +363,11 @@ public class MainJFrame extends javax.swing.JFrame {
         if (historyPanel.size() > 1) {
             ImageIcon iconBack = new ImageIcon(MainJFrame.class.getResource("/icon/icon-arrow-back-active.png"));
             btnBack.setIcon(iconBack);
+            btnBack.setEnabled(true);
         } else {
             ImageIcon iconBack = new ImageIcon(MainJFrame.class.getResource("/icon/icon-arrow-back-disable.png"));
             btnBack.setIcon(iconBack);
+            btnBack.setEnabled(false);
         }
     }
 
@@ -379,6 +413,8 @@ public class MainJFrame extends javax.swing.JFrame {
         btnYeuThich = new javax.swing.JButton();
         btnDieuKhoanVaDichVu = new javax.swing.JButton();
         btnGioiThieu = new javax.swing.JButton();
+        btnLienHe = new javax.swing.JButton();
+        btnMiniGame = new javax.swing.JButton();
         PanelFooter = new javax.swing.JPanel();
         PanelFooterChill = new javax.swing.JPanel();
         PanelFooterLeft = new javax.swing.JPanel();
@@ -402,6 +438,7 @@ public class MainJFrame extends javax.swing.JFrame {
         btnMenuPhatKeTiep = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btnKaraoke = new javax.swing.JButton();
+        btnOption = new javax.swing.JButton();
         PannelContainer = new javax.swing.JPanel();
         PanelHeader = new javax.swing.JPanel();
         btnBack = new javax.swing.JButton();
@@ -412,6 +449,8 @@ public class MainJFrame extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         ipTimKiem = new javax.swing.JTextField();
         btnMiniApp = new javax.swing.JButton();
+        lblHenGio = new javax.swing.JLabel();
+        tfChuChay = new javax.swing.JTextField();
         PanelWrap = new javax.swing.JPanel();
         PanelContent = new javax.swing.JPanel();
 
@@ -431,13 +470,23 @@ public class MainJFrame extends javax.swing.JFrame {
         btnKhamPha.setBackground(new java.awt.Color(102, 102, 102));
         btnKhamPha.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         btnKhamPha.setForeground(new java.awt.Color(255, 255, 255));
-        btnKhamPha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-circle-20.png"))); // NOI18N
+        btnKhamPha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-discover-20.png"))); // NOI18N
         btnKhamPha.setText("Khám phá");
         btnKhamPha.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnKhamPha.setBorderPainted(false);
         btnKhamPha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnKhamPha.setFocusPainted(false);
         btnKhamPha.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnKhamPha.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btnKhamPhaMouseMoved(evt);
+            }
+        });
+        btnKhamPha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnKhamPhaMouseExited(evt);
+            }
+        });
         btnKhamPha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnKhamPhaActionPerformed(evt);
@@ -454,6 +503,16 @@ public class MainJFrame extends javax.swing.JFrame {
         btnThuVien.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnThuVien.setFocusPainted(false);
         btnThuVien.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnThuVien.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btnThuVienMouseMoved(evt);
+            }
+        });
+        btnThuVien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnThuVienMouseExited(evt);
+            }
+        });
         btnThuVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThuVienActionPerformed(evt);
@@ -470,6 +529,16 @@ public class MainJFrame extends javax.swing.JFrame {
         btnLive.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLive.setFocusPainted(false);
         btnLive.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnLive.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btnLiveMouseMoved(evt);
+            }
+        });
+        btnLive.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLiveMouseExited(evt);
+            }
+        });
         btnLive.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLiveActionPerformed(evt);
@@ -486,6 +555,16 @@ public class MainJFrame extends javax.swing.JFrame {
         btnDaTai.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDaTai.setFocusPainted(false);
         btnDaTai.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnDaTai.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btnDaTaiMouseMoved(evt);
+            }
+        });
+        btnDaTai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnDaTaiMouseExited(evt);
+            }
+        });
         btnDaTai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDaTaiActionPerformed(evt);
@@ -502,6 +581,16 @@ public class MainJFrame extends javax.swing.JFrame {
         btnYeuThich.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnYeuThich.setFocusPainted(false);
         btnYeuThich.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnYeuThich.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btnYeuThichMouseMoved(evt);
+            }
+        });
+        btnYeuThich.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnYeuThichMouseExited(evt);
+            }
+        });
         btnYeuThich.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnYeuThichActionPerformed(evt);
@@ -538,6 +627,47 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        btnLienHe.setBackground(null);
+        btnLienHe.setFont(new java.awt.Font("Segoe UI Black", 0, 10)); // NOI18N
+        btnLienHe.setForeground(new java.awt.Color(153, 153, 153));
+        btnLienHe.setText("Liên hệ");
+        btnLienHe.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnLienHe.setBorderPainted(false);
+        btnLienHe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLienHe.setFocusPainted(false);
+        btnLienHe.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnLienHe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLienHeActionPerformed(evt);
+            }
+        });
+
+        btnMiniGame.setBackground(null);
+        btnMiniGame.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnMiniGame.setForeground(new java.awt.Color(255, 255, 255));
+        btnMiniGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-game-20.png"))); // NOI18N
+        btnMiniGame.setText("Mini game");
+        btnMiniGame.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnMiniGame.setBorderPainted(false);
+        btnMiniGame.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMiniGame.setFocusPainted(false);
+        btnMiniGame.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnMiniGame.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btnMiniGameMouseMoved(evt);
+            }
+        });
+        btnMiniGame.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnMiniGameMouseExited(evt);
+            }
+        });
+        btnMiniGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMiniGameActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelTabBarLayout = new javax.swing.GroupLayout(PanelTabBar);
         PanelTabBar.setLayout(PanelTabBarLayout);
         PanelTabBarLayout.setHorizontalGroup(
@@ -554,7 +684,9 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(btnGioiThieu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(PanelTabBarLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnLienHe, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMiniGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         PanelTabBarLayout.setVerticalGroup(
@@ -572,10 +704,14 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(btnDaTai, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnYeuThich, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnMiniGame, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(btnGioiThieu, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDieuKhoanVaDichVu, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLienHe, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
         );
 
@@ -737,7 +873,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addGroup(PanelFooterCenterLayout.createSequentialGroup()
                         .addComponent(lbThoiGianHienTai)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(progessTimeBaiHat, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                        .addComponent(progessTimeBaiHat, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbTongThoiGian)))
                 .addContainerGap())
@@ -812,15 +948,32 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        btnOption.setBackground(null);
+        btnOption.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon-more-20.png"))); // NOI18N
+        btnOption.setToolTipText("Karaoke");
+        btnOption.setBorder(null);
+        btnOption.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnOption.setFocusPainted(false);
+        btnOption.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        btnOption.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        btnOption.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOptionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelFooterRightLayout = new javax.swing.GroupLayout(PanelFooterRight);
         PanelFooterRight.setLayout(PanelFooterRightLayout);
         PanelFooterRightLayout.setHorizontalGroup(
             PanelFooterRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelFooterRightLayout.createSequentialGroup()
-                .addContainerGap(159, Short.MAX_VALUE)
-                .addComponent(btnKaraoke)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton13)
+            .addGroup(PanelFooterRightLayout.createSequentialGroup()
+                .addContainerGap(203, Short.MAX_VALUE)
+                .addGroup(PanelFooterRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton13, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelFooterRightLayout.createSequentialGroup()
+                        .addComponent(btnOption)
+                        .addGap(12, 12, 12)
+                        .addComponent(btnKaraoke)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(progessVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -832,16 +985,18 @@ public class MainJFrame extends javax.swing.JFrame {
         PanelFooterRightLayout.setVerticalGroup(
             PanelFooterRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelFooterRightLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(33, 33, 33)
                 .addGroup(PanelFooterRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnKaraoke)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMenuPhatKeTiep)
                     .addComponent(jButton13)
                     .addGroup(PanelFooterRightLayout.createSequentialGroup()
-                        .addComponent(progessVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(PanelFooterRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(progessVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnKaraoke)
+                            .addComponent(btnOption, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(8, 8, 8)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         PanelFooterChill.add(PanelFooterRight);
@@ -868,6 +1023,7 @@ public class MainJFrame extends javax.swing.JFrame {
         btnBack.setBackground(null);
         btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon-arrow-back-disable.png"))); // NOI18N
         btnBack.setBorder(null);
+        btnBack.setEnabled(false);
         btnBack.setFocusPainted(false);
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -934,8 +1090,8 @@ public class MainJFrame extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ipTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addComponent(ipTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -954,6 +1110,24 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        lblHenGio.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblHenGio.setForeground(new java.awt.Color(255, 255, 255));
+        lblHenGio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblHenGioMouseClicked(evt);
+            }
+        });
+
+        tfChuChay.setEditable(false);
+        tfChuChay.setBackground(null);
+        tfChuChay.setFont(new java.awt.Font("Segoe UI Light", 1, 12)); // NOI18N
+        tfChuChay.setForeground(new java.awt.Color(102, 0, 102));
+        tfChuChay.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tfChuChay.setText("ssss");
+        tfChuChay.setBorder(null);
+        tfChuChay.setEnabled(false);
+        tfChuChay.setFocusable(false);
+
         javax.swing.GroupLayout PanelHeaderLayout = new javax.swing.GroupLayout(PanelHeader);
         PanelHeader.setLayout(PanelHeaderLayout);
         PanelHeaderLayout.setHorizontalGroup(
@@ -965,9 +1139,13 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfChuChay, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(lblHenGio)
+                .addGap(18, 18, 18)
                 .addComponent(btnMiniApp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -989,7 +1167,9 @@ public class MainJFrame extends javax.swing.JFrame {
                                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(PanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel7)
-                                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblHenGio)
+                                    .addComponent(tfChuChay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(PanelHeaderLayout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(PanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -1223,6 +1403,9 @@ public class MainJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         String keyword = ipTimKiem.getText();
         if (!keyword.isEmpty()) {
+            if (threadTimKiem != null && threadTimKiem.isAlive()) {
+                threadTimKiem.interrupt();
+            }
             ShowPanel("TimKiem", new TimKiemPanel(keyword));
         }
     }//GEN-LAST:event_ipTimKiemActionPerformed
@@ -1342,13 +1525,108 @@ public class MainJFrame extends javax.swing.JFrame {
     private void btnMiniAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMiniAppActionPerformed
         // TODO add your handling code here:
         Main.rootFrame.setVisible(false);
-        
+
         JFrame miniFrame = new MiniAppFrame();
         miniFrame.setLocationRelativeTo(null);
         MiniAppFrame.isOpen = true;
         miniFrame.setVisible(true);
-       
+
     }//GEN-LAST:event_btnMiniAppActionPerformed
+
+    private void btnOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOptionActionPerformed
+        // TODO add your handling code here:
+        OptionBaiHat optionBaiHat = new OptionBaiHat(MyMusicPlayer.dsBaiHat.get(MyMusicPlayer.position), "Main", btnOption);
+        optionBaiHat.show();
+    }//GEN-LAST:event_btnOptionActionPerformed
+
+    private void btnLienHeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLienHeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLienHeActionPerformed
+
+    private void lblHenGioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHenGioMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            if (ModelHenGio.threadHenGio != null && ModelHenGio.threadHenGio.isAlive()) {
+                int xacnhan = JOptionPane.showConfirmDialog(null, "Hủy hẹn giờ hả?");
+                if (xacnhan == JOptionPane.OK_OPTION) {
+                    ModelHenGio.threadHenGio.interrupt();
+                    lblHenGio.setText("");
+                }
+            }
+        }
+    }//GEN-LAST:event_lblHenGioMouseClicked
+
+    private void btnMiniGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMiniGameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnMiniGameActionPerformed
+
+    private void btnKhamPhaMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnKhamPhaMouseMoved
+        // TODO add your handling code here:
+        onHoverMenu(btnKhamPha);
+    }//GEN-LAST:event_btnKhamPhaMouseMoved
+
+    private void btnKhamPhaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnKhamPhaMouseExited
+        // TODO add your handling code here:
+        endHoverMenu(btnKhamPha);
+    }//GEN-LAST:event_btnKhamPhaMouseExited
+
+    private void btnThuVienMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThuVienMouseMoved
+        // TODO add your handling code here:
+        onHoverMenu(btnThuVien);
+    }//GEN-LAST:event_btnThuVienMouseMoved
+
+    private void btnThuVienMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThuVienMouseExited
+        // TODO add your handling code here:
+        endHoverMenu(btnThuVien);
+    }//GEN-LAST:event_btnThuVienMouseExited
+
+    private void btnLiveMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLiveMouseMoved
+        // TODO add your handling code here:
+        onHoverMenu(btnLive);
+    }//GEN-LAST:event_btnLiveMouseMoved
+
+    private void btnLiveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLiveMouseExited
+        // TODO add your handling code here:
+        endHoverMenu(btnLive);
+    }//GEN-LAST:event_btnLiveMouseExited
+
+    private void btnDaTaiMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDaTaiMouseMoved
+        // TODO add your handling code here:
+        onHoverMenu(btnDaTai);
+    }//GEN-LAST:event_btnDaTaiMouseMoved
+
+    private void btnDaTaiMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDaTaiMouseExited
+        // TODO add your handling code here:
+        endHoverMenu(btnDaTai);
+    }//GEN-LAST:event_btnDaTaiMouseExited
+
+    private void btnYeuThichMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnYeuThichMouseMoved
+        // TODO add your handling code here:
+        onHoverMenu(btnYeuThich);
+    }//GEN-LAST:event_btnYeuThichMouseMoved
+
+    private void btnYeuThichMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnYeuThichMouseExited
+        // TODO add your handling code here:
+        endHoverMenu(btnYeuThich);
+    }//GEN-LAST:event_btnYeuThichMouseExited
+
+    private void btnMiniGameMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMiniGameMouseMoved
+        // TODO add your handling code here:
+        onHoverMenu(btnMiniGame);
+    }//GEN-LAST:event_btnMiniGameMouseMoved
+
+    private void btnMiniGameMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMiniGameMouseExited
+        // TODO add your handling code here:
+        endHoverMenu(btnMiniGame);
+    }//GEN-LAST:event_btnMiniGameMouseExited
+
+    public void onHoverMenu(JButton btn) {
+        btn.setForeground(Color.red);
+    }
+
+    public void endHoverMenu(JButton btn) {
+        btn.setForeground(Color.WHITE);
+    }
 
     public void getGoiYTimKiem() {
 
@@ -1459,12 +1737,15 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnGioiThieu;
     public static javax.swing.JButton btnKaraoke;
     private javax.swing.JButton btnKhamPha;
+    private javax.swing.JButton btnLienHe;
     private javax.swing.JButton btnLive;
     private javax.swing.JButton btnLoop;
     private javax.swing.JButton btnMenuPhatKeTiep;
     private javax.swing.JButton btnMiniApp;
+    private javax.swing.JButton btnMiniGame;
     private javax.swing.JButton btnMore;
     private javax.swing.JButton btnNextMusic;
+    public static javax.swing.JButton btnOption;
     public static javax.swing.JButton btnPlayPause;
     private javax.swing.JButton btnPrevBaiHat;
     private javax.swing.JButton btnRandom;
@@ -1485,7 +1766,9 @@ public class MainJFrame extends javax.swing.JFrame {
     public static javax.swing.JLabel lbTenCaSi;
     public static javax.swing.JLabel lbThoiGianHienTai;
     public static javax.swing.JLabel lbTongThoiGian;
+    public static javax.swing.JLabel lblHenGio;
     public static javax.swing.JProgressBar progessTimeBaiHat;
     public static javax.swing.JProgressBar progessVolume;
+    private javax.swing.JTextField tfChuChay;
     // End of variables declaration//GEN-END:variables
 }

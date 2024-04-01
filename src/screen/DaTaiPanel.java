@@ -4,6 +4,7 @@
  */
 package screen;
 
+import component.CustomScrollBarUI;
 import component.ItemMusicPanel;
 import gson.BaiHat;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class DaTaiPanel extends javax.swing.JPanel {
     public DaTaiPanel() {
         initComponents();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         getListMusic();
     }

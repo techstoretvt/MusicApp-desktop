@@ -12,6 +12,7 @@ import com.teamdev.jxbrowser.engine.Engine;
 import com.teamdev.jxbrowser.engine.EngineOptions;
 import com.teamdev.jxbrowser.engine.RenderingMode;
 import com.teamdev.jxbrowser.view.swing.BrowserView;
+import component.CustomScrollBarUI;
 import gson.BaiHat;
 import gson.GetBaiHatById;
 import gson.GetListBaiHat;
@@ -41,6 +42,7 @@ public class ChiTietMVPanel extends javax.swing.JPanel {
         initComponents();
         this.idMV = idMV;
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         //init browser
         Engine engine = Engine.newInstance(EngineOptions.newBuilder(RenderingMode.OFF_SCREEN)

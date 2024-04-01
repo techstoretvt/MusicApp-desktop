@@ -11,6 +11,7 @@ import com.teamdev.jxbrowser.engine.Engine;
 import com.teamdev.jxbrowser.engine.EngineOptions;
 import com.teamdev.jxbrowser.engine.RenderingMode;
 import com.teamdev.jxbrowser.view.swing.BrowserView;
+import component.CustomScrollBarUI;
 import gson.NewComentLive;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -38,6 +39,10 @@ public class LivePanel extends javax.swing.JPanel {
      */
     public LivePanel(String name, String avatar) {
         initComponents();
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+        jScrollPane2.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane2.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         idRoom = utils.randomKeyLogin();
         System.out.println("idRoom: " + idRoom);

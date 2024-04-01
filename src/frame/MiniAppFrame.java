@@ -116,10 +116,8 @@ public class MiniAppFrame extends javax.swing.JFrame {
 
         lblTenBaiHat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTenBaiHat.setForeground(new java.awt.Color(255, 255, 255));
-        lblTenBaiHat.setText("Đánh Mất Em");
 
         lblTenCaSi.setForeground(new java.awt.Color(204, 204, 204));
-        lblTenCaSi.setText("Quang Đăng Trần");
 
         jPanel3.setBackground(new java.awt.Color(23, 15, 35));
         jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
@@ -186,7 +184,7 @@ public class MiniAppFrame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTenBaiHat)
                     .addComponent(lblTenCaSi))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );

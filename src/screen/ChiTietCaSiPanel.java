@@ -6,6 +6,7 @@ package screen;
 
 import component.ItemMusicPanel;
 import component.CircleImagePanel;
+import component.CustomScrollBarUI;
 import gson.BaiHat;
 import gson.Casi;
 import gson.GetCaSiByID;
@@ -39,6 +40,7 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
         this.idCaSi = idCaSi;
 
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         handleGetCaSi(idCaSi);
         handleLayBaiHatCaSi(idCaSi);
@@ -176,6 +178,7 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
 
         lbTenCaSi.setFont(new java.awt.Font("Segoe UI", 1, 50)); // NOI18N
         lbTenCaSi.setForeground(new java.awt.Color(255, 255, 255));
+        lbTenCaSi.setText("Đang tải...");
 
         btnPlay.setBackground(new java.awt.Color(23, 15, 35));
         btnPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon-play-big.png"))); // NOI18N
@@ -189,12 +192,12 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
 
         lbQuanTam.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("người quan tâm");
 
         btnQuanTam.setBackground(new java.awt.Color(23, 15, 35));
         btnQuanTam.setForeground(new java.awt.Color(255, 255, 255));
-        btnQuanTam.setText("Quan tâm");
+        btnQuanTam.setText("...");
         btnQuanTam.setFocusPainted(false);
         btnQuanTam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,6 +268,7 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
         tfMoTa.setForeground(new java.awt.Color(255, 255, 255));
         tfMoTa.setLineWrap(true);
         tfMoTa.setRows(5);
+        tfMoTa.setText("Loading...");
         tfMoTa.setWrapStyleWord(true);
         jScrollPane2.setViewportView(tfMoTa);
 

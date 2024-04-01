@@ -4,13 +4,17 @@
  */
 package screen;
 
-import java.awt.Image;
-import java.awt.Window;
+import component.CustomScrollBarUI;
+import component.ModelHenGio;
 import javax.swing.ImageIcon;
-import javax.swing.SwingUtilities;
 import services.LocalData;
-import services.utils;
 import frame.MainJFrame;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
+import services.MyCustomDialog;
 
 /**
  *
@@ -23,17 +27,13 @@ public class SettingPanel extends javax.swing.JPanel {
      */
     public SettingPanel() {
         initComponents();
+        jScrollPane3.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane3.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         loadBtn();
 
         remoteId.setText(MainJFrame.keyRemoteControl);
-        
-        
-        //test
-        ImageIcon icon = new ImageIcon(getClass().getResource("/icon/anh-gif-test.gif"));
-        
-        
-        imgGif.setIcon(icon);
+
     }
 
     public void loadBtn() {
@@ -67,7 +67,8 @@ public class SettingPanel extends javax.swing.JPanel {
         remoteId = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnGiaoDien = new javax.swing.JLabel();
-        imgGif = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        btnHenGio = new javax.swing.JLabel();
 
         jScrollPane3.setBorder(null);
 
@@ -111,8 +112,17 @@ public class SettingPanel extends javax.swing.JPanel {
             }
         });
 
-        imgGif.setBackground(new java.awt.Color(102, 255, 255));
-        imgGif.setForeground(new java.awt.Color(0, 153, 153));
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Hẹn giờ");
+
+        btnHenGio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-right-20.png"))); // NOI18N
+        btnHenGio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnHenGio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnHenGioMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -122,10 +132,7 @@ public class SettingPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(imgGif, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnDKGiongNoi))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -133,9 +140,15 @@ public class SettingPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(remoteId))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnGiaoDien)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnGiaoDien))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnHenGio)))
                         .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
@@ -154,8 +167,10 @@ public class SettingPanel extends javax.swing.JPanel {
                     .addComponent(jLabel4)
                     .addComponent(btnGiaoDien))
                 .addGap(18, 18, 18)
-                .addComponent(imgGif, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnHenGio)
+                    .addComponent(jLabel5))
+                .addContainerGap(385, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -187,7 +202,7 @@ public class SettingPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 808, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,6 +232,12 @@ public class SettingPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnGiaoDienMouseClicked
 
+    private void btnHenGioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHenGioMouseClicked
+        // TODO add your handling code here:
+        MyCustomDialog customDialog = new MyCustomDialog(null, "", new ModelHenGio());
+        customDialog.show(true);
+    }//GEN-LAST:event_btnHenGioMouseClicked
+
     public void BatDKGiongNoi() {
         //        MainJFrame.initDKGiongNoi();
 //        String url = "http://localhost:3000/public/music/control?key=asdfd";
@@ -235,11 +256,12 @@ public class SettingPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnDKGiongNoi;
     private javax.swing.JLabel btnGiaoDien;
-    private javax.swing.JLabel imgGif;
+    private javax.swing.JLabel btnHenGio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;

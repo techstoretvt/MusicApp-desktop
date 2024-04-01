@@ -4,6 +4,7 @@
  */
 package screen;
 
+import component.CustomScrollBarUI;
 import component.ItemMusicPanel;
 import gson.BaiHat;
 import gson.TimKiemBaiHat;
@@ -29,6 +30,7 @@ public class BaiHatSearchPanel extends javax.swing.JPanel {
     public BaiHatSearchPanel(String keyword) {
         initComponents();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
         handleTimBaiHat(keyword);
     }
 

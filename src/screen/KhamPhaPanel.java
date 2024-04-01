@@ -4,6 +4,7 @@
  */
 package screen;
 
+import component.CustomScrollBarUI;
 import component.ItemMusicPanel;
 import gson.BaiHat;
 import gson.GetListBaiHat;
@@ -11,13 +12,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import static screen.ThuVienPanel.listDaNghe;
 import services.ApiServiceV1;
+import services.LocalData;
 import services.utils;
 
 /**
@@ -25,31 +30,53 @@ import services.utils;
  * @author tranv
  */
 public class KhamPhaPanel extends javax.swing.JPanel {
-    
+
     public static ArrayList<BaiHat> dsBaiHat;
-    
+    public int maxCountDaNghe = 3;
+
     public KhamPhaPanel() {
         initComponents();
-        
+
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
-        
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+
         loadTop10Music();
-        
-        ImageIcon anhKhamPha = utils.getImageBaiHat(getClass().getResource("/icon/anh-kham-pha.png").toString(),
-                600, 300);
-        lbAnhKhamPha.setIcon(anhKhamPha);
-        
+
+//        ImageIcon anhKhamPha = utils.getImageBaiHat(getClass().getResource("/icon/anh-kham-pha.png").toString(),
+//                600, 300);
+//        lbAnhKhamPha.setIcon(anhKhamPha);
+        getListDaNghe();
+
     }
-    
+
+    public void getListDaNghe() {
+        listDaNghe = LocalData.getListDaNghe();
+        if (listDaNghe != null && listDaNghe.size() != 0) {
+            pnDaNghe.removeAll();
+            int height = 0;
+            int size = listDaNghe.size();
+            for (int i = 0; i < size && i < maxCountDaNghe; i++) {
+                ItemMusicPanel itemBH = new ItemMusicPanel(listDaNghe.get(i), (i + 1), "DaNghe");
+                pnDaNghe.add(itemBH);
+                height += 71;
+            }
+            pnDaNghe.setPreferredSize(new Dimension(200, height));
+
+            pnDaNghe.revalidate();
+            pnDaNghe.repaint();
+        }
+
+    }
+
     public void loadTop10Music() {
-        
+
         JLabel lbLoading = new JLabel("Đang tải...");
         lbLoading.setForeground(Color.GRAY);
-        lbLoading.setMinimumSize(new Dimension(100,30));
-        lbLoading.setMaximumSize(new Dimension(100,30));
-        lbLoading.setHorizontalAlignment(SwingConstants.RIGHT); 
+        lbLoading.setMinimumSize(new Dimension(100, 30));
+        lbLoading.setMaximumSize(new Dimension(100, 30));
+        lbLoading.setHorizontalAlignment(SwingConstants.RIGHT);
         panelListMusic.add(lbLoading);
-        
+
         ApiServiceV1.apiServiceV1.getTop10MusicKhamPha(10).enqueue(new Callback<GetListBaiHat>() {
             @Override
             public void onResponse(Call<GetListBaiHat> call, Response<GetListBaiHat> rspns) {
@@ -68,17 +95,17 @@ public class KhamPhaPanel extends javax.swing.JPanel {
                     System.out.println("Loi ds bai hat 1");
                 }
             }
-            
+
             @Override
             public void onFailure(Call<GetListBaiHat> call, Throwable thrwbl) {
                 System.out.println("Loi ds bai hat 2");
             }
         });
-        
+
     }
-    
+
     public void loadTop100Music() {
-        
+
         ApiServiceV1.apiServiceV1.getTop10MusicKhamPha(100).enqueue(new Callback<GetListBaiHat>() {
             @Override
             public void onResponse(Call<GetListBaiHat> call, Response<GetListBaiHat> rspns) {
@@ -97,13 +124,13 @@ public class KhamPhaPanel extends javax.swing.JPanel {
                     System.out.println("Loi ds bai hat 1");
                 }
             }
-            
+
             @Override
             public void onFailure(Call<GetListBaiHat> call, Throwable thrwbl) {
                 System.out.println("Loi ds bai hat 2");
             }
         });
-        
+
     }
 
     /**
@@ -117,23 +144,35 @@ public class KhamPhaPanel extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         panelContainer = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        btnTop100 = new javax.swing.JButton();
         panelListMusic = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        lbAnhKhamPha = new javax.swing.JLabel();
+        pnDaNghe = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        btnTop100 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        btnMore = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(23, 15, 35));
         setMinimumSize(new java.awt.Dimension(100, 100));
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(507, 800));
         jScrollPane1.setViewportView(panelContainer);
 
         panelContainer.setBackground(new java.awt.Color(23, 15, 35));
-        panelContainer.setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBackground(new java.awt.Color(23, 15, 35));
+        panelListMusic.setBackground(new java.awt.Color(23, 15, 35));
+        panelListMusic.setLayout(new javax.swing.BoxLayout(panelListMusic, javax.swing.BoxLayout.Y_AXIS));
+
+        pnDaNghe.setBackground(new java.awt.Color(23, 15, 35));
+        pnDaNghe.setPreferredSize(new java.awt.Dimension(0, 300));
+        pnDaNghe.setLayout(new javax.swing.BoxLayout(pnDaNghe, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("NGHE GẤN ĐÂY");
 
         btnTop100.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnTop100.setText("Xem top 100");
@@ -143,18 +182,70 @@ public class KhamPhaPanel extends javax.swing.JPanel {
                 btnTop100ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnTop100);
 
-        panelContainer.add(jPanel1, java.awt.BorderLayout.PAGE_END);
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("PHỔ BIẾN NHẤT");
 
-        panelListMusic.setBackground(new java.awt.Color(23, 15, 35));
-        panelListMusic.setLayout(new javax.swing.BoxLayout(panelListMusic, javax.swing.BoxLayout.Y_AXIS));
-        panelContainer.add(panelListMusic, java.awt.BorderLayout.CENTER);
+        btnMore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-down.png"))); // NOI18N
+        btnMore.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMore.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMoreMouseClicked(evt);
+            }
+        });
 
-        jPanel2.setBackground(new java.awt.Color(23, 15, 35));
-        jPanel2.add(lbAnhKhamPha);
+        jSeparator1.setBackground(new java.awt.Color(153, 153, 153));
+        jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
 
-        panelContainer.add(jPanel2, java.awt.BorderLayout.PAGE_START);
+        jSeparator2.setBackground(new java.awt.Color(153, 153, 153));
+        jSeparator2.setForeground(new java.awt.Color(102, 102, 102));
+
+        javax.swing.GroupLayout panelContainerLayout = new javax.swing.GroupLayout(panelContainer);
+        panelContainer.setLayout(panelContainerLayout);
+        panelContainerLayout.setHorizontalGroup(
+            panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContainerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelContainerLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnMore)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE))
+                    .addGroup(panelContainerLayout.createSequentialGroup()
+                        .addComponent(btnTop100)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelContainerLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSeparator2)))
+                .addContainerGap())
+            .addComponent(pnDaNghe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelListMusic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        panelContainerLayout.setVerticalGroup(
+            panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContainerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(btnMore))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnDaNghe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelListMusic, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnTop100)
+                .addGap(0, 43, Short.MAX_VALUE))
+        );
 
         jScrollPane1.setViewportView(panelContainer);
 
@@ -162,11 +253,13 @@ public class KhamPhaPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 821, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -177,14 +270,32 @@ public class KhamPhaPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnTop100ActionPerformed
 
+    private void btnMoreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMoreMouseClicked
+        // TODO add your handling code here:
+        if (maxCountDaNghe == 3) {
+            maxCountDaNghe = 10;
+            getListDaNghe();
+            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/icons-up.png"));
+            btnMore.setIcon(icon);
+        } else {
+            maxCountDaNghe = 3;
+            getListDaNghe();
+            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/icons-down.png"));
+            btnMore.setIcon(icon);
+        }
+    }//GEN-LAST:event_btnMoreMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnMore;
     private javax.swing.JButton btnTop100;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lbAnhKhamPha;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPanel panelContainer;
     private javax.swing.JPanel panelListMusic;
+    private javax.swing.JPanel pnDaNghe;
     // End of variables declaration//GEN-END:variables
 }

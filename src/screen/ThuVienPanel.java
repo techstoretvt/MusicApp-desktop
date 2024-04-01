@@ -7,6 +7,9 @@ package screen;
 import component.ItemPlaylistPanel;
 import component.ItemNgheSiPanel;
 import bodyapi.BodyThemDSPhat;
+import component.CustomScrollBarUI;
+import component.ItemMusicPanel;
+import gson.BaiHat;
 import gson.DanhSachPhat;
 import gson.GetListCSQuanTam;
 import gson.GetListPlaylist;
@@ -23,6 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import services.ApiServiceV1;
+import services.LocalData;
 import services.utils;
 
 /**
@@ -31,17 +35,34 @@ import services.utils;
  */
 public class ThuVienPanel extends javax.swing.JPanel {
 
+    public static ArrayList<BaiHat> listDaNghe;
     /**
      * Creates new form ThuVienPanel
      */
     public ThuVienPanel() {
         initComponents();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 //        jScrollPane2.getVerticalScrollBar().setUnitIncrement(10);
         getListCaSi();
         getPlaylist();
 
+        getListDaNghe();
         //test
+    }
+
+    public void getListDaNghe() {
+        listDaNghe = LocalData.getListDaNghe();
+        if (listDaNghe != null && listDaNghe.size() != 0) {
+            int size = listDaNghe.size();
+            for (int i = 0; i < size; i++) {
+                ItemMusicPanel itemBH = new ItemMusicPanel(listDaNghe.get(i), (i + 1), "DaNghe");
+                pnNgheGanDay.add(itemBH);
+            }
+            pnNgheGanDay.revalidate();
+            pnNgheGanDay.repaint();
+        }
+
     }
 
     public void getListCaSi() {
@@ -93,7 +114,6 @@ public class ThuVienPanel extends javax.swing.JPanel {
 
     public void getPlaylist() {
         String header = utils.getHeader();
-        
 
         ApiServiceV1.apiServiceV1.getDanhSachPhat(header).enqueue(new Callback<GetListPlaylist>() {
             @Override
@@ -157,6 +177,8 @@ public class ThuVienPanel extends javax.swing.JPanel {
         PanelListPlaylist = new javax.swing.JPanel();
         lblLoadingCS1 = new javax.swing.JLabel();
         btnAddPlaylist = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        pnNgheGanDay = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(23, 15, 35));
         setLayout(new java.awt.BorderLayout());
@@ -199,21 +221,34 @@ public class ThuVienPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Nghe gần đây");
+
+        pnNgheGanDay.setBackground(null);
+        pnNgheGanDay.setLayout(new javax.swing.BoxLayout(pnNgheGanDay, javax.swing.BoxLayout.PAGE_AXIS));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PanelListCS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PanelListPlaylist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAddPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 288, Short.MAX_VALUE))
-            .addComponent(PanelListCS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(PanelListPlaylist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pnNgheGanDay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAddPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1))
+                        .addGap(0, 297, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,7 +263,11 @@ public class ThuVienPanel extends javax.swing.JPanel {
                     .addComponent(btnAddPlaylist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PanelListPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnNgheGanDay, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jScrollPane1.setViewportView(jPanel2);
@@ -254,7 +293,7 @@ public class ThuVienPanel extends javax.swing.JPanel {
                     } else {
                         System.out.println("Warning: " + res.getErrMessage());
                         JOptionPane.showMessageDialog(null, res.getErrMessage(),
-                                "Thông báo",JOptionPane.WARNING_MESSAGE);
+                                "Thông báo", JOptionPane.WARNING_MESSAGE);
                     }
                 }
 
@@ -274,11 +313,13 @@ public class ThuVienPanel extends javax.swing.JPanel {
     private javax.swing.JPanel PanelListCS;
     private javax.swing.JPanel PanelListPlaylist;
     private javax.swing.JButton btnAddPlaylist;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblLoadingCS;
     private javax.swing.JLabel lblLoadingCS1;
+    private javax.swing.JPanel pnNgheGanDay;
     // End of variables declaration//GEN-END:variables
 }

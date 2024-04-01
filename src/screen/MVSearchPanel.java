@@ -4,6 +4,7 @@
  */
 package screen;
 
+import component.CustomScrollBarUI;
 import component.WrapItemMVPanel;
 import gson.BaiHat;
 import gson.TimKiemMV;
@@ -25,6 +26,7 @@ public class MVSearchPanel extends javax.swing.JPanel {
     public MVSearchPanel(String keyword) {
         initComponents();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         //test
         handleTimKiemMV(keyword);

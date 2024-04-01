@@ -46,22 +46,24 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
             imageBaiHat.setIcon(icon);
         }).start();
 
-        if (active) {
-            setBackground(new Color(204, 0, 204));
-            lbTenCaSi.setForeground(new Color(200, 200, 200));
-            btnDelete.setVisible(false);
-        }
+        new Thread(() -> {
+            if (active) {
+                setBackground(new Color(204, 0, 204));
+                lbTenCaSi.setForeground(new Color(200, 200, 200));
+                btnDelete.setVisible(false);
+            }
 
-        if (!showArrow) {
-            btnUp.setVisible(false);
-            btnDown.setVisible(false);
-        }
+            if (!showArrow) {
+                btnUp.setVisible(false);
+                btnDown.setVisible(false);
+            }
 
-        if (index == 0) {
-            btnUp.setVisible(false);
-        } else if (index == MyMusicPlayer.dsBaiHat.size() - 1) {
-            btnDown.setVisible(false);
-        }
+            if (index == 0) {
+                btnUp.setVisible(false);
+            } else if (index == MyMusicPlayer.dsBaiHat.size() - 1) {
+                btnDown.setVisible(false);
+            }
+        }).start();
 
     }
 
@@ -102,48 +104,127 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(0, 0, 102));
         setMaximumSize(new java.awt.Dimension(32767, 62));
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                formMouseExited(evt);
+            }
+        });
 
         btnUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-up-20.png"))); // NOI18N
         btnUp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUp.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btnUpMouseMoved(evt);
+            }
+        });
         btnUp.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnUpMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnUpMouseExited(evt);
             }
         });
 
         btnDown.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-down-20.png"))); // NOI18N
         btnDown.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDown.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btnDownMouseMoved(evt);
+            }
+        });
         btnDown.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnDownMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnDownMouseExited(evt);
             }
         });
 
         jPanel1.setBackground(null);
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jPanel1MouseMoved(evt);
+            }
+        });
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel1MouseClicked(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel1MouseExited(evt);
+            }
         });
 
+        imageBaiHat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/loadingBH.gif"))); // NOI18N
         imageBaiHat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        imageBaiHat.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                imageBaiHatMouseMoved(evt);
+            }
+        });
+        imageBaiHat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imageBaiHatMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                imageBaiHatMouseExited(evt);
+            }
+        });
 
         lbTenBaiHat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbTenBaiHat.setForeground(new java.awt.Color(255, 255, 255));
         lbTenBaiHat.setText("Ten bai hat");
         lbTenBaiHat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbTenBaiHat.setMaximumSize(new java.awt.Dimension(190, 16));
+        lbTenBaiHat.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                lbTenBaiHatMouseMoved(evt);
+            }
+        });
+        lbTenBaiHat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbTenBaiHatMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lbTenBaiHatMouseExited(evt);
+            }
+        });
 
         lbTenCaSi.setForeground(new java.awt.Color(153, 153, 153));
         lbTenCaSi.setText("Ten ca si, tac gia");
         lbTenCaSi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbTenCaSi.setMaximumSize(new java.awt.Dimension(190, 16));
+        lbTenCaSi.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                lbTenCaSiMouseMoved(evt);
+            }
+        });
+        lbTenCaSi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lbTenCaSiMouseExited(evt);
+            }
+        });
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-delete-red.png"))); // NOI18N
+        btnDelete.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btnDeleteMouseMoved(evt);
+            }
+        });
         btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnDeleteMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnDeleteMouseExited(evt);
             }
         });
 
@@ -231,15 +312,13 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
         dsBaiHats.add(index, bh2);
         dsBaiHats.add(index + 1, bh1);
         MyMusicPlayer.dsBaiHat = dsBaiHats;
-        
-        if(index == MyMusicPlayer.position) {
+
+        if (index == MyMusicPlayer.position) {
             MyMusicPlayer.position = MyMusicPlayer.position + 1;
-        }
-        else if(index + 1 == MyMusicPlayer.position) {
+        } else if (index + 1 == MyMusicPlayer.position) {
             MyMusicPlayer.position = MyMusicPlayer.position - 1;
         }
-        
-        
+
         if (MainJFrame.isMenuPhatKeTiep) {
 
             MainJFrame.PanelWrap.remove(1);
@@ -262,18 +341,16 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
         dsBaiHats.remove(bh1);
         dsBaiHats.remove(bh2);
 
-        dsBaiHats.add(index -1, bh2);
+        dsBaiHats.add(index - 1, bh2);
         dsBaiHats.add(index, bh1);
         MyMusicPlayer.dsBaiHat = dsBaiHats;
-        
-        if(index == MyMusicPlayer.position) {
+
+        if (index == MyMusicPlayer.position) {
             MyMusicPlayer.position = MyMusicPlayer.position - 1;
-        }
-        else if(index - 1 == MyMusicPlayer.position) {
+        } else if (index - 1 == MyMusicPlayer.position) {
             MyMusicPlayer.position = MyMusicPlayer.position + 1;
         }
-        
-        
+
         if (MainJFrame.isMenuPhatKeTiep) {
 
             MainJFrame.PanelWrap.remove(1);
@@ -285,11 +362,138 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnUpMouseClicked
 
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+        // TODO add your handling code here:
+        onHover();
+    }//GEN-LAST:event_formMouseMoved
+
+    private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
+        // TODO add your handling code here:
+        endHover();
+    }//GEN-LAST:event_formMouseExited
+
+    private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
+        // TODO add your handling code here:
+        onHover();
+    }//GEN-LAST:event_jPanel1MouseMoved
+
+    private void jPanel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseExited
+        // TODO add your handling code here:
+        endHover();
+    }//GEN-LAST:event_jPanel1MouseExited
+
+    private void btnUpMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpMouseMoved
+        // TODO add your handling code here:
+        onHover();
+    }//GEN-LAST:event_btnUpMouseMoved
+
+    private void btnUpMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpMouseExited
+        // TODO add your handling code here:
+        endHover();
+    }//GEN-LAST:event_btnUpMouseExited
+
+    private void btnDownMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDownMouseMoved
+        // TODO add your handling code here:
+        onHover();
+    }//GEN-LAST:event_btnDownMouseMoved
+
+    private void btnDownMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDownMouseExited
+        // TODO add your handling code here:
+        endHover();
+    }//GEN-LAST:event_btnDownMouseExited
+
+    private void imageBaiHatMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageBaiHatMouseMoved
+        // TODO add your handling code here:
+        onHover();
+    }//GEN-LAST:event_imageBaiHatMouseMoved
+
+    private void imageBaiHatMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageBaiHatMouseExited
+        // TODO add your handling code here:
+        endHover();
+    }//GEN-LAST:event_imageBaiHatMouseExited
+
+    private void lbTenBaiHatMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTenBaiHatMouseMoved
+        // TODO add your handling code here:
+        onHover();
+    }//GEN-LAST:event_lbTenBaiHatMouseMoved
+
+    private void lbTenBaiHatMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTenBaiHatMouseExited
+        // TODO add your handling code here:
+        endHover();
+    }//GEN-LAST:event_lbTenBaiHatMouseExited
+
+    private void lbTenCaSiMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTenCaSiMouseMoved
+        // TODO add your handling code here:
+        onHover();
+    }//GEN-LAST:event_lbTenCaSiMouseMoved
+
+    private void lbTenCaSiMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTenCaSiMouseExited
+        // TODO add your handling code here:
+        endHover();
+    }//GEN-LAST:event_lbTenCaSiMouseExited
+
+    private void btnDeleteMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseMoved
+        // TODO add your handling code here:
+        onHover();
+    }//GEN-LAST:event_btnDeleteMouseMoved
+
+    private void btnDeleteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseExited
+        // TODO add your handling code here:
+        endHover();
+    }//GEN-LAST:event_btnDeleteMouseExited
+
+    private void imageBaiHatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageBaiHatMouseClicked
+        // TODO add your handling code here:
+        if (SwingUtilities.isLeftMouseButton(evt)) {
+            if (!active) {
+                handlePlayBaiHat();
+            }
+        } else if (SwingUtilities.isRightMouseButton(evt)) {
+            System.out.println("Right mouse button clicked");
+        }
+    }//GEN-LAST:event_imageBaiHatMouseClicked
+
+    private void lbTenBaiHatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTenBaiHatMouseClicked
+        // TODO add your handling code here:
+        if (SwingUtilities.isLeftMouseButton(evt)) {
+            if (!active) {
+                handlePlayBaiHat();
+            }
+        } else if (SwingUtilities.isRightMouseButton(evt)) {
+            System.out.println("Right mouse button clicked");
+        }
+    }//GEN-LAST:event_lbTenBaiHatMouseClicked
+
+    public void onHover() {
+        if (active) {
+            return;
+        }
+        setBackground(new Color(47, 39, 57));
+    }
+
+    public void endHover() {
+        if (active) {
+            return;
+        }
+        setBackground(new Color(0, 0, 102));
+    }
+
     public void handlePlayBaiHat() {
-        MyMusicPlayer.initMusicPlayer(MyMusicPlayer.dsBaiHat, index, MyMusicPlayer.typeMusic);
+
+        new Thread(() -> {
+            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/loadingBH.gif"));
+            imageBaiHat.setIcon(icon);
+
+            ItemMusicPanel.anhNhac = imageBaiHat;
+
+        }).start();
+
+        new Thread(() -> {
+            MyMusicPlayer.initMusicPlayer(MyMusicPlayer.dsBaiHat, index, MyMusicPlayer.typeMusic);
+        }).start();
 
     }
-    
+
     public void setIndex(int newIndex) {
         this.index = newIndex;
     }

@@ -4,6 +4,7 @@
  */
 package screen;
 
+import component.CustomScrollBarUI;
 import component.ItemLivePanel;
 import gson.GetListLive;
 import gson.LiveItem;
@@ -25,6 +26,9 @@ public class ListLivePanel extends javax.swing.JPanel {
      */
     public ListLivePanel() {
         initComponents();
+        
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
 //        ArrayList<LiveItem> listLive = new ArrayList<>();
 //

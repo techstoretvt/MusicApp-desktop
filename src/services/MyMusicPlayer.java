@@ -143,8 +143,35 @@ public class MyMusicPlayer {
                 MainJFrame.PanelWrap.add(phatKeTiep, BorderLayout.EAST);
                 MainJFrame.PanelWrap.revalidate();
                 MainJFrame.PanelWrap.repaint();
-
             }
+
+            //add đã nghe
+            new Thread(() -> {
+                ArrayList<BaiHat> listDaNghe = null;
+                ArrayList<BaiHat> newListDaNghe = new ArrayList<>();
+                try {
+                    listDaNghe = LocalData.getListDaNghe();
+                } catch (Exception e) {
+
+                }
+
+                if (listDaNghe == null) {
+                    listDaNghe = new ArrayList<>();
+                }
+                
+                for (BaiHat bh : listDaNghe) {
+                    if(!bh.getId().equals(currentBH.getId())){
+                        newListDaNghe.add(bh);
+                    }
+                }
+
+                newListDaNghe.addFirst(currentBH);
+                if (newListDaNghe.size() >= 10) {
+                    newListDaNghe.removeLast();
+                }
+                LocalData.saveListDaNghe(newListDaNghe);
+
+            }).start();
 
             //play
             try {

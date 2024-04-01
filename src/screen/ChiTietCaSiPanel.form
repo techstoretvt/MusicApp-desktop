@@ -145,6 +145,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
+                    <Property name="text" type="java.lang.String" value="&#x110;ang t&#x1ea3;i..."/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnPlay">
@@ -174,7 +175,7 @@
                 <Component class="javax.swing.JLabel" name="jLabel1">
                   <Properties>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                      <Color blue="cc" green="cc" red="cc" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="ng&#x1b0;&#x1edd;i quan t&#xe2;m"/>
                   </Properties>
@@ -187,7 +188,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Quan t&#xe2;m"/>
+                    <Property name="text" type="java.lang.String" value="..."/>
                     <Property name="focusPainted" type="boolean" value="false"/>
                   </Properties>
                   <Events>
@@ -288,6 +289,7 @@
                             </Property>
                             <Property name="lineWrap" type="boolean" value="true"/>
                             <Property name="rows" type="int" value="5"/>
+                            <Property name="text" type="java.lang.String" value="Loading..."/>
                             <Property name="wrapStyleWord" type="boolean" value="true"/>
                           </Properties>
                         </Component>

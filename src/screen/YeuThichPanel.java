@@ -4,6 +4,7 @@
  */
 package screen;
 
+import component.CustomScrollBarUI;
 import component.ItemMusicPanel;
 import gson.BaiHat;
 import gson.GetListBHYeuThich;
@@ -31,6 +32,7 @@ public class YeuThichPanel extends javax.swing.JPanel {
         initComponents();
         
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         loadListMusic();
     }

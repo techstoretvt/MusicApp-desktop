@@ -4,6 +4,7 @@
  */
 package screen;
 
+import component.CustomScrollBarUI;
 import component.ItemNgheSiPanel;
 import gson.Casi;
 import gson.TimKiemCaSi;
@@ -27,6 +28,7 @@ public class NgheSiSearchPanel extends javax.swing.JPanel {
 
         jScrollPane1.getHorizontalScrollBar().setUnitIncrement(10);
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         handleTimCaSi(keyword);
 
