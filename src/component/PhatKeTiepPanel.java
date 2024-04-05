@@ -5,7 +5,7 @@
 package component;
 
 import component.ItemPhatKeTiep;
-import gson.BaiHat;
+import model.BaiHat;
 import java.awt.BorderLayout;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;

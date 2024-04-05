@@ -6,16 +6,16 @@ package screen;
 
 import component.CustomScrollBarUI;
 import component.ItemMusicPanel;
-import gson.BaiHat;
-import gson.GetListBHYeuThich;
-import gson.YeuThichBaiHat;
+import model.BaiHat;
+import model.GetListBHYeuThich;
+import model.YeuThichBaiHat;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import services.ApiServiceV1;
-import services.utils;
+import api.ApiServiceV1;
+import helpers.utils;
 
 /**
  *

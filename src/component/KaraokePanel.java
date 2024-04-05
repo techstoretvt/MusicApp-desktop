@@ -4,8 +4,8 @@
  */
 package component;
 
-import gson.GetLoiBaiHat;
-import gson.LoiBaiHat;
+import model.GetLoiBaiHat;
+import model.LoiBaiHat;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -16,9 +16,9 @@ import javax.swing.JButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import services.ApiServiceV1;
+import api.ApiServiceV1;
 import services.MyMusicPlayer;
-import services.utils;
+import helpers.utils;
 
 /**
  *

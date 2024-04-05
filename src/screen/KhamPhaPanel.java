@@ -6,8 +6,8 @@ package screen;
 
 import component.CustomScrollBarUI;
 import component.ItemMusicPanel;
-import gson.BaiHat;
-import gson.GetListBaiHat;
+import model.BaiHat;
+import model.GetListBaiHat;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -21,9 +21,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import static screen.ThuVienPanel.listDaNghe;
-import services.ApiServiceV1;
+import api.ApiServiceV1;
 import services.LocalData;
-import services.utils;
+import helpers.utils;
 
 /**
  *
@@ -167,7 +167,7 @@ public class KhamPhaPanel extends javax.swing.JPanel {
         panelListMusic.setLayout(new javax.swing.BoxLayout(panelListMusic, javax.swing.BoxLayout.Y_AXIS));
 
         pnDaNghe.setBackground(new java.awt.Color(23, 15, 35));
-        pnDaNghe.setPreferredSize(new java.awt.Dimension(0, 300));
+        pnDaNghe.setPreferredSize(new java.awt.Dimension(0, 0));
         pnDaNghe.setLayout(new javax.swing.BoxLayout(pnDaNghe, javax.swing.BoxLayout.PAGE_AXIS));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -241,10 +241,10 @@ public class KhamPhaPanel extends javax.swing.JPanel {
                     .addComponent(jLabel4)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelListMusic, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+                .addComponent(panelListMusic, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnTop100)
-                .addGap(0, 43, Short.MAX_VALUE))
+                .addGap(0, 193, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(panelContainer);

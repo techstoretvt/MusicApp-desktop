@@ -4,7 +4,8 @@
  */
 package services;
 
-import gson.BaiHat;
+import api.ApiServiceV1;
+import model.BaiHat;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,7 +19,7 @@ import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 import org.apache.commons.io.FileUtils;
 import frame.MainJFrame;
-import gson.GetListBaiHat;
+import model.GetListBaiHat;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Rectangle;
@@ -28,6 +29,7 @@ import javax.swing.JPanel;
 import component.ItemMusicPanel;
 import component.KaraokePanel;
 import component.PhatKeTiepPanel;
+import helpers.utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

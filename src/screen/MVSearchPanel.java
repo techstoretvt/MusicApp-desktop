@@ -6,13 +6,13 @@ package screen;
 
 import component.CustomScrollBarUI;
 import component.WrapItemMVPanel;
-import gson.BaiHat;
-import gson.TimKiemMV;
+import model.BaiHat;
+import model.TimKiemMV;
 import javax.swing.JPanel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import services.ApiServiceV1;
+import api.ApiServiceV1;
 
 /**
  *

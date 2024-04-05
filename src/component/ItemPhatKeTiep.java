@@ -4,9 +4,9 @@
  */
 package component;
 
-import gson.BaiHat;
-import gson.BaiHat_CaSi;
-import gson.Casi;
+import model.BaiHat;
+import model.BaiHat_CaSi;
+import model.Casi;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import services.MyMusicPlayer;
-import services.utils;
+import helpers.utils;
 import frame.MainJFrame;
 
 /**

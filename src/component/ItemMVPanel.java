@@ -4,11 +4,11 @@
  */
 package component;
 
-import gson.BaiHat;
-import gson.Casi;
+import model.BaiHat;
+import model.Casi;
 import java.awt.Color;
 import javax.swing.ImageIcon;
-import services.utils;
+import helpers.utils;
 import frame.MainJFrame;
 import screen.ChiTietMVPanel;
 

@@ -4,9 +4,9 @@
  */
 package component;
 
-import gson.BaiHat;
+import model.BaiHat;
 import javax.swing.ImageIcon;
-import services.utils;
+import helpers.utils;
 
 /**
  *

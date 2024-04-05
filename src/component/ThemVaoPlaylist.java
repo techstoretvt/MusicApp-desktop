@@ -8,10 +8,10 @@ import bodyapi.BodyThemBHVaoDS;
 import bodyapi.BodyThemDSPhat;
 import frame.MainJFrame;
 import static frame.MainJFrame.historyPanel;
-import gson.DanhSachPhat;
-import gson.GetListPlaylist;
-import gson.ThemBHVaoDS;
-import gson.ThemDSPhat;
+import model.DanhSachPhat;
+import model.GetListPlaylist;
+import model.ThemBHVaoDS;
+import model.ThemDSPhat;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,8 +23,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import screen.ChiTietPlaylistPanel;
-import services.ApiServiceV1;
-import services.utils;
+import api.ApiServiceV1;
+import helpers.utils;
 
 /**
  *

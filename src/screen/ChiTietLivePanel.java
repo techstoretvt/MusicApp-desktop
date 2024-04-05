@@ -12,7 +12,7 @@ import com.teamdev.jxbrowser.engine.EngineOptions;
 import com.teamdev.jxbrowser.engine.RenderingMode;
 import com.teamdev.jxbrowser.view.swing.BrowserView;
 import component.CustomScrollBarUI;
-import gson.NewComentLive;
+import model.NewComentLive;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import java.awt.Color;
@@ -21,9 +21,9 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import services.AppConstants;
+import helpers.AppConstants;
 import services.MySocketClient;
-import services.utils;
+import helpers.utils;
 import frame.MainJFrame;
 
 /**

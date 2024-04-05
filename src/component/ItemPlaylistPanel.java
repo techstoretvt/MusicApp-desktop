@@ -4,11 +4,11 @@
  */
 package component;
 
-import gson.ChiTietDanhSachPhat;
-import gson.DanhSachPhat;
+import model.ChiTietDanhSachPhat;
+import model.DanhSachPhat;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
-import services.utils;
+import helpers.utils;
 import frame.MainJFrame;
 import screen.ChiTietPlaylistPanel;
 

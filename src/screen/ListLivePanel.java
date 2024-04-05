@@ -6,14 +6,14 @@ package screen;
 
 import component.CustomScrollBarUI;
 import component.ItemLivePanel;
-import gson.GetListLive;
-import gson.LiveItem;
+import model.GetListLive;
+import model.LiveItem;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import services.ApiServiceV2;
+import api.ApiServiceV2;
 
 /**
  *

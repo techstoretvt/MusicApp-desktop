@@ -9,9 +9,9 @@ import com.teamdev.jxbrowser.engine.Engine;
 import com.teamdev.jxbrowser.engine.EngineOptions;
 import com.teamdev.jxbrowser.engine.RenderingMode;
 import com.teamdev.jxbrowser.view.swing.BrowserView;
-import gson.GetTaiKhoan;
-import gson.KeywordGoogle;
-import gson.TaiKhoan;
+import model.GetTaiKhoan;
+import model.KeywordGoogle;
+import model.TaiKhoan;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import java.awt.AWTException;
@@ -64,13 +64,13 @@ import screen.YeuThichPanel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import services.ApiServiceV1;
-import services.AppConstants;
+import api.ApiServiceV1;
+import helpers.AppConstants;
 import services.LocalData;
-import services.MyCustomDialog;
+import component.MyCustomDialog;
 import services.MyMusicPlayer;
 import services.MySocketClient;
-import services.utils;
+import helpers.utils;
 
 /**
  *

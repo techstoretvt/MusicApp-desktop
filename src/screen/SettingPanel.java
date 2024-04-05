@@ -14,7 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
-import services.MyCustomDialog;
+import component.MyCustomDialog;
 
 /**
  *

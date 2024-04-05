@@ -13,18 +13,18 @@ import com.teamdev.jxbrowser.engine.EngineOptions;
 import com.teamdev.jxbrowser.engine.RenderingMode;
 import com.teamdev.jxbrowser.view.swing.BrowserView;
 import component.CustomScrollBarUI;
-import gson.BaiHat;
-import gson.GetBaiHatById;
-import gson.GetListBaiHat;
+import model.BaiHat;
+import model.GetBaiHatById;
+import model.GetListBaiHat;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import services.ApiServiceV1;
-import services.AppConstants;
-import services.utils;
+import api.ApiServiceV1;
+import helpers.AppConstants;
+import helpers.utils;
 
 /**
  *

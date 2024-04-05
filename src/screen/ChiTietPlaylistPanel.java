@@ -6,11 +6,11 @@ package screen;
 
 import component.CustomScrollBarUI;
 import component.ItemMusicPanel;
-import gson.BaiHat;
-import gson.ChiTietDanhSachPhat;
-import gson.DanhSachPhat;
-import gson.GetDSPhatById;
-import gson.ResponseDefault;
+import model.BaiHat;
+import model.ChiTietDanhSachPhat;
+import model.DanhSachPhat;
+import model.GetDSPhatById;
+import model.ResponseDefault;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -22,9 +22,9 @@ import javax.swing.JPopupMenu;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import services.ApiServiceV1;
+import api.ApiServiceV1;
 import services.MyMusicPlayer;
-import services.utils;
+import helpers.utils;
 import frame.MainJFrame;
 
 /**

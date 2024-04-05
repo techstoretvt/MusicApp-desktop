@@ -6,13 +6,13 @@ package screen;
 
 import component.CustomScrollBarUI;
 import component.ItemNgheSiPanel;
-import gson.Casi;
-import gson.TimKiemCaSi;
+import model.Casi;
+import model.TimKiemCaSi;
 import javax.swing.JPanel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import services.ApiServiceV1;
+import api.ApiServiceV1;
 
 /**
  *

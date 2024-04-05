@@ -4,9 +4,9 @@
  */
 package component;
 
-import gson.NewComentLive;
+import model.NewComentLive;
 import javax.swing.ImageIcon;
-import services.utils;
+import helpers.utils;
 
 /**
  *

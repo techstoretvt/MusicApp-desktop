@@ -5,18 +5,17 @@
 package component;
 
 import com.google.gson.Gson;
-import gson.LoginData;
+import model.LoginData;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import services.AppConstants;
+import helpers.AppConstants;
 import services.LocalData;
-import services.MyCustomDialog;
 import services.MySocketClient;
-import services.utils;
+import helpers.utils;
 import frame.Main;
 import frame.MainJFrame;
 

@@ -6,7 +6,7 @@ package screen;
 
 import component.CustomScrollBarUI;
 import component.ItemMusicPanel;
-import gson.BaiHat;
+import model.BaiHat;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import services.LocalData;

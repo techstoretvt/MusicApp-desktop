@@ -5,7 +5,7 @@
 package component;
 
 import component.ItemMVPanel;
-import gson.BaiHat;
+import model.BaiHat;
 import javax.swing.JPanel;
 
 /**

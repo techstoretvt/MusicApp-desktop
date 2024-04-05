@@ -4,7 +4,7 @@
  */
 package services;
 
-import gson.BaiHat;
+import model.BaiHat;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -123,7 +123,7 @@ public class LocalData {
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filename))) {
             listBH = (ArrayList<BaiHat>) inputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return listBH;
     }

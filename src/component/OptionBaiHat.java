@@ -5,8 +5,8 @@
 package component;
 
 import frame.MainJFrame;
-import gson.BaiHat;
-import gson.ResponseDefault;
+import model.BaiHat;
+import model.ResponseDefault;
 import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -31,11 +31,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import screen.ChiTietMVPanel;
 import screen.ChiTietPlaylistPanel;
-import services.ApiServiceV1;
+import api.ApiServiceV1;
 import services.LocalData;
-import services.MyCustomDialog;
 import services.MyMusicPlayer;
-import services.utils;
+import helpers.utils;
 
 /**
  *

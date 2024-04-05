@@ -5,7 +5,7 @@
 package component;
 
 import component.CircleImagePanel;
-import gson.Casi;
+import model.Casi;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;

@@ -7,20 +7,20 @@ package screen;
 import component.ItemMusicPanel;
 import component.CircleImagePanel;
 import component.CustomScrollBarUI;
-import gson.BaiHat;
-import gson.Casi;
-import gson.GetCaSiByID;
-import gson.GetListBaiHat;
-import gson.ResponseDefault;
+import model.BaiHat;
+import model.Casi;
+import model.GetCaSiByID;
+import model.GetListBaiHat;
+import model.ResponseDefault;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import services.ApiServiceV1;
+import api.ApiServiceV1;
 import services.MyMusicPlayer;
-import services.utils;
+import helpers.utils;
 
 /**
  *
