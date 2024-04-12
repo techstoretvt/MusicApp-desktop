@@ -4,6 +4,15 @@ public class LoiBaiHat {
     private String id, idBaiHat, loiBaiHat;
     private Double thoiGian;
 
+    public LoiBaiHat(String id, String idBaiHat, String loiBaiHat, Double thoiGian) {
+        this.id = id;
+        this.idBaiHat = idBaiHat;
+        this.loiBaiHat = loiBaiHat;
+        this.thoiGian = thoiGian;
+    }
+    
+    
+
     public String getId() {
         return id;
     }

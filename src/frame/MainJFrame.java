@@ -71,6 +71,8 @@ import component.MyCustomDialog;
 import services.MyMusicPlayer;
 import services.MySocketClient;
 import helpers.utils;
+import screen.MiniGame;
+import screen.RadioPanel;
 
 /**
  *
@@ -320,8 +322,14 @@ public class MainJFrame extends javax.swing.JFrame {
             case "ListLive":
                 newPN = new ListLivePanel();
                 break;
+            case "Radio":
+                newPN = new RadioPanel();
+                break;
             case "SettingGiaoDien":
                 newPN = new SettingGiaoDien();
+                break;
+            case "MiniGame":
+                newPN = new MiniGame();
                 break;
             default:
                 newPN = new KhamPhaPanel();
@@ -415,6 +423,7 @@ public class MainJFrame extends javax.swing.JFrame {
         btnGioiThieu = new javax.swing.JButton();
         btnLienHe = new javax.swing.JButton();
         btnMiniGame = new javax.swing.JButton();
+        btnRadio = new javax.swing.JButton();
         PanelFooter = new javax.swing.JPanel();
         PanelFooterChill = new javax.swing.JPanel();
         PanelFooterLeft = new javax.swing.JPanel();
@@ -668,6 +677,32 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        btnRadio.setBackground(null);
+        btnRadio.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnRadio.setForeground(new java.awt.Color(255, 255, 255));
+        btnRadio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-radio-20.png"))); // NOI18N
+        btnRadio.setText("Radio");
+        btnRadio.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnRadio.setBorderPainted(false);
+        btnRadio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRadio.setFocusPainted(false);
+        btnRadio.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnRadio.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btnRadioMouseMoved(evt);
+            }
+        });
+        btnRadio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRadioMouseExited(evt);
+            }
+        });
+        btnRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRadioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelTabBarLayout = new javax.swing.GroupLayout(PanelTabBar);
         PanelTabBar.setLayout(PanelTabBarLayout);
         PanelTabBarLayout.setHorizontalGroup(
@@ -686,7 +721,8 @@ public class MainJFrame extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(btnLienHe, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnMiniGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnMiniGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRadio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         PanelTabBarLayout.setVerticalGroup(
@@ -701,12 +737,14 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLive, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRadio, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDaTai, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnYeuThich, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMiniGame, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(btnGioiThieu, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDieuKhoanVaDichVu, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1307,12 +1345,18 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnNextMusicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextMusicActionPerformed
         // TODO add your handling code here:
-        MyMusicPlayer.nextBaiHat();
+        new Thread(() -> {
+            MyMusicPlayer.nextBaiHat();
+        }).start();
+
     }//GEN-LAST:event_btnNextMusicActionPerformed
 
     private void btnPrevBaiHatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevBaiHatActionPerformed
         // TODO add your handling code here:
-        MyMusicPlayer.preBaiHat();
+        new Thread(() -> {
+            MyMusicPlayer.preBaiHat();
+        }).start();
+
     }//GEN-LAST:event_btnPrevBaiHatActionPerformed
 
     private void btnLoopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoopActionPerformed
@@ -1517,10 +1561,14 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void imageBaiHatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageBaiHatMouseClicked
         // TODO add your handling code here:
+        XemThongTinBaiHat();
+    }//GEN-LAST:event_imageBaiHatMouseClicked
+
+    public void XemThongTinBaiHat() {
         MyCustomDialog customDialog = new MyCustomDialog(this, "", new ThongTinBaiHat(MyMusicPlayer.dsBaiHat.get(MyMusicPlayer.position)));
         customDialog.setResizable(false);
         customDialog.show(true);
-    }//GEN-LAST:event_imageBaiHatMouseClicked
+    }
 
     private void btnMiniAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMiniAppActionPerformed
         // TODO add your handling code here:
@@ -1558,6 +1606,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnMiniGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMiniGameActionPerformed
         // TODO add your handling code here:
+        ShowPanel("MiniGame", new MiniGame());
+        resetTabBarColor();
+        btnMiniGame.setBackground(new Color(102, 102, 102));
     }//GEN-LAST:event_btnMiniGameActionPerformed
 
     private void btnKhamPhaMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnKhamPhaMouseMoved
@@ -1620,6 +1671,23 @@ public class MainJFrame extends javax.swing.JFrame {
         endHoverMenu(btnMiniGame);
     }//GEN-LAST:event_btnMiniGameMouseExited
 
+    private void btnRadioMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRadioMouseMoved
+        // TODO add your handling code here:
+        onHoverMenu(btnRadio);
+    }//GEN-LAST:event_btnRadioMouseMoved
+
+    private void btnRadioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRadioMouseExited
+        // TODO add your handling code here:
+        endHoverMenu(btnRadio);
+    }//GEN-LAST:event_btnRadioMouseExited
+
+    private void btnRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRadioActionPerformed
+        // TODO add your handling code here:
+        ShowPanel("Radio", new RadioPanel());
+        resetTabBarColor();
+        btnRadio.setBackground(new Color(102, 102, 102));
+    }//GEN-LAST:event_btnRadioActionPerformed
+
     public void onHoverMenu(JButton btn) {
         btn.setForeground(Color.red);
     }
@@ -1671,6 +1739,8 @@ public class MainJFrame extends javax.swing.JFrame {
         btnLive.setBackground(null);
         btnYeuThich.setBackground(null);
         btnDaTai.setBackground(null);
+        btnRadio.setBackground(null);
+        btnMiniGame.setBackground(null);
     }
 
     public static void initDKGiongNoi() {
@@ -1748,6 +1818,7 @@ public class MainJFrame extends javax.swing.JFrame {
     public static javax.swing.JButton btnOption;
     public static javax.swing.JButton btnPlayPause;
     private javax.swing.JButton btnPrevBaiHat;
+    private javax.swing.JButton btnRadio;
     private javax.swing.JButton btnRandom;
     private javax.swing.JButton btnSetting;
     private javax.swing.JButton btnThuVien;

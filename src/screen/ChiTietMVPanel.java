@@ -25,6 +25,8 @@ import retrofit2.Response;
 import api.ApiServiceV1;
 import helpers.AppConstants;
 import helpers.utils;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 /**
  *
@@ -34,6 +36,7 @@ public class ChiTietMVPanel extends javax.swing.JPanel {
 
     public static String idMV = "a1d52f6e-63db-46b9-9bf2-7d4023e6b9e2";
     private Browser browser;
+    private boolean loading = true;
 
     /**
      * Creates new form ChiTietMVPanel
@@ -48,12 +51,43 @@ public class ChiTietMVPanel extends javax.swing.JPanel {
         Engine engine = Engine.newInstance(EngineOptions.newBuilder(RenderingMode.OFF_SCREEN)
                 .licenseKey(AppConstants.licenseKey_browser).build());
         browser = engine.newBrowser();
-        BrowserView view = BrowserView.newInstance(browser);
-        PanelVideo.add(view);
+        new Thread(() -> {
+
+            BrowserView view = BrowserView.newInstance(browser);
+
+            PanelVideo.removeAll();
+            PanelVideo.add(view);
+            PanelVideo.revalidate();
+            PanelVideo.repaint();
+        }).start();
 
 //        addVideo("zp-x4cY8fu0");
         getBaiHat(idMV);
         getListGoiYMV(idMV);
+
+        addComponentListener(new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentShown(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentHidden(ComponentEvent e) {
+
+                if (browser != null && loading == false) {
+                    System.out.println("Dong browser mv");
+                    browser.close();
+                }
+                loading = false;
+            }
+        });
     }
 
     public void getBaiHat(String idMV) {
@@ -87,7 +121,7 @@ public class ChiTietMVPanel extends javax.swing.JPanel {
     }
 
     public void getListGoiYMV(String idMV) {
-       
+
         Gson gson = new GsonBuilder().create();
         ArrayList<String> a = new ArrayList<>();
         a.add(idMV);
@@ -149,6 +183,7 @@ public class ChiTietMVPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         PanelVideo = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         imgBaiHat = new javax.swing.JLabel();
         lbTenBH = new javax.swing.JLabel();
@@ -164,6 +199,12 @@ public class ChiTietMVPanel extends javax.swing.JPanel {
 
         PanelVideo.setBackground(new java.awt.Color(23, 15, 35));
         PanelVideo.setLayout(new java.awt.BorderLayout());
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Đang tải...");
+        PanelVideo.add(jLabel3, java.awt.BorderLayout.CENTER);
 
         lbTenBH.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lbTenBH.setForeground(new java.awt.Color(255, 255, 255));
@@ -236,6 +277,7 @@ public class ChiTietMVPanel extends javax.swing.JPanel {
     private javax.swing.JLabel imgBaiHat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbTenBH;

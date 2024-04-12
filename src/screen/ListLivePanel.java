@@ -14,6 +14,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import api.ApiServiceV2;
+import java.awt.Color;
+import javax.swing.JLabel;
 
 /**
  *
@@ -26,7 +28,7 @@ public class ListLivePanel extends javax.swing.JPanel {
      */
     public ListLivePanel() {
         initComponents();
-        
+
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
@@ -59,7 +61,20 @@ public class ListLivePanel extends javax.swing.JPanel {
                         JPanel pn = new ItemLivePanel(item);
                         panelListLive.add(pn);
                     }
+
+                    if (list.size() == 0) {
+                        JLabel lbMess = new JLabel("Không có phòng live nào");
+                        lbMess.setForeground(Color.WHITE);
+                        panelListLive.add(lbMess);
+                        System.out.println("ko co phong live nao");
+                    }
+                    panelListLive.repaint();
+                    panelListLive.revalidate();
+
                 } else {
+                    JLabel lbMess = new JLabel("Không có phòng live nào");
+                    lbMess.setForeground(Color.WHITE);
+                    panelListLive.add(lbMess);
                     System.out.println("ko co phong live nao");
                 }
 

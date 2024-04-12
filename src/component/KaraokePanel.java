@@ -62,10 +62,11 @@ public class KaraokePanel extends javax.swing.JPanel {
                     int sizeLoiBH = res.getData().size();
                     if (sizeLoiBH != 0) {
                         GridLayout la = (GridLayout) PanelListLoiBH.getLayout();
-                        la.setRows(sizeLoiBH);
+                        la.setRows(sizeLoiBH+1);
                         PanelListLoiBH.setLayout(la);
 
                         // add ui
+                        
                         for (int i = 0; i < sizeLoiBH; i++) {
                             LoiBaiHat currentLoiBH = res.getData().get(i);
                             JButton loiBH = new JButton();
@@ -97,6 +98,7 @@ public class KaraokePanel extends javax.swing.JPanel {
 
                             dsItemLoiBH.add(loiBH);
                         }
+
                         PanelListLoiBH.revalidate();
                         PanelListLoiBH.repaint();
 
