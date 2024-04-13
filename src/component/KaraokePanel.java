@@ -18,7 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import api.ApiServiceV1;
 import services.MyMusicPlayer;
-import helpers.utils;
+import helpers.Utils;
 
 /**
  *
@@ -58,7 +58,7 @@ public class KaraokePanel extends javax.swing.JPanel {
             public void onResponse(Call<GetLoiBaiHat> call, Response<GetLoiBaiHat> rspns) {
                 GetLoiBaiHat res = rspns.body();
                 if (res != null && res.getErrCode() == 0) {
-                    listIndexLoiBaiHat = utils.createListIndexLoiBaiHat(res.getData());
+                    listIndexLoiBaiHat = Utils.createListIndexLoiBaiHat(res.getData());
                     int sizeLoiBH = res.getData().size();
                     if (sizeLoiBH != 0) {
                         GridLayout la = (GridLayout) PanelListLoiBH.getLayout();

@@ -22,9 +22,9 @@ import javax.swing.JOptionPane;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import screen.ChiTietPlaylistPanel;
+import screen.ChiTietPlaylist;
 import api.ApiServiceV1;
-import helpers.utils;
+import helpers.Utils;
 
 /**
  *
@@ -44,7 +44,7 @@ public class ThemVaoPlaylist extends javax.swing.JPanel {
     }
 
     public void loadListPlaylist() {
-        String header = utils.getHeader();
+        String header = Utils.getHeader();
         PanelDSPlaylist.removeAll();
 
         ApiServiceV1.apiServiceV1.getDanhSachPhat(header).enqueue(new Callback<GetListPlaylist>() {
@@ -97,7 +97,7 @@ public class ThemVaoPlaylist extends javax.swing.JPanel {
     }
 
     public void handleThemBHVaoPlaylist(String idBH, String idDS) {
-        String header = utils.getHeader();
+        String header = Utils.getHeader();
         BodyThemBHVaoDS body = new BodyThemBHVaoDS(idBH, idDS);
 
         ApiServiceV1.apiServiceV1.themBaiHatVaoDS(body, header).enqueue(new Callback<ThemBHVaoDS>() {
@@ -109,7 +109,7 @@ public class ThemVaoPlaylist extends javax.swing.JPanel {
                             "", JOptionPane.INFORMATION_MESSAGE);
                     
                     if(MainJFrame.historyPanel.peek().equals("ChiTietPlaylist")) {
-                        if (ChiTietPlaylistPanel.idPlaylist.equals(idDS)) {
+                        if (ChiTietPlaylist.idPlaylist.equals(idDS)) {
                             MainJFrame.resetPanel();
                         }
                     }
@@ -193,7 +193,7 @@ public class ThemVaoPlaylist extends javax.swing.JPanel {
         String namePlaylist = JOptionPane.showInputDialog(null, "Nhập tên danh sách:", "Thêm danh sách phát",
                 JOptionPane.INFORMATION_MESSAGE);
         if (namePlaylist != null && !namePlaylist.isEmpty()) {
-            String header = utils.getHeader();
+            String header = Utils.getHeader();
 
             BodyThemDSPhat body = new BodyThemDSPhat(namePlaylist);
             ApiServiceV1.apiServiceV1.themDanhSachPhat(body, header).enqueue(new Callback<ThemDSPhat>() {

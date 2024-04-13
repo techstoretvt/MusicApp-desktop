@@ -1,4 +1,6 @@
-package model;
+package bodyapi;
+
+import model.CommentBaiHat;
 
 public class AddCommentParent {
     private int errCode, status;

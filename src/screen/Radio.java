@@ -17,13 +17,13 @@ import java.awt.event.ComponentListener;
  *
  * @author tranv
  */
-public class RadioPanel extends javax.swing.JPanel {
+public class Radio extends javax.swing.JPanel {
 
      private Browser browser;
     /**
      * Creates new form RadioPanel
      */
-    public RadioPanel() {
+    public Radio() {
         initComponents();
         
          new Thread(() -> {

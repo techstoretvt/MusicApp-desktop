@@ -7,7 +7,7 @@ package screen;
 import java.awt.Color;
 import javax.swing.JColorChooser;
 import javax.swing.SwingUtilities;
-import services.LocalData;
+import helpers.LocalData;
 import frame.MainJFrame;
 
 /**

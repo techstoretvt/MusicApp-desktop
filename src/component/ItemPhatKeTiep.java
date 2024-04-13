@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import services.MyMusicPlayer;
-import helpers.utils;
+import helpers.Utils;
 import frame.MainJFrame;
 
 /**
@@ -40,9 +40,9 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
         new Thread(() -> {
             String urlAnh = bh.getAnhBia();
             if (MyMusicPlayer.typeMusic.equals("off")) {
-                urlAnh = utils.getAnhBHDownload(bh.getId());
+                urlAnh = Utils.getAnhBHDownload(bh.getId());
             }
-            ImageIcon icon = utils.getImageBaiHat(urlAnh, 40, 40);
+            ImageIcon icon = Utils.getImageBaiHat(urlAnh, 40, 40);
             imageBaiHat.setIcon(icon);
         }).start();
 
@@ -484,7 +484,7 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
             ImageIcon icon = new ImageIcon(getClass().getResource("/icon/loadingBH.gif"));
             imageBaiHat.setIcon(icon);
 
-            ItemMusicPanel.anhNhac = imageBaiHat;
+            ItemMusic.anhNhac = imageBaiHat;
 
         }).start();
 

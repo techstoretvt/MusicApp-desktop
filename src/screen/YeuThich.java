@@ -5,7 +5,7 @@
 package screen;
 
 import component.CustomScrollBarUI;
-import component.ItemMusicPanel;
+import component.ItemMusic;
 import model.BaiHat;
 import model.GetListBHYeuThich;
 import model.YeuThichBaiHat;
@@ -15,20 +15,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import api.ApiServiceV1;
-import helpers.utils;
+import helpers.Utils;
 
 /**
  *
  * @author tranv
  */
-public class YeuThichPanel extends javax.swing.JPanel {
+public class YeuThich extends javax.swing.JPanel {
     
     public static ArrayList<BaiHat> dsBaiHat;
 
     /**
      * Creates new form YeuThichPanel
      */
-    public YeuThichPanel() {
+    public YeuThich() {
         initComponents();
         
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
@@ -38,7 +38,7 @@ public class YeuThichPanel extends javax.swing.JPanel {
     }
 
     public void loadListMusic() {
-        String header = utils.getHeader();
+        String header = Utils.getHeader();
 
         dsBaiHat = new ArrayList<>();
         ApiServiceV1.apiServiceV1.getListBHYeuThich("", "", header).enqueue(new Callback<GetListBHYeuThich>() {
@@ -52,7 +52,7 @@ public class YeuThichPanel extends javax.swing.JPanel {
                     for(int i =0;i<size;i++){
                         BaiHat bh = data.get(i).getBaihat();
                         dsBaiHat.add(bh);
-                        JPanel pn = new ItemMusicPanel(bh,i+1,"YeuThich");
+                        JPanel pn = new ItemMusic(bh,i+1,"YeuThich");
                         PanelListMusic.add(pn);
                     }
                     PanelListMusic.revalidate();

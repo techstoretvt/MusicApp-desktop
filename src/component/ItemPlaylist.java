@@ -8,22 +8,22 @@ import model.ChiTietDanhSachPhat;
 import model.DanhSachPhat;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
-import helpers.utils;
+import helpers.Utils;
 import frame.MainJFrame;
-import screen.ChiTietPlaylistPanel;
+import screen.ChiTietPlaylist;
 
 /**
  *
  * @author tranv
  */
-public class ItemPlaylistPanel extends javax.swing.JPanel {
+public class ItemPlaylist extends javax.swing.JPanel {
 
     private DanhSachPhat playlist;
 
     /**
      * Creates new form ItemPlaylistPanel
      */
-    public ItemPlaylistPanel(DanhSachPhat playlist) {
+    public ItemPlaylist(DanhSachPhat playlist) {
         initComponents();
         
         this.playlist = playlist;
@@ -33,11 +33,11 @@ public class ItemPlaylistPanel extends javax.swing.JPanel {
         ArrayList<ChiTietDanhSachPhat> chiTietDanhSachPhats = playlist.getChiTietDanhSachPhats();
 
         if (chiTietDanhSachPhats.size() == 0) {
-            ImageIcon icon = utils.getImageBaiHat(getClass().getResource("/icon/playlist-empty.png").toString(),
+            ImageIcon icon = Utils.getImageBaiHat(getClass().getResource("/icon/playlist-empty.png").toString(),
                     200, 200);
             imgPlaylist.setIcon(icon);
         } else {
-            ImageIcon icon = utils.getImageBaiHat(chiTietDanhSachPhats.get(0).getBaihat().getAnhBia(),
+            ImageIcon icon = Utils.getImageBaiHat(chiTietDanhSachPhats.get(0).getBaihat().getAnhBia(),
                     200, 200);
             imgPlaylist.setIcon(icon);
         }
@@ -100,7 +100,7 @@ public class ItemPlaylistPanel extends javax.swing.JPanel {
     private void imgPlaylistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgPlaylistMouseClicked
         // TODO add your handling code here:
         System.out.println("id: "+playlist.getId());
-        MainJFrame.ShowPanel("ChiTietPlaylist", new ChiTietPlaylistPanel(playlist.getId()));
+        MainJFrame.ShowPanel("ChiTietPlaylist", new ChiTietPlaylist(playlist.getId()));
     }//GEN-LAST:event_imgPlaylistMouseClicked
 
 

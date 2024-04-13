@@ -39,40 +39,40 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.Timer;
-import screen.ChiTietCaSiPanel;
-import screen.ChiTietMVPanel;
-import screen.ChiTietPlaylistPanel;
-import screen.DaTaiPanel;
+import screen.ChiTietCaSi;
+import screen.ChiTietMV;
+import screen.ChiTietPlaylist;
+import screen.DaTai;
 import component.KaraokePanel;
 import component.ModelHenGio;
 import component.OptionBaiHat;
-import screen.KhamPhaPanel;
-import screen.ListLivePanel;
-import screen.LivePanel;
+import screen.KhamPha;
+import screen.ListLive;
+import screen.RoomLive;
 import component.PhatKeTiepPanel;
 import screen.SettingGiaoDien;
-import screen.SettingPanel;
+import screen.Setting;
 import component.ThemVaoPlaylist;
 import component.ThongTinBaiHat;
 import java.awt.FontMetrics;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import screen.ThuVienPanel;
-import screen.TimKiemPanel;
-import screen.YeuThichPanel;
+import screen.ThuVien;
+import screen.TimKiem;
+import screen.YeuThich;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import api.ApiServiceV1;
 import helpers.AppConstants;
-import services.LocalData;
+import helpers.LocalData;
 import component.MyCustomDialog;
 import services.MyMusicPlayer;
 import services.MySocketClient;
-import helpers.utils;
+import helpers.Utils;
 import screen.MiniGame;
-import screen.RadioPanel;
+import screen.Radio;
 
 /**
  *
@@ -112,7 +112,7 @@ public class MainJFrame extends javax.swing.JFrame {
         PanelFooter.setVisible(false);
         // test
 //        LocalData.removeData("accessToken");
-        utils.CheckLogin();
+        Utils.CheckLogin();
 
         getUserLogin();
 
@@ -161,7 +161,7 @@ public class MainJFrame extends javax.swing.JFrame {
     public void initSocketDkBangDienThoai() {
         Socket mSocket = MySocketClient.getSocket();
 
-        keyRemoteControl = utils.randomKeyRemoteControl();
+        keyRemoteControl = Utils.randomKeyRemoteControl();
 
         mSocket.on("next-music-mobile--" + keyRemoteControl, new Emitter.Listener() {
             @Override
@@ -213,7 +213,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     public static void getUserLogin() {
-        String header = utils.getHeader();
+        String header = Utils.getHeader();
 
         ApiServiceV1.apiServiceV1.getTaiKhoan(header).enqueue(new Callback<GetTaiKhoan>() {
             @Override
@@ -222,9 +222,9 @@ public class MainJFrame extends javax.swing.JFrame {
                 if (res != null && res.getErrCode() == 0) {
                     TaiKhoan user = res.getData();
                     userInfo = user;
-                    String urlAnh = utils.getAnhUser(user);
+                    String urlAnh = Utils.getAnhUser(user);
 
-                    ImageIcon avatar = utils.getImageBaiHat(urlAnh, 40, 40);
+                    ImageIcon avatar = Utils.getImageBaiHat(urlAnh, 40, 40);
 
                     btnAvatar.setIcon(avatar);
 
@@ -290,40 +290,40 @@ public class MainJFrame extends javax.swing.JFrame {
         JPanel newPN = null;
         switch (name) {
             case "KhamPha":
-                newPN = new KhamPhaPanel();
+                newPN = new KhamPha();
                 break;
             case "ThuVien":
-                newPN = new ThuVienPanel();
+                newPN = new ThuVien();
                 break;
             case "Karaoke":
                 newPN = new KaraokePanel();
                 break;
             case "TimKiem":
-                newPN = new TimKiemPanel(TimKiemPanel.keyword);
+                newPN = new TimKiem(TimKiem.keyword);
                 break;
             case "ChiTietCaSi":
-                newPN = new ChiTietCaSiPanel(ChiTietCaSiPanel.idCaSi);
+                newPN = new ChiTietCaSi(ChiTietCaSi.idCaSi);
                 break;
             case "ChiTietMV":
-                newPN = new ChiTietMVPanel(ChiTietMVPanel.idMV);
+                newPN = new ChiTietMV(ChiTietMV.idMV);
                 break;
             case "ChiTietPlaylist":
-                newPN = new ChiTietPlaylistPanel(ChiTietPlaylistPanel.idPlaylist);
+                newPN = new ChiTietPlaylist(ChiTietPlaylist.idPlaylist);
                 break;
             case "YeuThich":
-                newPN = new YeuThichPanel();
+                newPN = new YeuThich();
                 break;
             case "DaTai":
-                newPN = new DaTaiPanel();
+                newPN = new DaTai();
                 break;
             case "Setting":
-                newPN = new SettingPanel();
+                newPN = new Setting();
                 break;
             case "ListLive":
-                newPN = new ListLivePanel();
+                newPN = new ListLive();
                 break;
             case "Radio":
-                newPN = new RadioPanel();
+                newPN = new Radio();
                 break;
             case "SettingGiaoDien":
                 newPN = new SettingGiaoDien();
@@ -332,7 +332,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 newPN = new MiniGame();
                 break;
             default:
-                newPN = new KhamPhaPanel();
+                newPN = new KhamPha();
         }
 
         return newPN;
@@ -1085,7 +1085,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnAvatar.setBackground(null);
+        btnAvatar.setBackground(new java.awt.Color(102, 102, 102));
         btnAvatar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon-user.png"))); // NOI18N
         btnAvatar.setBorder(null);
         btnAvatar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -1271,7 +1271,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnKhamPhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhamPhaActionPerformed
         // TODO add your handling code here:
-        ShowPanel("KhamPha", new KhamPhaPanel());
+        ShowPanel("KhamPha", new KhamPha());
         resetTabBarColor();
         btnKhamPha.setBackground(new Color(102, 102, 102));
 
@@ -1279,11 +1279,11 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnThuVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThuVienActionPerformed
         // TODO add your handling code here:
-        if (!utils.getIsLogin()) {
+        if (!Utils.getIsLogin()) {
             return;
         }
 
-        ShowPanel("ThuVien", new ThuVienPanel());
+        ShowPanel("ThuVien", new ThuVien());
         resetTabBarColor();
         btnThuVien.setBackground(new Color(102, 102, 102));
 
@@ -1291,7 +1291,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnLiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiveActionPerformed
         // TODO add your handling code here:
-        ShowPanel("ListLive", new ListLivePanel());
+        ShowPanel("ListLive", new ListLive());
         resetTabBarColor();
         btnLive.setBackground(new Color(102, 102, 102));
 
@@ -1391,7 +1391,7 @@ public class MainJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         String keyword = ipTimKiem.getText();
         if (!keyword.isEmpty()) {
-            ShowPanel("TimKiem", new TimKiemPanel(keyword));
+            ShowPanel("TimKiem", new TimKiem(keyword));
         }
 
 
@@ -1450,7 +1450,7 @@ public class MainJFrame extends javax.swing.JFrame {
             if (threadTimKiem != null && threadTimKiem.isAlive()) {
                 threadTimKiem.interrupt();
             }
-            ShowPanel("TimKiem", new TimKiemPanel(keyword));
+            ShowPanel("TimKiem", new TimKiem(keyword));
         }
     }//GEN-LAST:event_ipTimKiemActionPerformed
 
@@ -1461,7 +1461,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnAvatarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvatarActionPerformed
         // TODO add your handling code here:
-        if (!utils.getIsLogin()) {
+        if (!Utils.getIsLogin()) {
             return;
         }
 
@@ -1490,7 +1490,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
                 String name = userInfo.getFirstName() + " " + userInfo.getLastName();
 
-                MainJFrame.ShowPanel("Live", new LivePanel(name, utils.getAnhUser(userInfo)));
+                MainJFrame.ShowPanel("Live", new RoomLive(name, Utils.getAnhUser(userInfo)));
             }
         });
 
@@ -1502,11 +1502,11 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnYeuThichActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnYeuThichActionPerformed
         // TODO add your handling code here:
-        if (!utils.getIsLogin()) {
+        if (!Utils.getIsLogin()) {
             return;
         }
 
-        ShowPanel("YeuThich", new YeuThichPanel());
+        ShowPanel("YeuThich", new YeuThich());
         resetTabBarColor();
         btnYeuThich.setBackground(new Color(102, 102, 102));
     }//GEN-LAST:event_btnYeuThichActionPerformed
@@ -1520,7 +1520,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnSettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSettingActionPerformed
         // TODO add your handling code here:
-        ShowPanel("Setting", new SettingPanel());
+        ShowPanel("Setting", new Setting());
     }//GEN-LAST:event_btnSettingActionPerformed
 
     private void btnDieuKhoanVaDichVuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDieuKhoanVaDichVuActionPerformed
@@ -1683,7 +1683,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRadioActionPerformed
         // TODO add your handling code here:
-        ShowPanel("Radio", new RadioPanel());
+        ShowPanel("Radio", new Radio());
         resetTabBarColor();
         btnRadio.setBackground(new Color(102, 102, 102));
     }//GEN-LAST:event_btnRadioActionPerformed
@@ -1715,7 +1715,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
                                 String keyword = ipTimKiem.getText();
                                 if (!keyword.isEmpty()) {
-                                    ShowPanel("TimKiem", new TimKiemPanel(keyword));
+                                    ShowPanel("TimKiem", new TimKiem(keyword));
                                 }
                             }
                         });
@@ -1749,7 +1749,7 @@ public class MainJFrame extends javax.swing.JFrame {
         browser = engine.newBrowser();
         BrowserView view = BrowserView.newInstance(browser);
 
-        String key = utils.randomKeyLogin();
+        String key = Utils.randomKeyLogin();
         String url = AppConstants.url_frontend + "/public/music/control?key=" + key;
         browser.navigation().loadUrlAndWait(url);
 

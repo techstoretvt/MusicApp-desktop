@@ -29,12 +29,12 @@ import org.apache.commons.io.FileUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import screen.ChiTietMVPanel;
-import screen.ChiTietPlaylistPanel;
+import screen.ChiTietMV;
+import screen.ChiTietPlaylist;
 import api.ApiServiceV1;
-import services.LocalData;
+import helpers.LocalData;
 import services.MyMusicPlayer;
-import helpers.utils;
+import helpers.Utils;
 
 /**
  *
@@ -55,7 +55,7 @@ public class OptionBaiHat extends JPopupMenu {
 
     public void show() {
 
-        String header = utils.getHeader();
+        String header = Utils.getHeader();
 
         ApiServiceV1.apiServiceV1.kiemTraYeuThichBaiHat(bh.getId(), header).enqueue(new Callback<ResponseDefault>() {
             @Override
@@ -93,7 +93,7 @@ public class OptionBaiHat extends JPopupMenu {
         option1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!utils.getIsLogin()) {
+                if (!Utils.getIsLogin()) {
                     return;
                 }
                 MyCustomDialog customDialog = new MyCustomDialog(null, "Thêm vào playlist",
@@ -164,7 +164,7 @@ public class OptionBaiHat extends JPopupMenu {
             optYeuThich.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (utils.getIsLogin()) {
+                    if (Utils.getIsLogin()) {
                         toggleYeuThich();
                     }
 
@@ -207,7 +207,7 @@ public class OptionBaiHat extends JPopupMenu {
             option5.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    MainJFrame.ShowPanel("ChiTietMV", new ChiTietMVPanel(bh.getId()));
+                    MainJFrame.ShowPanel("ChiTietMV", new ChiTietMV(bh.getId()));
                 }
 
             });
@@ -290,13 +290,13 @@ public class OptionBaiHat extends JPopupMenu {
                             JOptionPane.ERROR_MESSAGE);
                     customDialog.show(false);
                     LoadingTaiBaiHat.closeThread();
-                    Logger.getLogger(ItemMusicPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ItemMusic.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }).start();
 
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ItemMusicPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMusic.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -314,7 +314,7 @@ public class OptionBaiHat extends JPopupMenu {
     }
 
     public void toggleYeuThich() {
-        String header = utils.getHeader();
+        String header = Utils.getHeader();
 
         ApiServiceV1.apiServiceV1.toggleLikeBaiHat(bh.getId(), header).enqueue(new Callback<ResponseDefault>() {
             @Override
@@ -337,7 +337,7 @@ public class OptionBaiHat extends JPopupMenu {
     }
 
     public void handleCheckYeuThich() {
-        String header = utils.getHeader();
+        String header = Utils.getHeader();
 
         ApiServiceV1.apiServiceV1.kiemTraYeuThichBaiHat(bh.getId(), header).enqueue(new Callback<ResponseDefault>() {
             @Override
@@ -366,9 +366,9 @@ public class OptionBaiHat extends JPopupMenu {
     }
 
      public void handleXoaBHKhoiPlaylist() {
-        String header = utils.getHeader();
+        String header = Utils.getHeader();
 
-        ApiServiceV1.apiServiceV1.xoaBaiHatKhoiDS(ChiTietPlaylistPanel.idPlaylist, bh.getId(), header).enqueue(new Callback<ResponseDefault>() {
+        ApiServiceV1.apiServiceV1.xoaBaiHatKhoiDS(ChiTietPlaylist.idPlaylist, bh.getId(), header).enqueue(new Callback<ResponseDefault>() {
             @Override
             public void onResponse(Call<ResponseDefault> call, Response<ResponseDefault> rspns) {
                 ResponseDefault res = rspns.body();

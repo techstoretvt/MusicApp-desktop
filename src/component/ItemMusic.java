@@ -14,23 +14,23 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import services.LocalData;
+import helpers.LocalData;
 import services.MyMusicPlayer;
-import helpers.utils;
+import helpers.Utils;
 import frame.MainJFrame;
 import java.awt.Color;
-import screen.BaiHatSearchPanel;
-import screen.ChiTietCaSiPanel;
-import screen.ChiTietPlaylistPanel;
-import screen.KhamPhaPanel;
-import screen.ThuVienPanel;
-import screen.YeuThichPanel;
+import screen.BaiHatSearch;
+import screen.ChiTietCaSi;
+import screen.ChiTietPlaylist;
+import screen.KhamPha;
+import screen.ThuVien;
+import screen.YeuThich;
 
 /**
  *
  * @author tranv
  */
-public class ItemMusicPanel extends javax.swing.JPanel {
+public class ItemMusic extends javax.swing.JPanel {
 
     private BaiHat bh = null;
     private String from_to = ""; //khampha,...
@@ -39,7 +39,7 @@ public class ItemMusicPanel extends javax.swing.JPanel {
     private boolean isCheckYeuThich = false;
     public static JLabel anhNhac;
 
-    public ItemMusicPanel(BaiHat bh, int stt, String from_to) {
+    public ItemMusic(BaiHat bh, int stt, String from_to) {
         initComponents();
 
         this.bh = bh;
@@ -49,25 +49,25 @@ public class ItemMusicPanel extends javax.swing.JPanel {
         lbStt.setText(String.valueOf(stt));
         lbTenBaiHat.setText(bh.getTenBaiHat());
         lbTenCaSi.setText(getStringTenCaSi());
-        lbThoiGian.setText(utils.getThoiGianBaiHat((int) bh.getThoiGian() / 1000));
+        lbThoiGian.setText(Utils.getThoiGianBaiHat((int) bh.getThoiGian() / 1000));
 
         if (from_to.equals("DaTai")) {
             new Thread(() -> {
                 String urlAnh2 = "";
                 while (true) {
-                    urlAnh2 = utils.getAnhBHDownload(bh.getId());
+                    urlAnh2 = Utils.getAnhBHDownload(bh.getId());
                     if (urlAnh2 != null) {
                         break;
                     }
                 }
-                ImageIcon icon = utils.getImageBaiHat(urlAnh2, 40, 40);
+                ImageIcon icon = Utils.getImageBaiHat(urlAnh2, 40, 40);
                 imageBaiHat.setIcon(icon);
             }).start();
 
         } else {
             new Thread(() -> {
                 String urlAnh = bh.getAnhBia();
-                ImageIcon icon = utils.getImageBaiHat(urlAnh, 40, 40);
+                ImageIcon icon = Utils.getImageBaiHat(urlAnh, 40, 40);
                 imageBaiHat.setIcon(icon);
             }).start();
 
@@ -254,11 +254,11 @@ public class ItemMusicPanel extends javax.swing.JPanel {
 
         if (size == 1) {
             if (MainJFrame.historyPanel.peek().equals("ChiTietCaSi")) {
-                ChiTietCaSiPanel.idCaSi = listcs.get(0).getCasi().getId();
+                ChiTietCaSi.idCaSi = listcs.get(0).getCasi().getId();
                 MainJFrame.resetPanel();
 
             } else {
-                MainJFrame.ShowPanel("ChiTietCaSi", new ChiTietCaSiPanel(listcs.get(0).getCasi().getId()));
+                MainJFrame.ShowPanel("ChiTietCaSi", new ChiTietCaSi(listcs.get(0).getCasi().getId()));
             }
 
         } else {
@@ -271,11 +271,11 @@ public class ItemMusicPanel extends javax.swing.JPanel {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (MainJFrame.historyPanel.peek().equals("ChiTietCaSi")) {
-                            ChiTietCaSiPanel.idCaSi = cs.getId();
+                            ChiTietCaSi.idCaSi = cs.getId();
                             MainJFrame.resetPanel();
 
                         } else {
-                            MainJFrame.ShowPanel("ChiTietCaSi", new ChiTietCaSiPanel(cs.getId()));
+                            MainJFrame.ShowPanel("ChiTietCaSi", new ChiTietCaSi(cs.getId()));
                         }
 
                     }
@@ -361,19 +361,19 @@ public class ItemMusicPanel extends javax.swing.JPanel {
 
         new Thread(() -> {
             if (from_to.equals("khampha")) {
-                MyMusicPlayer.initMusicPlayer(KhamPhaPanel.dsBaiHat, stt - 1);
+                MyMusicPlayer.initMusicPlayer(KhamPha.dsBaiHat, stt - 1);
             } else if (from_to.equals("timKiem")) {
-                MyMusicPlayer.initMusicPlayer(BaiHatSearchPanel.dsBaiHat, stt - 1);
+                MyMusicPlayer.initMusicPlayer(BaiHatSearch.dsBaiHat, stt - 1);
 
             } else if (from_to.equals("caSi")) {
-                MyMusicPlayer.initMusicPlayer(ChiTietCaSiPanel.dsBaiHat, stt - 1);
+                MyMusicPlayer.initMusicPlayer(ChiTietCaSi.dsBaiHat, stt - 1);
             } else if (from_to.equals("Playlist")) {
-                MyMusicPlayer.initMusicPlayer(ChiTietPlaylistPanel.dsBaiHat, stt - 1);
+                MyMusicPlayer.initMusicPlayer(ChiTietPlaylist.dsBaiHat, stt - 1);
             } else if (from_to.equals("YeuThich")) {
-                MyMusicPlayer.initMusicPlayer(YeuThichPanel.dsBaiHat, stt - 1);
+                MyMusicPlayer.initMusicPlayer(YeuThich.dsBaiHat, stt - 1);
             } 
             else if (from_to.equals("DaNghe")) {
-                MyMusicPlayer.initMusicPlayer(ThuVienPanel.listDaNghe, stt - 1);
+                MyMusicPlayer.initMusicPlayer(ThuVien.listDaNghe, stt - 1);
             }
             else if (from_to.equals("DaTai")) {
                 System.out.println("phat nhac offline");

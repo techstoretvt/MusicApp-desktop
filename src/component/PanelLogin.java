@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import helpers.AppConstants;
-import services.LocalData;
+import helpers.LocalData;
 import services.MySocketClient;
-import helpers.utils;
+import helpers.Utils;
 import frame.Main;
 import frame.MainJFrame;
 
@@ -120,7 +120,7 @@ public class PanelLogin extends javax.swing.JPanel {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        String keyLogin = utils.randomKeyLogin();
+        String keyLogin = Utils.randomKeyLogin();
         openWebPage(AppConstants.url_login + "?key=" + keyLogin);
 
         Socket mSocket = MySocketClient.getSocket();

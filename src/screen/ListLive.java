@@ -5,7 +5,7 @@
 package screen;
 
 import component.CustomScrollBarUI;
-import component.ItemLivePanel;
+import component.ItemLive;
 import model.GetListLive;
 import model.LiveItem;
 import java.util.ArrayList;
@@ -21,12 +21,12 @@ import javax.swing.JLabel;
  *
  * @author tranv
  */
-public class ListLivePanel extends javax.swing.JPanel {
+public class ListLive extends javax.swing.JPanel {
 
     /**
      * Creates new form ListLivePanel
      */
-    public ListLivePanel() {
+    public ListLive() {
         initComponents();
 
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
@@ -58,7 +58,7 @@ public class ListLivePanel extends javax.swing.JPanel {
                     ArrayList<LiveItem> list = res.getData();
 
                     for (LiveItem item : list) {
-                        JPanel pn = new ItemLivePanel(item);
+                        JPanel pn = new ItemLive(item);
                         panelListLive.add(pn);
                     }
 

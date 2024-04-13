@@ -4,6 +4,7 @@
  */
 package services;
 
+import helpers.LocalData;
 import api.ApiServiceV1;
 import model.BaiHat;
 import java.io.File;
@@ -26,10 +27,10 @@ import java.awt.Rectangle;
 import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import component.ItemMusicPanel;
+import component.ItemMusic;
 import component.KaraokePanel;
 import component.PhatKeTiepPanel;
-import helpers.utils;
+import helpers.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -95,94 +96,16 @@ public class MyMusicPlayer {
                 FileUtils.copyURLToFile(songURL, destination);
             }
 
-            // reset ui
-            if (MainJFrame.btnPlayPause != null) {
-                ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-pause.png"));
-                MainJFrame.btnPlayPause.setIcon(icon);
-            }
-            if (MainJFrame.lbTenBaiHat != null && MainJFrame.lbTenCaSi != null) {
-                MainJFrame.lbTenBaiHat.setText(currentBH.getTenBaiHat());
-                MainJFrame.lbTenCaSi.setText(utils.getTenCaSi(currentBH));
-            }
-            if (MainJFrame.imageBaiHat != null) {
-                new Thread(() -> {
-                    String urlAnh = currentBH.getAnhBia();
-                    if (type.equals("off")) {
-                        urlAnh = utils.getAnhBHDownload(currentBH.getId());
-                    }
-                    ImageIcon anhBH = utils.getImageBaiHat(urlAnh, 50, 50);
-                    MainJFrame.imageBaiHat.setIcon(anhBH);
-                }).start();
+            updateUI(currentBH, type);
 
-            }
-            if (MainJFrame.lbTongThoiGian != null) {
-                String tongTG = utils.getThoiGianBaiHat((int) (currentBH.getThoiGian() / 1000));
-                MainJFrame.lbTongThoiGian.setText(tongTG);
-            }
-            if (MainJFrame.PanelFooter != null) {
-                MainJFrame.PanelFooter.setVisible(true);
-            }
-            if (MainJFrame.isKaraoke) {
-                MainJFrame.isKaraoke = false;
-                MainJFrame.ToggleShowKaraoke();
-            }
-            if (ItemMusicPanel.anhNhac != null) {
-                new Thread(() -> {
-                    String urlAnh = currentBH.getAnhBia();
-                    ImageIcon anhBH = utils.getImageBaiHat(urlAnh, 50, 50);
-                    ItemMusicPanel.anhNhac.setIcon(anhBH);
-
-                    ItemMusicPanel.anhNhac = null;
-                }).start();
-
-            }
-
-            // add phat ke tiep
-            if (MainJFrame.isMenuPhatKeTiep) {
-
-                MainJFrame.PanelWrap.remove(1);
-                JPanel phatKeTiep = new PhatKeTiepPanel();
-                MainJFrame.PanelWrap.add(phatKeTiep, BorderLayout.EAST);
-                MainJFrame.PanelWrap.revalidate();
-                MainJFrame.PanelWrap.repaint();
-            }
-
-            //add đã nghe
-            new Thread(() -> {
-                ArrayList<BaiHat> listDaNghe = null;
-                ArrayList<BaiHat> newListDaNghe = new ArrayList<>();
-                try {
-                    listDaNghe = LocalData.getListDaNghe();
-                } catch (Exception e) {
-
-                }
-
-                if (listDaNghe == null) {
-                    listDaNghe = new ArrayList<>();
-                }
-                
-                for (BaiHat bh : listDaNghe) {
-                    if(!bh.getId().equals(currentBH.getId())){
-                        newListDaNghe.add(bh);
-                    }
-                }
-
-                newListDaNghe.addFirst(currentBH);
-                if (newListDaNghe.size() >= 10) {
-                    newListDaNghe.removeLast();
-                }
-                LocalData.saveListDaNghe(newListDaNghe);
-
-            }).start();
+            addDaNghe(currentBH);
 
             //play
             try {
                 String file_path = file_path_music;
                 if (type.equals("off")) {
-                    System.out.println("vao off");
-                    file_path = utils.getUrlBHDownload(currentBH.getId());
+                    file_path = Utils.getUrlBHDownload(currentBH.getId());
                 }
-//                JOptionPane.showMessageDialog(null ,file_path);
 
                 fileInputStream = new FileInputStream(file_path);
                 player = new Player(fileInputStream);
@@ -210,7 +133,17 @@ public class MyMusicPlayer {
                 MainJFrame.progessTimeBaiHat.setMaximum((int) (currentBH.getThoiGian() / 1000));
             }
 
-            myThread = new Thread(new Runnable() {
+           initThreadPlay();
+
+        } catch (MalformedURLException ex) {
+            System.out.println("vao loi karaoke 2");
+        } catch (IOException ex) {
+            System.out.println("vao loi karaoke 3");
+        }
+    }
+    
+    public static void initThreadPlay() {
+         myThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     while (true) {
@@ -234,14 +167,13 @@ public class MyMusicPlayer {
                         // set progess
                         if (isPlay) {
                             currentTime += 1;
-//                                System.out.println("tg Current: " + currentTime);
 
                             if (MainJFrame.progessTimeBaiHat != null) {
                                 MainJFrame.progessTimeBaiHat.setValue(currentTime);
                             }
 
                             if (MainJFrame.lbThoiGianHienTai != null) {
-                                String tgHienTai = utils.getThoiGianBaiHat(currentTime);
+                                String tgHienTai = Utils.getThoiGianBaiHat(currentTime);
                                 MainJFrame.lbThoiGianHienTai.setText(tgHienTai);
                             }
 
@@ -276,11 +208,89 @@ public class MyMusicPlayer {
                 }
             });
             myThread.start();
+    }
+    
+    public static void addDaNghe(BaiHat currentBH) {
+        //add đã nghe
+            new Thread(() -> {
+                ArrayList<BaiHat> listDaNghe = null;
+                ArrayList<BaiHat> newListDaNghe = new ArrayList<>();
+                try {
+                    listDaNghe = LocalData.getListDaNghe();
+                } catch (Exception e) {
 
-        } catch (MalformedURLException ex) {
-            System.out.println("vao loi karaoke 2");
-        } catch (IOException ex) {
-            System.out.println("vao loi karaoke 3");
+                }
+
+                if (listDaNghe == null) {
+                    listDaNghe = new ArrayList<>();
+                }
+
+                for (BaiHat bh : listDaNghe) {
+                    if (!bh.getId().equals(currentBH.getId())) {
+                        newListDaNghe.add(bh);
+                    }
+                }
+
+                newListDaNghe.addFirst(currentBH);
+                if (newListDaNghe.size() >= 10) {
+                    newListDaNghe.removeLast();
+                }
+                LocalData.saveListDaNghe(newListDaNghe);
+
+            }).start();
+    }
+
+    public static void updateUI(BaiHat currentBH, String type) {
+        // reset ui
+        if (MainJFrame.btnPlayPause != null) {
+            ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-pause.png"));
+            MainJFrame.btnPlayPause.setIcon(icon);
+        }
+        if (MainJFrame.lbTenBaiHat != null && MainJFrame.lbTenCaSi != null) {
+            MainJFrame.lbTenBaiHat.setText(currentBH.getTenBaiHat());
+            MainJFrame.lbTenCaSi.setText(Utils.getTenCaSi(currentBH));
+        }
+        if (MainJFrame.imageBaiHat != null) {
+            new Thread(() -> {
+                String urlAnh = currentBH.getAnhBia();
+                if (type.equals("off")) {
+                    urlAnh = Utils.getAnhBHDownload(currentBH.getId());
+                }
+                ImageIcon anhBH = Utils.getImageBaiHat(urlAnh, 50, 50);
+                MainJFrame.imageBaiHat.setIcon(anhBH);
+            }).start();
+
+        }
+        if (MainJFrame.lbTongThoiGian != null) {
+            String tongTG = Utils.getThoiGianBaiHat((int) (currentBH.getThoiGian() / 1000));
+            MainJFrame.lbTongThoiGian.setText(tongTG);
+        }
+        if (MainJFrame.PanelFooter != null) {
+            MainJFrame.PanelFooter.setVisible(true);
+        }
+        if (MainJFrame.isKaraoke) {
+            MainJFrame.isKaraoke = false;
+            MainJFrame.ToggleShowKaraoke();
+        }
+        if (ItemMusic.anhNhac != null) {
+            new Thread(() -> {
+                String urlAnh = currentBH.getAnhBia();
+                ImageIcon anhBH = Utils.getImageBaiHat(urlAnh, 50, 50);
+                ItemMusic.anhNhac.setIcon(anhBH);
+
+                ItemMusic.anhNhac = null;
+            }).start();
+
+        }
+
+        //reset phat ke tiep
+        if (MainJFrame.isMenuPhatKeTiep) {
+
+            MainJFrame.PanelWrap.remove(1);
+            JPanel phatKeTiep = new PhatKeTiepPanel();
+            MainJFrame.PanelWrap.add(phatKeTiep, BorderLayout.EAST);
+            MainJFrame.PanelWrap.revalidate();
+            MainJFrame.PanelWrap.repaint();
         }
     }
 
@@ -389,7 +399,7 @@ public class MyMusicPlayer {
             BaiHat currentBH = dsBaiHat.get(position);
             String file_path = file_path_music;
             if (typeMusic.equals("off")) {
-                file_path = utils.getUrlBHDownload(currentBH.getId());
+                file_path = Utils.getUrlBHDownload(currentBH.getId());
             }
             fileInputStream = new FileInputStream(file_path);
 

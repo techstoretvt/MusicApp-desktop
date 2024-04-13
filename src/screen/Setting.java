@@ -7,7 +7,7 @@ package screen;
 import component.CustomScrollBarUI;
 import component.ModelHenGio;
 import javax.swing.ImageIcon;
-import services.LocalData;
+import helpers.LocalData;
 import frame.MainJFrame;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -20,12 +20,12 @@ import component.MyCustomDialog;
  *
  * @author tranv
  */
-public class SettingPanel extends javax.swing.JPanel {
+public class Setting extends javax.swing.JPanel {
 
     /**
      * Creates new form SettingPanel
      */
-    public SettingPanel() {
+    public Setting() {
         initComponents();
         jScrollPane3.getVerticalScrollBar().setUnitIncrement(10);
         jScrollPane3.getVerticalScrollBar().setUI(new CustomScrollBarUI());
@@ -163,9 +163,10 @@ public class SettingPanel extends javax.swing.JPanel {
                     .addComponent(jLabel3)
                     .addComponent(remoteId))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(btnGiaoDien))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnGiaoDien)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnHenGio)

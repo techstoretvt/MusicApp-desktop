@@ -5,9 +5,11 @@
 package screen;
 
 import component.CustomScrollBarUI;
-import component.ItemNgheSiPanel;
-import model.Casi;
-import model.TimKiemCaSi;
+import component.ItemMusic;
+import model.BaiHat;
+import model.TimKiemBaiHat;
+import java.awt.BorderLayout;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,46 +20,52 @@ import api.ApiServiceV1;
  *
  * @author tranv
  */
-public class NgheSiSearchPanel extends javax.swing.JPanel {
+public class BaiHatSearch extends javax.swing.JPanel {
+    
+    public static ArrayList<BaiHat> dsBaiHat;
 
     /**
      * Creates new form BaiHatSearchPanel
      */
-    public NgheSiSearchPanel(String keyword) {
+    public BaiHatSearch(String keyword) {
         initComponents();
-
-        jScrollPane1.getHorizontalScrollBar().setUnitIncrement(10);
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
-
-        handleTimCaSi(keyword);
-
+        handleTimBaiHat(keyword);
     }
 
-    public void handleTimCaSi(String keyword) {
+    public void handleTimBaiHat(String keyword) {
 
-        ApiServiceV1.apiServiceV1.timKiemCaSi(keyword, "0", "10").enqueue(new Callback<TimKiemCaSi>() {
+        ApiServiceV1.apiServiceV1.timKiemBaiHat(keyword, "0", "10").enqueue(new Callback<TimKiemBaiHat>() {
             @Override
-            public void onResponse(Call<TimKiemCaSi> call, Response<TimKiemCaSi> rspns) {
-                PanelContainerNgheSi.removeAll();
-                TimKiemCaSi res = rspns.body();
+            public void onResponse(Call<TimKiemBaiHat> call, Response<TimKiemBaiHat> rspns) {
+                PanelContainerMusic.removeAll();
+                TimKiemBaiHat res = rspns.body();
                 if (res != null && res.getErrCode() == 0) {
-                    int size = res.getData().size();
-                    for (int i = 0; i < size; i++) {
-                        Casi cs = res.getCaSiIndex(i);
-                        JPanel pn = new ItemNgheSiPanel(cs);
-                        PanelContainerNgheSi.add(pn);
-                    }
-                    PanelContainerNgheSi.revalidate();
-                    PanelContainerNgheSi.repaint();
-                } else {
-                    System.out.println("ko tim thay ca si");
-                }
 
+                    dsBaiHat = new ArrayList<>();
+                    
+                    new Thread(() -> {
+                        int size = res.getData().size();
+                        for (int i = 0; i < size; i++) {
+                            BaiHat bh = res.getItemIndex(i);
+                            JPanel pnBaiHat = new ItemMusic(bh, i + 1, "timKiem");
+                            PanelContainerMusic.add(pnBaiHat, BorderLayout.CENTER);
+                            
+                            dsBaiHat.add(bh);
+                        }
+                        PanelContainerMusic.revalidate();
+                        PanelContainerMusic.repaint();
+                    }).start();
+
+                } else {
+                    System.out.println("KO tim thay bai hat");
+                }
             }
 
             @Override
-            public void onFailure(Call<TimKiemCaSi> call, Throwable thrwbl) {
+            public void onFailure(Call<TimKiemBaiHat> call, Throwable thrwbl) {
+                System.out.println("Error tim bai hat");
                 throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
             }
         });
@@ -74,29 +82,26 @@ public class NgheSiSearchPanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        PanelContainerNgheSi = new javax.swing.JPanel();
+        PanelContainerMusic = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(23, 15, 35));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Nghệ sĩ");
+        jLabel1.setText("Bài hát");
 
-        jScrollPane1.setBackground(new java.awt.Color(23, 15, 35));
         jScrollPane1.setBorder(null);
 
-        PanelContainerNgheSi.setBackground(new java.awt.Color(23, 15, 35));
-        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout();
-        flowLayout1.setAlignOnBaseline(true);
-        PanelContainerNgheSi.setLayout(flowLayout1);
+        PanelContainerMusic.setBackground(new java.awt.Color(23, 15, 35));
+        PanelContainerMusic.setLayout(new javax.swing.BoxLayout(PanelContainerMusic, javax.swing.BoxLayout.PAGE_AXIS));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Đang tải...");
-        PanelContainerNgheSi.add(jLabel2);
+        PanelContainerMusic.add(jLabel2);
 
-        jScrollPane1.setViewportView(PanelContainerNgheSi);
+        jScrollPane1.setViewportView(PanelContainerMusic);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -105,7 +110,7 @@ public class NgheSiSearchPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(355, Short.MAX_VALUE))
+                .addContainerGap(218, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
@@ -114,13 +119,13 @@ public class NgheSiSearchPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel PanelContainerNgheSi;
+    private javax.swing.JPanel PanelContainerMusic;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

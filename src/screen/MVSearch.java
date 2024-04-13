@@ -18,12 +18,12 @@ import api.ApiServiceV1;
  *
  * @author tranv
  */
-public class MVSearchPanel extends javax.swing.JPanel {
+public class MVSearch extends javax.swing.JPanel {
 
     /**
      * Creates new form BaiHatSearchPanel
      */
-    public MVSearchPanel(String keyword) {
+    public MVSearch(String keyword) {
         initComponents();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());

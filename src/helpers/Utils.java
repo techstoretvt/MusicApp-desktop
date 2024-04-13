@@ -4,7 +4,6 @@
  */
 package helpers;
 
-import services.LocalData;
 import component.MyCustomDialog;
 import api.ApiServiceV1;
 import model.BaiHat;
@@ -27,7 +26,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import component.ItemMusicPanel;
+import component.ItemMusic;
 import component.PanelLogin;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,7 +37,7 @@ import frame.MainJFrame;
  *
  * @author tranv
  */
-public class utils {
+public class Utils {
 
     public static String getThoiGianBaiHat(int giay) {
         if (giay < 0) {
@@ -58,7 +57,7 @@ public class utils {
             imageUrl = new URL(url);
         } catch (MalformedURLException ex) {
             System.out.println("loi url");
-            Logger.getLogger(ItemMusicPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMusic.class.getName()).log(Level.SEVERE, null, ex);
         }
         ImageIcon originalIcon = new ImageIcon(imageUrl);
 

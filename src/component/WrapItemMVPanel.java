@@ -4,7 +4,7 @@
  */
 package component;
 
-import component.ItemMVPanel;
+import component.ItemMV;
 import model.BaiHat;
 import javax.swing.JPanel;
 
@@ -21,8 +21,8 @@ public class WrapItemMVPanel extends javax.swing.JPanel {
         initComponents();
         
         //test
-        JPanel pn1 = new ItemMVPanel(bh1);
-        JPanel pn2 = new ItemMVPanel(bh2);
+        JPanel pn1 = new ItemMV(bh1);
+        JPanel pn2 = new ItemMV(bh2);
         
         add(pn1);
         add(pn2);

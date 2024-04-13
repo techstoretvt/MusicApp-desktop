@@ -5,7 +5,7 @@
 package screen;
 
 import component.CustomScrollBarUI;
-import component.ItemMusicPanel;
+import component.ItemMusic;
 import model.BaiHat;
 import model.ChiTietDanhSachPhat;
 import model.DanhSachPhat;
@@ -24,14 +24,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import api.ApiServiceV1;
 import services.MyMusicPlayer;
-import helpers.utils;
+import helpers.Utils;
 import frame.MainJFrame;
 
 /**
  *
  * @author tranv
  */
-public class ChiTietPlaylistPanel extends javax.swing.JPanel {
+public class ChiTietPlaylist extends javax.swing.JPanel {
 
     public static String idPlaylist = "59408314-7bbb-4842-882f-ef946a858902";
     public static ArrayList<BaiHat> dsBaiHat;
@@ -41,7 +41,7 @@ public class ChiTietPlaylistPanel extends javax.swing.JPanel {
     /**
      * Creates new form ChiTietPlaylistPanel
      */
-    public ChiTietPlaylistPanel(String idPlaylist) {
+    public ChiTietPlaylist(String idPlaylist) {
         initComponents();
 
         this.idPlaylist = idPlaylist;
@@ -53,7 +53,7 @@ public class ChiTietPlaylistPanel extends javax.swing.JPanel {
     }
 
     public void getPlaylist(String idPlaylist) {
-        String header = utils.getHeader();
+        String header = Utils.getHeader();
         dsBaiHat = new ArrayList<>();
 
         ApiServiceV1.apiServiceV1.getDanhSachPhatById(idPlaylist, header).enqueue(new Callback<GetDSPhatById>() {
@@ -68,11 +68,11 @@ public class ChiTietPlaylistPanel extends javax.swing.JPanel {
 
                     // add info playlist
                     if (size == 0) {
-                        ImageIcon icon = utils.getImageBaiHat(getClass().getResource("/icon/playlist-empty.png").toString(),
+                        ImageIcon icon = Utils.getImageBaiHat(getClass().getResource("/icon/playlist-empty.png").toString(),
                                 200, 200);
                         imgPlaylist.setIcon(icon);
                     } else {
-                        ImageIcon icon = utils.getImageBaiHat(listBH.get(0).getBaihat().getAnhBia(),
+                        ImageIcon icon = Utils.getImageBaiHat(listBH.get(0).getBaihat().getAnhBia(),
                                 200, 200);
                         imgPlaylist.setIcon(icon);
                     }
@@ -81,7 +81,7 @@ public class ChiTietPlaylistPanel extends javax.swing.JPanel {
                     // add list music
                     for (int i = 0; i < size; i++) {
                         ChiTietDanhSachPhat bh = listBH.get(i);
-                        JPanel pnMusic = new ItemMusicPanel(bh.getBaihat(), i + 1, "Playlist");
+                        JPanel pnMusic = new ItemMusic(bh.getBaihat(), i + 1, "Playlist");
                         PanelListMusic.add(pnMusic);
 
                         dsBaiHat.add(bh.getBaihat());
@@ -256,7 +256,7 @@ public class ChiTietPlaylistPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnOptionActionPerformed
 
     public void handelDeletePlaylist(String id) {
-        String header = utils.getHeader();
+        String header = Utils.getHeader();
         
         ApiServiceV1.apiServiceV1.xoaDanhSachPhatById(id, header).enqueue(new Callback<ResponseDefault>() {
             @Override
@@ -281,7 +281,7 @@ public class ChiTietPlaylistPanel extends javax.swing.JPanel {
     }
     
     public void handleDoiTenDS(String id, String name) {
-        String header = utils.getHeader();
+        String header = Utils.getHeader();
         
         ApiServiceV1.apiServiceV1.doiTenDanhSach(id, name, header).enqueue(new Callback<ResponseDefault>() {
             @Override

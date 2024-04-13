@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import component.PhatKeTiepPanel;
 import services.MyMusicPlayer;
-import helpers.utils;
+import helpers.Utils;
 
 /**
  *
@@ -58,11 +58,11 @@ public class MiniAppFrame extends javax.swing.JFrame {
             BaiHat bh = MyMusicPlayer.dsBaiHat.get(MyMusicPlayer.position);
 
             new Thread(() -> {
-                ImageIcon anh = utils.getImageBaiHat(bh.getAnhBia(), 50, 50);
+                ImageIcon anh = Utils.getImageBaiHat(bh.getAnhBia(), 50, 50);
                 imgBaiHat.setIcon(anh);
             }).start();
 
-            lblTenCaSi.setText(utils.getTenCaSi(bh));
+            lblTenCaSi.setText(Utils.getTenCaSi(bh));
             lblTenBaiHat.setText(bh.getTenBaiHat());
 
             if (MyMusicPlayer.isPlay) {

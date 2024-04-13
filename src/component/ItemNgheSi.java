@@ -4,8 +4,8 @@
  */
 package component;
 
-import component.CircleImagePanel;
-import model.LiveItem;
+import component.CircleImage;
+import model.Casi;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
@@ -13,32 +13,35 @@ import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import frame.MainJFrame;
-import screen.ChiTietLivePanel;
+import screen.ChiTietCaSi;
 
 /**
  *
  * @author tranv
  */
-public class ItemLivePanel extends javax.swing.JPanel {
+public class ItemNgheSi extends javax.swing.JPanel {
 
     /**
-     * Creates new form ItemLivePanel
+     * Creates new form ItemNgheSiPanel
      */
-    public ItemLivePanel(LiveItem live) {
+    
+    
+    public ItemNgheSi(Casi cs) {
         initComponents();
+
+        JPanel pn = new CircleImage(cs.getAnh(),150, 150);
         
-        JPanel pn = new CircleImagePanel(live.getAvatar(),150, 150);
-        
-         pn.addMouseListener(new  MouseAdapter() {
+        pn.addMouseListener(new  MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                MainJFrame.ShowPanelNoHistory("ChiTietLive", new ChiTietLivePanel(live.getIdRoom(), live.getAvatar()));
+                MainJFrame.ShowPanel("ChiTietCaSi", new ChiTietCaSi(cs.getId()));
+                
             }
             
         });
-        
+
         add(pn);
-        
+
         JPanel pn2 = new JPanel();
         pn2.setBackground(new Color(23,15,35));
         FlowLayout fl = new FlowLayout();
@@ -46,13 +49,13 @@ public class ItemLivePanel extends javax.swing.JPanel {
         pn2.setLayout(fl);
 
         JLabel lb = new JLabel();
-        lb.setText(live.getNameRoom());
+        lb.setText(cs.getTenCaSi());
         lb.setForeground(Color.WHITE);
 
         pn2.add(lb);
 
         add(pn2);
-        
+
     }
 
     /**
@@ -64,6 +67,7 @@ public class ItemLivePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        setBackground(new java.awt.Color(153, 153, 0));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
     }// </editor-fold>//GEN-END:initComponents
 

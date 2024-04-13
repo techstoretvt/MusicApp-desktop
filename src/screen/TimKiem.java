@@ -10,17 +10,17 @@ import java.awt.Color;
  *
  * @author tranv
  */
-public class TimKiemPanel extends javax.swing.JPanel {
+public class TimKiem extends javax.swing.JPanel {
 
     public static String typeSearch = "BaiHat";
     public static String keyword = "";
     /**
      * Creates new form TimKiemPanel
      */
-    public TimKiemPanel(String keyword) {
+    public TimKiem(String keyword) {
         initComponents();
         
-        TimKiemPanel.keyword = keyword;
+        TimKiem.keyword = keyword;
         
         switchTypeSearch(typeSearch);
         
@@ -36,7 +36,7 @@ public class TimKiemPanel extends javax.swing.JPanel {
                 btnMV.setBackground(new Color(23, 15, 35));
                 
                 PanelContentSearch.removeAll();
-                PanelContentSearch.add(new BaiHatSearchPanel(keyword));
+                PanelContentSearch.add(new BaiHatSearch(keyword));
                 break;
             }
             case "NgheSi": {
@@ -45,7 +45,7 @@ public class TimKiemPanel extends javax.swing.JPanel {
                 btnMV.setBackground(new Color(23, 15, 35));
                 
                 PanelContentSearch.removeAll();
-                PanelContentSearch.add(new NgheSiSearchPanel(keyword));
+                PanelContentSearch.add(new NgheSiSearch(keyword));
                 break;
             }
             case "MV": {
@@ -54,7 +54,7 @@ public class TimKiemPanel extends javax.swing.JPanel {
                 btnMV.setBackground(new Color(204, 0, 204));
                 
                 PanelContentSearch.removeAll();
-                PanelContentSearch.add(new MVSearchPanel(keyword));
+                PanelContentSearch.add(new MVSearch(keyword));
                 break;
             }
             default: {

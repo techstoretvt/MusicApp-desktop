@@ -6,7 +6,7 @@ package component;
 
 import model.BaiHat;
 import javax.swing.ImageIcon;
-import helpers.utils;
+import helpers.Utils;
 
 /**
  *
@@ -25,12 +25,12 @@ public class ThongTinBaiHat extends javax.swing.JPanel {
         this.bh = bh;
         
         new Thread(()-> {
-            ImageIcon icon = utils.getImageBaiHat(bh.getAnhBia(), 400, 300);
+            ImageIcon icon = Utils.getImageBaiHat(bh.getAnhBia(), 400, 300);
             imgBaiHat.setIcon(icon);
         }).start();
         
         lblTenBH.setText(bh.getTenBaiHat());
-        lblThoiGian.setText(utils.getThoiGianBaiHat((int) bh.getThoiGian() / 1000));
+        lblThoiGian.setText(Utils.getThoiGianBaiHat((int) bh.getThoiGian() / 1000));
         lblLuotNghe.setText(String.valueOf(bh.getLuotNghe()));
         lblNhacSi.setText(bh.getTenNhacSi()); 
         lblTheLoai.setText(bh.getTheLoai());

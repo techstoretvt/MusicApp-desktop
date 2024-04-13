@@ -4,8 +4,8 @@
  */
 package screen;
 
-import component.ItemMusicPanel;
-import component.CircleImagePanel;
+import component.ItemMusic;
+import component.CircleImage;
 import component.CustomScrollBarUI;
 import model.BaiHat;
 import model.Casi;
@@ -20,13 +20,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import api.ApiServiceV1;
 import services.MyMusicPlayer;
-import helpers.utils;
+import helpers.Utils;
 
 /**
  *
  * @author tranv
  */
-public class ChiTietCaSiPanel extends javax.swing.JPanel {
+public class ChiTietCaSi extends javax.swing.JPanel {
 
     public static ArrayList<BaiHat> dsBaiHat;
     public static String idCaSi = "";
@@ -34,7 +34,7 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
     /**
      * Creates new form ChiTietCaSiPanel
      */
-    public ChiTietCaSiPanel(String idCaSi) {
+    public ChiTietCaSi(String idCaSi) {
         initComponents();
 
         this.idCaSi = idCaSi;
@@ -48,7 +48,7 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
     }
 
     public void checkQuamTamCS() {
-        String header = utils.getHeader();
+        String header = Utils.getHeader();
 
         ApiServiceV1.apiServiceV1.kiemTraQuanTamCaSi(idCaSi, header).enqueue(new Callback<ResponseDefault>() {
             @Override
@@ -80,7 +80,7 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
                 GetCaSiByID res = rspns.body();
                 if (res != null && res.getErrCode() == 0) {
                     Casi cs = res.getData();
-                    JPanel pnAnh = new CircleImagePanel(cs.getAnh(), 150, 150);
+                    JPanel pnAnh = new CircleImage(cs.getAnh(), 150, 150);
                     PanelAnhCS.setLayout(new BorderLayout());
                     PanelAnhCS.add(pnAnh);
 
@@ -113,7 +113,7 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
                     int size = dsBaiHat.size();
                     for (int i = 0; i < size; i++) {
                         BaiHat currentBH = dsBaiHat.get(i);
-                        JPanel bh = new ItemMusicPanel(currentBH, i + 1, "caSi");
+                        JPanel bh = new ItemMusic(currentBH, i + 1, "caSi");
                         PanelBaiHatCaSi.add(bh);
                     }
                     PanelBaiHatCaSi.revalidate();
@@ -359,7 +359,7 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
 
     private void btnQuanTamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuanTamActionPerformed
         // TODO add your handling code here:
-        if (!utils.getIsLogin()) {
+        if (!Utils.getIsLogin()) {
             return;
         }
         toggleQuanTamCaSi();
@@ -372,7 +372,7 @@ public class ChiTietCaSiPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnPlayActionPerformed
 
     public void toggleQuanTamCaSi() {
-        String header = utils.getHeader();
+        String header = Utils.getHeader();
 
         ApiServiceV1.apiServiceV1.toggleQuanTamCasi(idCaSi, header).enqueue(new Callback<ResponseDefault>() {
             @Override

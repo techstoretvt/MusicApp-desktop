@@ -4,7 +4,7 @@
  */
 package screen;
 
-import component.ItemCommentPanel;
+import component.ItemComment;
 import com.google.gson.Gson;
 import com.teamdev.jxbrowser.browser.Browser;
 import com.teamdev.jxbrowser.engine.Engine;
@@ -21,13 +21,13 @@ import java.awt.event.ComponentListener;
 import javax.swing.JPanel;
 import helpers.AppConstants;
 import services.MySocketClient;
-import helpers.utils;
+import helpers.Utils;
 
 /**
  *
  * @author tranv
  */
-public class LivePanel extends javax.swing.JPanel {
+public class RoomLive extends javax.swing.JPanel {
 
     private Browser browser;
     private boolean isLoading = false;
@@ -37,14 +37,14 @@ public class LivePanel extends javax.swing.JPanel {
     /**
      * Creates new form LivePanel
      */
-    public LivePanel(String name, String avatar) {
+    public RoomLive(String name, String avatar) {
         initComponents();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
         jScrollPane2.getVerticalScrollBar().setUnitIncrement(10);
         jScrollPane2.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
-        idRoom = utils.randomKeyLogin();
+        idRoom = Utils.randomKeyLogin();
         System.out.println("idRoom: " + idRoom);
         new Thread(() -> {
             Engine engine = Engine.newInstance(EngineOptions.newBuilder(RenderingMode.OFF_SCREEN)
@@ -100,7 +100,7 @@ public class LivePanel extends javax.swing.JPanel {
                 Gson gson = new Gson();
                 NewComentLive newCmt = gson.fromJson(args[0].toString(), NewComentLive.class);
 
-                JPanel newPnCmt = new ItemCommentPanel(newCmt);
+                JPanel newPnCmt = new ItemComment(newCmt);
 
                 panelListCmt.add(newPnCmt);
 

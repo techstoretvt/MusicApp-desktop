@@ -4,7 +4,7 @@
  */
 package screen;
 
-import component.ItemCommentPanel;
+import component.ItemComment;
 import com.google.gson.Gson;
 import com.teamdev.jxbrowser.browser.Browser;
 import com.teamdev.jxbrowser.engine.Engine;
@@ -23,14 +23,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import helpers.AppConstants;
 import services.MySocketClient;
-import helpers.utils;
+import helpers.Utils;
 import frame.MainJFrame;
 
 /**
  *
  * @author tranv
  */
-public class ChiTietLivePanel extends javax.swing.JPanel {
+public class ChiTietLive extends javax.swing.JPanel {
 
     private Browser browser;
 
@@ -44,7 +44,7 @@ public class ChiTietLivePanel extends javax.swing.JPanel {
     /**
      * Creates new form ChiTietLivePanel
      */
-    public ChiTietLivePanel(String idRoom, String avatarRoom) {
+    public ChiTietLive(String idRoom, String avatarRoom) {
         initComponents();
 
         this.idRoom = idRoom;
@@ -67,7 +67,7 @@ public class ChiTietLivePanel extends javax.swing.JPanel {
             panelVideo.repaint();
         }).start();
 
-        JPanel newPnCmt = new ItemCommentPanel(new NewComentLive("Chào mừng bạn đã đến", "author", avatarRoom));
+        JPanel newPnCmt = new ItemComment(new NewComentLive("Chào mừng bạn đã đến", "author", avatarRoom));
 
         panelListCmt.add(newPnCmt);
 
@@ -124,7 +124,7 @@ public class ChiTietLivePanel extends javax.swing.JPanel {
                 Gson gson = new Gson();
                 NewComentLive newCmt = gson.fromJson(args[0].toString(), NewComentLive.class);
 
-                JPanel newPnCmt = new ItemCommentPanel(newCmt);
+                JPanel newPnCmt = new ItemComment(newCmt);
 
                 panelListCmt.add(newPnCmt);
 
@@ -269,7 +269,7 @@ public class ChiTietLivePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_ipCommentActionPerformed
 
     public void addComment() {
-        if (!utils.getIsLogin()) {
+        if (!Utils.getIsLogin()) {
             return;
         }
 
@@ -279,7 +279,7 @@ public class ChiTietLivePanel extends javax.swing.JPanel {
         }
 
         String nameUser = MainJFrame.userInfo.getFirstName() + " " + MainJFrame.userInfo.getLastName();
-        String avatar = utils.getAnhUser(MainJFrame.userInfo);
+        String avatar = Utils.getAnhUser(MainJFrame.userInfo);
 
         Socket mSocket = MySocketClient.getSocket();
         mSocket.emit("new-cmt-live", idRoom, noiDung, nameUser, avatar);

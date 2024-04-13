@@ -9,19 +9,19 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import javax.swing.ImageIcon;
-import helpers.utils;
+import helpers.Utils;
 
 /**
  *
  * @author tranv
  */
-public class CircleImagePanel extends javax.swing.JPanel {
+public class CircleImage extends javax.swing.JPanel {
 
     public String url;
     /**
      * Creates new form CircleImagePanel
      */
-    public CircleImagePanel(String url, int w,int h) {
+    public CircleImage(String url, int w,int h) {
         initComponents();
         setPreferredSize(new Dimension(w,h));
         this.url = url;
@@ -44,7 +44,7 @@ public class CircleImagePanel extends javax.swing.JPanel {
         Graphics2D g2 = (Graphics2D) g;
         g2.setClip(circle);
 
-        ImageIcon img = utils.getImageBaiHat(url, w, h);
+        ImageIcon img = Utils.getImageBaiHat(url, w, h);
 
         // Vẽ ảnh trong phạm vi hình tròn
         g.drawImage(img.getImage(), 0, 0, null);

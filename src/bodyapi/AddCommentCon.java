@@ -1,4 +1,6 @@
-package model;
+package bodyapi;
+
+import model.CommentBaiHatCon;
 
 public class AddCommentCon {
     private int errCode, status;

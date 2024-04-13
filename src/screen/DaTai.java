@@ -5,23 +5,23 @@
 package screen;
 
 import component.CustomScrollBarUI;
-import component.ItemMusicPanel;
+import component.ItemMusic;
 import model.BaiHat;
 import java.util.ArrayList;
 import javax.swing.JPanel;
-import services.LocalData;
+import helpers.LocalData;
 
 /**
  *
  * @author tranv
  */
-public class DaTaiPanel extends javax.swing.JPanel {
+public class DaTai extends javax.swing.JPanel {
 
     public static ArrayList<BaiHat> dsBaiHat;
     /**
      * Creates new form DaTaiPanel
      */
-    public DaTaiPanel() {
+    public DaTai() {
         initComponents();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
@@ -35,7 +35,7 @@ public class DaTaiPanel extends javax.swing.JPanel {
         
         for (int i=0;i<size;i++) {
             BaiHat bh = dsBaiHat.get(i);
-            JPanel pn = new ItemMusicPanel(bh, i+1, "DaTai");
+            JPanel pn = new ItemMusic(bh, i+1, "DaTai");
             PanelListMusic.add(pn);
         }
         PanelListMusic.revalidate();

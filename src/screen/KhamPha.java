@@ -5,7 +5,7 @@
 package screen;
 
 import component.CustomScrollBarUI;
-import component.ItemMusicPanel;
+import component.ItemMusic;
 import model.BaiHat;
 import model.GetListBaiHat;
 import java.awt.Color;
@@ -20,21 +20,21 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import static screen.ThuVienPanel.listDaNghe;
+import static screen.ThuVien.listDaNghe;
 import api.ApiServiceV1;
-import services.LocalData;
-import helpers.utils;
+import helpers.LocalData;
+import helpers.Utils;
 
 /**
  *
  * @author tranv
  */
-public class KhamPhaPanel extends javax.swing.JPanel {
+public class KhamPha extends javax.swing.JPanel {
 
     public static ArrayList<BaiHat> dsBaiHat;
     public int maxCountDaNghe = 3;
 
-    public KhamPhaPanel() {
+    public KhamPha() {
         initComponents();
 
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
@@ -56,7 +56,7 @@ public class KhamPhaPanel extends javax.swing.JPanel {
             int height = 0;
             int size = listDaNghe.size();
             for (int i = 0; i < size && i < maxCountDaNghe; i++) {
-                ItemMusicPanel itemBH = new ItemMusicPanel(listDaNghe.get(i), (i + 1), "DaNghe");
+                ItemMusic itemBH = new ItemMusic(listDaNghe.get(i), (i + 1), "DaNghe");
                 pnDaNghe.add(itemBH);
                 height += 71;
             }
@@ -86,7 +86,7 @@ public class KhamPhaPanel extends javax.swing.JPanel {
                     dsBaiHat = res.getData();
                     int sizeDs = dsBaiHat.size();
                     for (int i = 0; i < sizeDs; i++) {
-                        JPanel pn = new ItemMusicPanel(res.getData().get(i), i + 1, "khampha");
+                        JPanel pn = new ItemMusic(res.getData().get(i), i + 1, "khampha");
                         panelListMusic.add(pn);
                     }
                     panelListMusic.revalidate();
@@ -115,7 +115,7 @@ public class KhamPhaPanel extends javax.swing.JPanel {
                     dsBaiHat = res.getData();
                     int sizeDs = dsBaiHat.size();
                     for (int i = 0; i < sizeDs; i++) {
-                        JPanel pn = new ItemMusicPanel(res.getData().get(i), i + 1, "khampha");
+                        JPanel pn = new ItemMusic(res.getData().get(i), i + 1, "khampha");
                         panelListMusic.add(pn);
                     }
                     panelListMusic.revalidate();

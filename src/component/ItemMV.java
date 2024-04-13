@@ -8,21 +8,21 @@ import model.BaiHat;
 import model.Casi;
 import java.awt.Color;
 import javax.swing.ImageIcon;
-import helpers.utils;
+import helpers.Utils;
 import frame.MainJFrame;
-import screen.ChiTietMVPanel;
+import screen.ChiTietMV;
 
 /**
  *
  * @author tranv
  */
-public class ItemMVPanel extends javax.swing.JPanel {
+public class ItemMV extends javax.swing.JPanel {
 
     BaiHat bh;
     /**
      * Creates new form ItemMVPanel
      */
-    public ItemMVPanel(BaiHat bh) {
+    public ItemMV(BaiHat bh) {
         initComponents();
         
         this.bh = bh;
@@ -37,13 +37,13 @@ public class ItemMVPanel extends javax.swing.JPanel {
             imgCaSi.setIcon(null);
         }
         else {
-            ImageIcon img = utils.getImageBaiHat(bh.getAnhBia(), 400, 400);
+            ImageIcon img = Utils.getImageBaiHat(bh.getAnhBia(), 400, 400);
             imgBaiHat.setIcon(img);
             lbTenBaiHat.setText(bh.getTenBaiHat());
-            lbTenCaSi.setText(utils.getTenCaSi(bh));
+            lbTenCaSi.setText(Utils.getTenCaSi(bh));
             
             Casi cs = bh.getBaiHat_caSis().get(0).getCasi();
-            ImageIcon img2 = utils.getImageBaiHat(cs.getAnh(), 50, 50);
+            ImageIcon img2 = Utils.getImageBaiHat(cs.getAnh(), 50, 50);
             imgCaSi.setIcon(img2);
         }
     }
@@ -117,11 +117,11 @@ public class ItemMVPanel extends javax.swing.JPanel {
         if(bh != null ) {
             
             if(MainJFrame.historyPanel.peek().equals("ChiTietMV")) {
-                ChiTietMVPanel.idMV = bh.getId();
+                ChiTietMV.idMV = bh.getId();
                 MainJFrame.resetPanel();
             }
             else {
-                MainJFrame.ShowPanel("ChiTietMV", new ChiTietMVPanel(bh.getId()));
+                MainJFrame.ShowPanel("ChiTietMV", new ChiTietMV(bh.getId()));
             }
             
             

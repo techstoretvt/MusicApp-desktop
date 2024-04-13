@@ -4,11 +4,11 @@
  */
 package screen;
 
-import component.ItemPlaylistPanel;
-import component.ItemNgheSiPanel;
+import component.ItemPlaylist;
+import component.ItemNgheSi;
 import bodyapi.BodyThemDSPhat;
 import component.CustomScrollBarUI;
-import component.ItemMusicPanel;
+import component.ItemMusic;
 import model.BaiHat;
 import model.DanhSachPhat;
 import model.GetListCSQuanTam;
@@ -26,20 +26,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import api.ApiServiceV1;
-import services.LocalData;
-import helpers.utils;
+import helpers.LocalData;
+import helpers.Utils;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import org.json.JSONObject;
 
 /**
  *
  * @author tranv
  */
-public class ThuVienPanel extends javax.swing.JPanel {
+public class ThuVien extends javax.swing.JPanel {
 
     public static ArrayList<BaiHat> listDaNghe;
+
     /**
      * Creates new form ThuVienPanel
      */
-    public ThuVienPanel() {
+    public ThuVien() {
         initComponents();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
@@ -49,10 +53,8 @@ public class ThuVienPanel extends javax.swing.JPanel {
 
     }
 
-    
-
     public void getListCaSi() {
-        String header = utils.getHeader();
+        String header = Utils.getHeader();
 
         ApiServiceV1.apiServiceV1.getListCaSiQuanTam(header).enqueue(new Callback<GetListCSQuanTam>() {
             @Override
@@ -67,7 +69,7 @@ public class ThuVienPanel extends javax.swing.JPanel {
                             break;
                         }
                         QuanTamCS cs = data.get(i);
-                        JPanel pn = new ItemNgheSiPanel(cs.getCasi());
+                        JPanel pn = new ItemNgheSi(cs.getCasi());
                         PanelListCS.add(pn);
                     }
 
@@ -99,7 +101,7 @@ public class ThuVienPanel extends javax.swing.JPanel {
     }
 
     public void getPlaylist() {
-        String header = utils.getHeader();
+        String header = Utils.getHeader();
 
         ApiServiceV1.apiServiceV1.getDanhSachPhat(header).enqueue(new Callback<GetListPlaylist>() {
             @Override
@@ -115,7 +117,7 @@ public class ThuVienPanel extends javax.swing.JPanel {
                             break;
                         }
                         DanhSachPhat playlist = listPlaylist.get(i);
-                        JPanel pn = new ItemPlaylistPanel(playlist);
+                        JPanel pn = new ItemPlaylist(playlist);
                         PanelListPlaylist.add(pn);
                     }
                     if (size > 2 || true) {
@@ -248,10 +250,36 @@ public class ThuVienPanel extends javax.swing.JPanel {
                 JOptionPane.INFORMATION_MESSAGE);
         if (namePlaylist != null && !namePlaylist.isEmpty()) {
             System.out.println("Dữ liệu nhập vào: " + namePlaylist);
-            String header = utils.getHeader();
 
-            BodyThemDSPhat body = new BodyThemDSPhat(namePlaylist);
-            ApiServiceV1.apiServiceV1.themDanhSachPhat(body, header).enqueue(new Callback<ThemDSPhat>() {
+            //v1
+//            String header = utils.getHeader();
+//
+//            BodyThemDSPhat body = new BodyThemDSPhat(namePlaylist);
+//            ApiServiceV1.apiServiceV1.themDanhSachPhat(body, header).enqueue(new Callback<ThemDSPhat>() {
+//                @Override
+//                public void onResponse(Call<ThemDSPhat> call, Response<ThemDSPhat> rspns) {
+//                    ThemDSPhat res = rspns.body();
+//                    if (res != null && res.getErrCode() == 0) {
+//                        getPlaylist();
+//                    } else {
+//                        System.out.println("Warning: " + res.getErrMessage());
+//                        JOptionPane.showMessageDialog(null, res.getErrMessage(),
+//                                "Thông báo", JOptionPane.WARNING_MESSAGE);
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<ThemDSPhat> call, Throwable thrwbl) {
+//                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//                }
+//            });
+            //v2
+            String header = Utils.getHeader();
+            JSONObject postData = new JSONObject();
+            postData.put("tenDanhSach", namePlaylist);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), postData.toString());
+            
+            ApiServiceV1.apiServiceV1.themDanhSachPhat2(requestBody, header).enqueue(new Callback<ThemDSPhat>() {
                 @Override
                 public void onResponse(Call<ThemDSPhat> call, Response<ThemDSPhat> rspns) {
                     ThemDSPhat res = rspns.body();
@@ -269,6 +297,8 @@ public class ThuVienPanel extends javax.swing.JPanel {
                     throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
                 }
             });
+            
+            
 
         } else {
             System.out.println("Người dùng đã hủy bỏ hộp thoại.");

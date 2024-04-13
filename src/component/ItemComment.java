@@ -6,21 +6,21 @@ package component;
 
 import model.NewComentLive;
 import javax.swing.ImageIcon;
-import helpers.utils;
+import helpers.Utils;
 
 /**
  *
  * @author tranv
  */
-public class ItemCommentPanel extends javax.swing.JPanel {
+public class ItemComment extends javax.swing.JPanel {
 
     /**
      * Creates new form ItemCommentPanel
      */
-    public ItemCommentPanel(NewComentLive cmt) {
+    public ItemComment(NewComentLive cmt) {
         initComponents();
         
-        ImageIcon icon = utils.getImageBaiHat(cmt.getAvatar(), 35, 35);
+        ImageIcon icon = Utils.getImageBaiHat(cmt.getAvatar(), 35, 35);
         imgUser.setIcon(icon);
         
         nameUser.setText(cmt.getNameUser());

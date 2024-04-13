@@ -37,6 +37,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
 import helpers.AppConstants;
+import okhttp3.RequestBody;
 
 /**
  *
@@ -170,5 +171,9 @@ public interface ApiServiceV1 {
     
     @GET("/api/v2/get-list-keyword-search-mobile")
     Call<KeywordGoogle> getGoiYTuKhoa(@Query("value") String value);
+    
+    
+    @POST("/api/v2/them-danh-sach-phat")
+    Call<ThemDSPhat> themDanhSachPhat2(@Body RequestBody postData, @Header("authorization") String authorization);
 
 }

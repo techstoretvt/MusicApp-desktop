@@ -24,7 +24,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import api.ApiServiceV1;
 import helpers.AppConstants;
-import helpers.utils;
+import helpers.Utils;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
@@ -32,7 +32,7 @@ import java.awt.event.ComponentListener;
  *
  * @author tranv
  */
-public class ChiTietMVPanel extends javax.swing.JPanel {
+public class ChiTietMV extends javax.swing.JPanel {
 
     public static String idMV = "a1d52f6e-63db-46b9-9bf2-7d4023e6b9e2";
     private Browser browser;
@@ -41,7 +41,7 @@ public class ChiTietMVPanel extends javax.swing.JPanel {
     /**
      * Creates new form ChiTietMVPanel
      */
-    public ChiTietMVPanel(String idMV) {
+    public ChiTietMV(String idMV) {
         initComponents();
         this.idMV = idMV;
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
@@ -103,10 +103,10 @@ public class ChiTietMVPanel extends javax.swing.JPanel {
                     addVideo(videoId);
 
                     //set ui
-                    ImageIcon imgBH = utils.getImageBaiHat(bh.getAnhBia(), 50, 50);
+                    ImageIcon imgBH = Utils.getImageBaiHat(bh.getAnhBia(), 50, 50);
                     imgBaiHat.setIcon(imgBH);
                     lbTenBH.setText(bh.getTenBaiHat());
-                    lbTenCS.setText(utils.getTenCaSi(bh));
+                    lbTenCS.setText(Utils.getTenCaSi(bh));
 
                 } else {
                     System.out.println("khong tim thay bai hat");
