@@ -6,17 +6,15 @@ package frame;
 
 import model.BaiHat;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import component.PhatKeTiepPanel;
 import services.MyMusicPlayer;
 import helpers.Utils;
+import observer.MiniAppObserver;
+import observer.PhatKeTiepObserver;
 
 /**
  *
@@ -26,6 +24,10 @@ public class MiniAppFrame extends javax.swing.JFrame {
 
     public static boolean isOpen = false;
     private boolean isShowPhatKeTiep = false;
+    private MiniAppObserver miniAppObserver;
+    private PhatKeTiepPanel phatKeTiepPanel;
+    private PhatKeTiepObserver phatKeTiepObserver;
+    private boolean isZoom = true;
 
     /**
      * Creates new form MiniAppFrame
@@ -48,6 +50,18 @@ public class MiniAppFrame extends javax.swing.JFrame {
             }
 
         });
+        miniAppObserver = new MiniAppObserver(this);
+        MainJFrame.subject.attach(miniAppObserver);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                MainJFrame.subject.detach(miniAppObserver);
+            }
+
+        });
+
+        handeZoom();
 
         pack();
 
@@ -76,12 +90,18 @@ public class MiniAppFrame extends javax.swing.JFrame {
             if (isShowPhatKeTiep) {
                 ImageIcon icon = new ImageIcon(getClass().getResource("/icon/menu-music-active.png"));
                 btnPhatKeTiep.setIcon(icon);
+
+                updatePhatKeTiep();
             } else {
                 ImageIcon icon = new ImageIcon(getClass().getResource("/icon/menu-music.png"));
                 btnPhatKeTiep.setIcon(icon);
             }
 
         }
+    }
+
+    public void updatePhatKeTiep() {
+        phatKeTiepObserver.update();
     }
 
     /**
@@ -98,8 +118,9 @@ public class MiniAppFrame extends javax.swing.JFrame {
         imgBaiHat = new javax.swing.JLabel();
         lblTenBaiHat = new javax.swing.JLabel();
         lblTenCaSi = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        btnZoom = new javax.swing.JButton();
         btnShowMainApp = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         btnPrev = new javax.swing.JLabel();
         btnPause = new javax.swing.JLabel();
         btnNext = new javax.swing.JLabel();
@@ -107,6 +128,7 @@ public class MiniAppFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
+        setPreferredSize(new java.awt.Dimension(468, 90));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
@@ -116,11 +138,30 @@ public class MiniAppFrame extends javax.swing.JFrame {
 
         lblTenBaiHat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTenBaiHat.setForeground(new java.awt.Color(255, 255, 255));
+        lblTenBaiHat.setMaximumSize(new java.awt.Dimension(130, 0));
+        lblTenBaiHat.setMinimumSize(new java.awt.Dimension(130, 0));
+        lblTenBaiHat.setPreferredSize(new java.awt.Dimension(130, 0));
 
         lblTenCaSi.setForeground(new java.awt.Color(204, 204, 204));
+        lblTenCaSi.setMaximumSize(new java.awt.Dimension(130, 0));
+        lblTenCaSi.setMinimumSize(new java.awt.Dimension(130, 0));
+        lblTenCaSi.setPreferredSize(new java.awt.Dimension(130, 0));
 
-        jPanel3.setBackground(new java.awt.Color(23, 15, 35));
-        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
+        btnZoom.setBackground(new java.awt.Color(23, 15, 35));
+        btnZoom.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnZoom.setForeground(new java.awt.Color(255, 255, 255));
+        btnZoom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-left-20.png"))); // NOI18N
+        btnZoom.setBorder(null);
+        btnZoom.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnZoom.setFocusPainted(false);
+        btnZoom.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        btnZoom.setMaximumSize(new java.awt.Dimension(40, 23));
+        btnZoom.setPreferredSize(new java.awt.Dimension(40, 23));
+        btnZoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnZoomActionPerformed(evt);
+            }
+        });
 
         btnShowMainApp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-device-20.png"))); // NOI18N
         btnShowMainApp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -131,7 +172,9 @@ public class MiniAppFrame extends javax.swing.JFrame {
                 btnShowMainAppMouseClicked(evt);
             }
         });
-        jPanel3.add(btnShowMainApp);
+
+        jPanel3.setBackground(new java.awt.Color(23, 15, 35));
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
 
         btnPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/prev.png"))); // NOI18N
         btnPrev.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -182,25 +225,33 @@ public class MiniAppFrame extends javax.swing.JFrame {
                 .addComponent(imgBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTenBaiHat)
-                    .addComponent(lblTenCaSi))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTenBaiHat, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                    .addComponent(lblTenCaSi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addComponent(btnShowMainApp, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnZoom, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addComponent(lblTenBaiHat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(lblTenCaSi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(imgBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnZoom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(lblTenBaiHat)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(lblTenCaSi))
-                        .addComponent(imgBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0))
+                .addGap(15, 15, 15)
+                .addComponent(btnShowMainApp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_START);
@@ -229,53 +280,86 @@ public class MiniAppFrame extends javax.swing.JFrame {
     private void btnPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrevMouseClicked
         // TODO add your handling code here:
         MyMusicPlayer.preBaiHat();
-        loadGiaoDienBaiHat();
-        resetPhatKeTiep();
+//        loadGiaoDienBaiHat();
     }//GEN-LAST:event_btnPrevMouseClicked
 
     private void btnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseClicked
         // TODO add your handling code here:
         MyMusicPlayer.nextBaiHat();
-        loadGiaoDienBaiHat();
-        resetPhatKeTiep();
+//        loadGiaoDienBaiHat();
     }//GEN-LAST:event_btnNextMouseClicked
 
     private void btnPauseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPauseMouseClicked
         // TODO add your handling code here:
         if (MyMusicPlayer.isPlay) {
             MyMusicPlayer.pause();
+            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/icon-play.png"));
+            btnPause.setIcon(icon);
         } else {
             MyMusicPlayer.resume();
+            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/icon-pause.png"));
+            btnPause.setIcon(icon);
         }
-        loadGiaoDienBaiHat();
-        resetPhatKeTiep();
     }//GEN-LAST:event_btnPauseMouseClicked
 
     private void btnPhatKeTiepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPhatKeTiepMouseClicked
         // TODO add your handling code here:
         isShowPhatKeTiep = !isShowPhatKeTiep;
-        loadGiaoDienBaiHat();
+//        loadGiaoDienBaiHat();
 
-        resetPhatKeTiep();
-
-    }//GEN-LAST:event_btnPhatKeTiepMouseClicked
-
-    public void resetPhatKeTiep() {
         if (isShowPhatKeTiep) {
-            setSize(428, 400);
-            JPanel pn = new PhatKeTiepPanel(true);
-            jPanel1.add(pn, BorderLayout.CENTER);
+            setSize(468, 400);
+            phatKeTiepPanel = new PhatKeTiepPanel(true);
+            phatKeTiepObserver = new PhatKeTiepObserver(phatKeTiepPanel);
+            jPanel1.add(phatKeTiepPanel, BorderLayout.CENTER);
+
+            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/menu-music-active.png"));
+            btnPhatKeTiep.setIcon(icon);
 
         } else {
-            setSize(428, 90);
+
+            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/menu-music.png"));
+            btnPhatKeTiep.setIcon(icon);
+            setSize(468, 90);
             try {
                 jPanel1.remove(1);
             } catch (Exception e) {
             }
 
         }
+
         jPanel1.repaint();
         jPanel1.revalidate();
+
+    }//GEN-LAST:event_btnPhatKeTiepMouseClicked
+
+    private void btnZoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZoomActionPerformed
+        // TODO add your handling code here:
+        handeZoom();
+    }//GEN-LAST:event_btnZoomActionPerformed
+
+    public void handeZoom() {
+        if (isZoom) {
+            new Thread(() -> {
+                setSize(300, 90);
+                jPanel3.setVisible(false);
+
+                ImageIcon icon = new ImageIcon(getClass().getResource("/icon/icons-right-20.png"));
+                btnZoom.setIcon(icon);
+            }).start();
+
+        } else {
+            int height = 90;
+            if (isShowPhatKeTiep) {
+                height = 400;
+            }
+            setSize(468, height);
+            jPanel3.setVisible(true);
+
+            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/icons-left-20.png"));
+            btnZoom.setIcon(icon);
+        }
+        isZoom = !isZoom;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -284,6 +368,7 @@ public class MiniAppFrame extends javax.swing.JFrame {
     private javax.swing.JLabel btnPhatKeTiep;
     private javax.swing.JLabel btnPrev;
     private javax.swing.JLabel btnShowMainApp;
+    private javax.swing.JButton btnZoom;
     private javax.swing.JLabel imgBaiHat;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

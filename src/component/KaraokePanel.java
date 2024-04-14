@@ -47,6 +47,7 @@ public class KaraokePanel extends javax.swing.JPanel {
             return;
         }
 
+        PanelListLoiBH.removeAll();
         dsItemLoiBH = new ArrayList<>();
         listIndexLoiBaiHat = null;
         currentIndexLoiBH = 0;

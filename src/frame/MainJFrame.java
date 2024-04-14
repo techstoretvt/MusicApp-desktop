@@ -71,6 +71,11 @@ import component.MyCustomDialog;
 import services.MyMusicPlayer;
 import services.MySocketClient;
 import helpers.Utils;
+import model.BaiHat;
+import observer.FooterHomeObserver;
+import observer.KaraokeObserver;
+import observer.PhatKeTiepObserver;
+import observer.Subject;
 import screen.MiniGame;
 import screen.Radio;
 
@@ -95,6 +100,11 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private Thread threadTimKiem;
     private String textChuChay;
+
+    public static Subject subject;
+
+    private KaraokeObserver karaokeObserver;
+    private PhatKeTiepObserver phatKeTiepObserver;
 
     /**
      * Creates new form HomeJFrame
@@ -121,6 +131,9 @@ public class MainJFrame extends javax.swing.JFrame {
         loadBackGroundColor();
 
         loadChuChay();
+
+        subject = new Subject();
+        subject.attach(new FooterHomeObserver(this));
 
     }
 
@@ -379,7 +392,7 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     }
 
-    public static void ToggleShowKaraoke() {
+    public void ToggleShowKaraoke() {
 
         if (isKaraoke) {
             ImageIcon icon = new ImageIcon(MainJFrame.class.getResource("/icon/micro.png"));
@@ -387,6 +400,8 @@ public class MainJFrame extends javax.swing.JFrame {
 
             String oldPanel = historyPanel.peek();
             cardLayout.show(cardPanel, oldPanel);
+
+            subject.detach(karaokeObserver);
 
         } else {
             ImageIcon icon = new ImageIcon(MainJFrame.class.getResource("/icon/micro-active.png"));
@@ -396,6 +411,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
             cardPanel.add(pn, "Karaoke");
             cardLayout.show(cardPanel, "Karaoke");
+
+            karaokeObserver = new KaraokeObserver((KaraokePanel) pn);
+            subject.attach(karaokeObserver);
         }
 
         isKaraoke = !isKaraoke;
@@ -771,12 +789,10 @@ public class MainJFrame extends javax.swing.JFrame {
 
         lbTenBaiHat.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         lbTenBaiHat.setForeground(new java.awt.Color(255, 255, 255));
-        lbTenBaiHat.setText("Đi về nhàĐi về nhàĐi về nhà");
         lbTenBaiHat.setMaximumSize(new java.awt.Dimension(200, 20));
         lbTenBaiHat.setMinimumSize(new java.awt.Dimension(150, 22));
 
         lbTenCaSi.setForeground(new java.awt.Color(204, 204, 204));
-        lbTenCaSi.setText("Đen Vâu");
         lbTenCaSi.setMaximumSize(new java.awt.Dimension(450, 16));
 
         btnMore.setBackground(new java.awt.Color(0, 0, 0));
@@ -798,7 +814,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(PanelFooterLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lbTenBaiHat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbTenCaSi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbTenCaSi, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMore)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -823,10 +839,10 @@ public class MainJFrame extends javax.swing.JFrame {
         PanelFooterCenter.setBackground(new java.awt.Color(0, 0, 0));
 
         lbThoiGianHienTai.setForeground(new java.awt.Color(255, 255, 255));
-        lbThoiGianHienTai.setText("0:13");
+        lbThoiGianHienTai.setText("0:00");
 
         lbTongThoiGian.setForeground(new java.awt.Color(255, 255, 255));
-        lbTongThoiGian.setText("5:11");
+        lbTongThoiGian.setText("0:00");
 
         progessTimeBaiHat.setValue(50);
         progessTimeBaiHat.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1316,9 +1332,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
         if (MyMusicPlayer.isPlay) {
             MyMusicPlayer.pause();
+            ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-play.png"));
+            btnPlayPause.setIcon(icon);
 
         } else {
             MyMusicPlayer.resume();
+            ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-pause.png"));
+            btnPlayPause.setIcon(icon);
         }
 
     }//GEN-LAST:event_btnPlayPauseActionPerformed
@@ -1381,7 +1401,7 @@ public class MainJFrame extends javax.swing.JFrame {
         } else {
             ImageIcon icon = new ImageIcon(getClass().getResource("/icon/icon-random-active.png"));
             btnRandom.setIcon(icon);
-            MyMusicPlayer.getListRandom();
+            MyMusicPlayer.getListRandom(phatKeTiepObserver);
         }
         MyMusicPlayer.isRandom = !MyMusicPlayer.isRandom;
     }//GEN-LAST:event_btnRandomActionPerformed
@@ -1411,6 +1431,8 @@ public class MainJFrame extends javax.swing.JFrame {
             PanelWrap.remove(1);
             PanelWrap.revalidate();
             PanelWrap.repaint();
+
+            subject.detach(phatKeTiepObserver);
         } else {
             ImageIcon icon = new ImageIcon(getClass().getResource("/icon/menu-music-active.png"));
             btnMenuPhatKeTiep.setIcon(icon);
@@ -1419,6 +1441,9 @@ public class MainJFrame extends javax.swing.JFrame {
             PanelWrap.add(phatKeTiep, BorderLayout.EAST);
             PanelWrap.revalidate();
             PanelWrap.repaint();
+
+            phatKeTiepObserver = new PhatKeTiepObserver((PhatKeTiepPanel) phatKeTiep);
+            subject.attach(phatKeTiepObserver);
         }
         isMenuPhatKeTiep = !isMenuPhatKeTiep;
 
@@ -1426,19 +1451,6 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnKaraokeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKaraokeActionPerformed
         // TODO add your handling code here:
-//        if (isKaraoke) {
-//            ShowPanel(oldPanel, null);
-//            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/micro.png"));
-//            btnKaraoke.setIcon(icon);
-//            isKaraoke = false;
-//
-//        } else {
-//            ShowPanel("Karaoke", new KaraokePanel());
-//            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/micro-active.png"));
-//            btnKaraoke.setIcon(icon);
-//            isKaraoke = true;
-//        }
-
         ToggleShowKaraoke();
 
     }//GEN-LAST:event_btnKaraokeActionPerformed
@@ -1578,6 +1590,7 @@ public class MainJFrame extends javax.swing.JFrame {
         miniFrame.setLocationRelativeTo(null);
         MiniAppFrame.isOpen = true;
         miniFrame.setVisible(true);
+
 
     }//GEN-LAST:event_btnMiniAppActionPerformed
 
@@ -1787,6 +1800,29 @@ public class MainJFrame extends javax.swing.JFrame {
         PanelFooterLeft.setBackground(color);
         PanelFooterCenter.setBackground(color);
         PanelFooterRight.setBackground(color);
+    }
+
+    public void updateFooterHome(BaiHat baiHat) {
+        new Thread(() -> {
+            String urlAnh = baiHat.getAnhBia();
+            if (MyMusicPlayer.typeMusic.equals("off")) {
+                urlAnh = Utils.getAnhBHDownload(baiHat.getId());
+            }
+            ImageIcon anhBH = Utils.getImageBaiHat(urlAnh, 50, 50);
+            imageBaiHat.setIcon(anhBH);
+        }).start();
+
+        lbTenBaiHat.setText(baiHat.getTenBaiHat());
+        lbTenCaSi.setText(Utils.getTenCaSi(baiHat));
+
+        ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-pause.png"));
+        btnPlayPause.setIcon(icon);
+
+        String tongTG = Utils.getThoiGianBaiHat((int) (baiHat.getThoiGian() / 1000));
+        lbTongThoiGian.setText(tongTG);
+
+        PanelFooter.setVisible(true);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

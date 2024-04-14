@@ -16,6 +16,8 @@ import javax.swing.SwingUtilities;
 import services.MyMusicPlayer;
 import helpers.Utils;
 import frame.MainJFrame;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  *
@@ -65,6 +67,19 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
             }
         }).start();
 
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+        if (active) {
+            setBackground(new Color(204, 0, 204));
+            lbTenCaSi.setForeground(new Color(200, 200, 200));
+            btnDelete.setVisible(false);
+        } else {
+            setBackground(new Color(0, 0, 102));
+            lbTenCaSi.setForeground(new Color(255, 255, 255));
+            btnDelete.setVisible(true);
+        }
     }
 
     public String getStringTenCaSi() {
@@ -123,9 +138,6 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
             }
         });
         btnUp.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnUpMouseClicked(evt);
-            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnUpMouseExited(evt);
             }
@@ -139,9 +151,6 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
             }
         });
         btnDown.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnDownMouseClicked(evt);
-            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnDownMouseExited(evt);
             }
@@ -300,67 +309,59 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jPanel1MouseClicked
 
-    private void btnDownMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDownMouseClicked
-        // TODO add your handling code here:
-        ArrayList<BaiHat> dsBaiHats = MyMusicPlayer.dsBaiHat;
-        BaiHat bh1 = dsBaiHats.get(index);
-        BaiHat bh2 = dsBaiHats.get(index + 1);
+    public void initBtnUpDownClick(PhatKeTiepPanel phatKeTiepPanel) {
+        btnDown.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ArrayList<BaiHat> dsBaiHats = MyMusicPlayer.dsBaiHat;
+                BaiHat bh1 = dsBaiHats.get(index);
+                BaiHat bh2 = dsBaiHats.get(index + 1);
 
-        dsBaiHats.remove(bh1);
-        dsBaiHats.remove(bh2);
+                dsBaiHats.set(index, bh2);
+                dsBaiHats.set(index + 1, bh1);
 
-        dsBaiHats.add(index, bh2);
-        dsBaiHats.add(index + 1, bh1);
-        MyMusicPlayer.dsBaiHat = dsBaiHats;
+                MyMusicPlayer.dsBaiHat = dsBaiHats;
 
-        if (index == MyMusicPlayer.position) {
-            MyMusicPlayer.position = MyMusicPlayer.position + 1;
-        } else if (index + 1 == MyMusicPlayer.position) {
-            MyMusicPlayer.position = MyMusicPlayer.position - 1;
-        }
+                if (index == MyMusicPlayer.position) {
+                    MyMusicPlayer.position = MyMusicPlayer.position + 1;
+                } else if (index + 1 == MyMusicPlayer.position) {
+                    MyMusicPlayer.position = MyMusicPlayer.position - 1;
+                }
 
-        if (MainJFrame.isMenuPhatKeTiep) {
+                phatKeTiepPanel.swapItem(index, index + 1);
+            }
 
-            MainJFrame.PanelWrap.remove(1);
-            JPanel phatKeTiep = new PhatKeTiepPanel();
-            MainJFrame.PanelWrap.add(phatKeTiep, BorderLayout.EAST);
-            MainJFrame.PanelWrap.revalidate();
-            MainJFrame.PanelWrap.repaint();
+        });
 
-        }
+        btnUp.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ArrayList<BaiHat> dsBaiHats = MyMusicPlayer.dsBaiHat;
+                BaiHat bh1 = dsBaiHats.get(index - 1);
+                BaiHat bh2 = dsBaiHats.get(index);
 
+//                dsBaiHats.remove(bh1);
+//                dsBaiHats.remove(bh2);
+//
+//                dsBaiHats.add(index - 1, bh2);
+//                dsBaiHats.add(index, bh1);
+                dsBaiHats.set(index - 1, bh2);
+                dsBaiHats.set(index, bh1);
 
-    }//GEN-LAST:event_btnDownMouseClicked
+                MyMusicPlayer.dsBaiHat = dsBaiHats;
 
-    private void btnUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpMouseClicked
-        // TODO add your handling code here:
-        ArrayList<BaiHat> dsBaiHats = MyMusicPlayer.dsBaiHat;
-        BaiHat bh1 = dsBaiHats.get(index - 1);
-        BaiHat bh2 = dsBaiHats.get(index);
+                if (index == MyMusicPlayer.position) {
+                    MyMusicPlayer.position = MyMusicPlayer.position - 1;
+                } else if (index - 1 == MyMusicPlayer.position) {
+                    MyMusicPlayer.position = MyMusicPlayer.position + 1;
+                }
 
-        dsBaiHats.remove(bh1);
-        dsBaiHats.remove(bh2);
+                phatKeTiepPanel.swapItem(index, index -1);
+            }
 
-        dsBaiHats.add(index - 1, bh2);
-        dsBaiHats.add(index, bh1);
-        MyMusicPlayer.dsBaiHat = dsBaiHats;
+        });
+    }
 
-        if (index == MyMusicPlayer.position) {
-            MyMusicPlayer.position = MyMusicPlayer.position - 1;
-        } else if (index - 1 == MyMusicPlayer.position) {
-            MyMusicPlayer.position = MyMusicPlayer.position + 1;
-        }
-
-        if (MainJFrame.isMenuPhatKeTiep) {
-
-            MainJFrame.PanelWrap.remove(1);
-            JPanel phatKeTiep = new PhatKeTiepPanel();
-            MainJFrame.PanelWrap.add(phatKeTiep, BorderLayout.EAST);
-            MainJFrame.PanelWrap.revalidate();
-            MainJFrame.PanelWrap.repaint();
-
-        }
-    }//GEN-LAST:event_btnUpMouseClicked
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
         // TODO add your handling code here:
@@ -479,7 +480,7 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
     }
 
     public void handlePlayBaiHat() {
-
+        PhatKeTiepPanel.isUpdate = false;
         new Thread(() -> {
             ImageIcon icon = new ImageIcon(getClass().getResource("/icon/loadingBH.gif"));
             imageBaiHat.setIcon(icon);
@@ -496,6 +497,15 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
 
     public void setIndex(int newIndex) {
         this.index = newIndex;
+        if (index == 0) {
+            btnUp.setVisible(false);
+        } else if (index == MyMusicPlayer.dsBaiHat.size() - 1) {
+            btnDown.setVisible(false);
+        }
+        else {
+            btnUp.setVisible(true);
+            btnDown.setVisible(true);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

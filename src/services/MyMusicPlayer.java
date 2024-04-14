@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
@@ -25,12 +23,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.math.BigDecimal;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import component.ItemMusic;
 import component.KaraokePanel;
 import component.PhatKeTiepPanel;
 import helpers.Utils;
+import observer.PhatKeTiepObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -133,7 +131,9 @@ public class MyMusicPlayer {
                 MainJFrame.progessTimeBaiHat.setMaximum((int) (currentBH.getThoiGian() / 1000));
             }
 
-           initThreadPlay();
+            MainJFrame.subject.notifyObservers();
+
+            initThreadPlay();
 
         } catch (MalformedURLException ex) {
             System.out.println("vao loi karaoke 2");
@@ -141,137 +141,106 @@ public class MyMusicPlayer {
             System.out.println("vao loi karaoke 3");
         }
     }
-    
+
     public static void initThreadPlay() {
-         myThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (true) {
+        myThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
 
-                        // su kien phat xong
-                        if (totalTime == currentTime) {
-                            myThread.interrupt();
-                            isPlay = false;
-                            if (MainJFrame.btnPlayPause != null) {
-                                ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-play.png"));
-                                MainJFrame.btnPlayPause.setIcon(icon);
-                            }
-                            player.close();
-
-                            // next nhac
-                            nextBaiHat();
-
-                            break;
+                    // su kien phat xong
+                    if (totalTime == currentTime) {
+                        myThread.interrupt();
+                        isPlay = false;
+                        if (MainJFrame.btnPlayPause != null) {
+                            ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-play.png"));
+                            MainJFrame.btnPlayPause.setIcon(icon);
                         }
+                        player.close();
 
-                        // set progess
-                        if (isPlay) {
-                            currentTime += 1;
+                        // next nhac
+                        nextBaiHat();
 
-                            if (MainJFrame.progessTimeBaiHat != null) {
-                                MainJFrame.progessTimeBaiHat.setValue(currentTime);
-                            }
-
-                            if (MainJFrame.lbThoiGianHienTai != null) {
-                                String tgHienTai = Utils.getThoiGianBaiHat(currentTime);
-                                MainJFrame.lbThoiGianHienTai.setText(tgHienTai);
-                            }
-
-                            if (MainJFrame.isKaraoke && KaraokePanel.dsItemLoiBH != null
-                                    && KaraokePanel.dsItemLoiBH.size() != 0
-                                    && KaraokePanel.listIndexLoiBaiHat != null) {
-
-                                Rectangle rect = new Rectangle(0, 200, 10, 10);
-
-                                Integer indexLoiBH = KaraokePanel.listIndexLoiBaiHat.get(String.valueOf(currentTime));
-                                if (indexLoiBH != null) {
-                                    int lastIndex = KaraokePanel.currentIndexLoiBH;
-                                    KaraokePanel.dsItemLoiBH.get(lastIndex).setForeground(Color.WHITE);
-
-                                    KaraokePanel.dsItemLoiBH.get(indexLoiBH).setForeground(Color.YELLOW);
-
-                                    KaraokePanel.dsItemLoiBH.get(indexLoiBH).scrollRectToVisible(rect);
-
-                                    KaraokePanel.currentIndexLoiBH = indexLoiBH;
-                                }
-
-                            }
-                        }
-
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException ex) {
-                            break;
-                        }
-
+                        break;
                     }
+
+                    // set progess
+                    if (isPlay) {
+                        currentTime += 1;
+
+                        if (MainJFrame.progessTimeBaiHat != null) {
+                            MainJFrame.progessTimeBaiHat.setValue(currentTime);
+                        }
+
+                        if (MainJFrame.lbThoiGianHienTai != null) {
+                            String tgHienTai = Utils.getThoiGianBaiHat(currentTime);
+                            MainJFrame.lbThoiGianHienTai.setText(tgHienTai);
+                        }
+
+                        if (MainJFrame.isKaraoke && KaraokePanel.dsItemLoiBH != null
+                                && KaraokePanel.dsItemLoiBH.size() != 0
+                                && KaraokePanel.listIndexLoiBaiHat != null) {
+
+                            Rectangle rect = new Rectangle(0, 200, 10, 10);
+
+                            Integer indexLoiBH = KaraokePanel.listIndexLoiBaiHat.get(String.valueOf(currentTime));
+                            if (indexLoiBH != null) {
+                                int lastIndex = KaraokePanel.currentIndexLoiBH;
+                                KaraokePanel.dsItemLoiBH.get(lastIndex).setForeground(Color.WHITE);
+
+                                KaraokePanel.dsItemLoiBH.get(indexLoiBH).setForeground(Color.YELLOW);
+
+                                KaraokePanel.dsItemLoiBH.get(indexLoiBH).scrollRectToVisible(rect);
+
+                                KaraokePanel.currentIndexLoiBH = indexLoiBH;
+                            }
+
+                        }
+                    }
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        break;
+                    }
+
                 }
-            });
-            myThread.start();
+            }
+        });
+        myThread.start();
     }
-    
+
     public static void addDaNghe(BaiHat currentBH) {
         //add đã nghe
-            new Thread(() -> {
-                ArrayList<BaiHat> listDaNghe = null;
-                ArrayList<BaiHat> newListDaNghe = new ArrayList<>();
-                try {
-                    listDaNghe = LocalData.getListDaNghe();
-                } catch (Exception e) {
+        new Thread(() -> {
+            ArrayList<BaiHat> listDaNghe = null;
+            ArrayList<BaiHat> newListDaNghe = new ArrayList<>();
+            try {
+                listDaNghe = LocalData.getListDaNghe();
+            } catch (Exception e) {
 
+            }
+
+            if (listDaNghe == null) {
+                listDaNghe = new ArrayList<>();
+            }
+
+            for (BaiHat bh : listDaNghe) {
+                if (!bh.getId().equals(currentBH.getId())) {
+                    newListDaNghe.add(bh);
                 }
+            }
 
-                if (listDaNghe == null) {
-                    listDaNghe = new ArrayList<>();
-                }
+            newListDaNghe.addFirst(currentBH);
+            if (newListDaNghe.size() >= 10) {
+                newListDaNghe.removeLast();
+            }
+            LocalData.saveListDaNghe(newListDaNghe);
 
-                for (BaiHat bh : listDaNghe) {
-                    if (!bh.getId().equals(currentBH.getId())) {
-                        newListDaNghe.add(bh);
-                    }
-                }
-
-                newListDaNghe.addFirst(currentBH);
-                if (newListDaNghe.size() >= 10) {
-                    newListDaNghe.removeLast();
-                }
-                LocalData.saveListDaNghe(newListDaNghe);
-
-            }).start();
+        }).start();
     }
 
     public static void updateUI(BaiHat currentBH, String type) {
-        // reset ui
-        if (MainJFrame.btnPlayPause != null) {
-            ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-pause.png"));
-            MainJFrame.btnPlayPause.setIcon(icon);
-        }
-        if (MainJFrame.lbTenBaiHat != null && MainJFrame.lbTenCaSi != null) {
-            MainJFrame.lbTenBaiHat.setText(currentBH.getTenBaiHat());
-            MainJFrame.lbTenCaSi.setText(Utils.getTenCaSi(currentBH));
-        }
-        if (MainJFrame.imageBaiHat != null) {
-            new Thread(() -> {
-                String urlAnh = currentBH.getAnhBia();
-                if (type.equals("off")) {
-                    urlAnh = Utils.getAnhBHDownload(currentBH.getId());
-                }
-                ImageIcon anhBH = Utils.getImageBaiHat(urlAnh, 50, 50);
-                MainJFrame.imageBaiHat.setIcon(anhBH);
-            }).start();
-
-        }
-        if (MainJFrame.lbTongThoiGian != null) {
-            String tongTG = Utils.getThoiGianBaiHat((int) (currentBH.getThoiGian() / 1000));
-            MainJFrame.lbTongThoiGian.setText(tongTG);
-        }
-        if (MainJFrame.PanelFooter != null) {
-            MainJFrame.PanelFooter.setVisible(true);
-        }
-        if (MainJFrame.isKaraoke) {
-            MainJFrame.isKaraoke = false;
-            MainJFrame.ToggleShowKaraoke();
-        }
         if (ItemMusic.anhNhac != null) {
             new Thread(() -> {
                 String urlAnh = currentBH.getAnhBia();
@@ -281,16 +250,6 @@ public class MyMusicPlayer {
                 ItemMusic.anhNhac = null;
             }).start();
 
-        }
-
-        //reset phat ke tiep
-        if (MainJFrame.isMenuPhatKeTiep) {
-
-            MainJFrame.PanelWrap.remove(1);
-            JPanel phatKeTiep = new PhatKeTiepPanel();
-            MainJFrame.PanelWrap.add(phatKeTiep, BorderLayout.EAST);
-            MainJFrame.PanelWrap.revalidate();
-            MainJFrame.PanelWrap.repaint();
         }
     }
 
@@ -336,10 +295,10 @@ public class MyMusicPlayer {
                 player.close();
                 isPlay = false;
 
-                if (MainJFrame.btnPlayPause != null) {
-                    ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-play.png"));
-                    MainJFrame.btnPlayPause.setIcon(icon);
-                }
+//                if (MainJFrame.btnPlayPause != null) {
+//                    ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-play.png"));
+//                    MainJFrame.btnPlayPause.setIcon(icon);
+//                }
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -360,10 +319,10 @@ public class MyMusicPlayer {
             player = new Player(fileInputStream);
             isPlay = true;
 
-            if (MainJFrame.btnPlayPause != null) {
-                ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-pause.png"));
-                MainJFrame.btnPlayPause.setIcon(icon);
-            }
+//            if (MainJFrame.btnPlayPause != null) {
+//                ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-pause.png"));
+//                MainJFrame.btnPlayPause.setIcon(icon);
+//            }
 
         } catch (JavaLayerException | java.io.IOException e) {
             e.printStackTrace();
@@ -483,6 +442,7 @@ public class MyMusicPlayer {
 
         position = (position + 1) % dsBaiHat.size();
 
+        PhatKeTiepPanel.isUpdate = false;
         initMusicPlayer(dsBaiHat, position, typeMusic);
     }
 
@@ -493,10 +453,11 @@ public class MyMusicPlayer {
         currentTime = 0;
 
         position = (position - 1 + dsBaiHat.size()) % dsBaiHat.size();
+        PhatKeTiepPanel.isUpdate = false;
         initMusicPlayer(dsBaiHat, position, typeMusic);
     }
 
-    public static void getListRandom() {
+    public static void getListRandom(PhatKeTiepObserver phatKeTiepObserver) {
 
         String idCurrentBH = "";
         if (dsBaiHat != null && dsBaiHat.size() != 0) {
@@ -516,16 +477,7 @@ public class MyMusicPlayer {
                     dsBaiHat = newList;
                     position = 0;
 
-                    // reset phat ke tiep
-                    if (MainJFrame.isMenuPhatKeTiep) {
-
-                        MainJFrame.PanelWrap.remove(1);
-                        JPanel phatKeTiep = new PhatKeTiepPanel();
-                        MainJFrame.PanelWrap.add(phatKeTiep, BorderLayout.EAST);
-                        MainJFrame.PanelWrap.revalidate();
-                        MainJFrame.PanelWrap.repaint();
-
-                    }
+                    phatKeTiepObserver.update();
                 } else {
 
                 }
