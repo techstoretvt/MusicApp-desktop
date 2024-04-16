@@ -35,21 +35,39 @@ public class ItemMusic extends javax.swing.JPanel {
     private BaiHat bh = null;
     private String from_to = ""; //khampha,...
     private int stt = 1;
+    private boolean isShowStt;
     private boolean isYeuThich = false;
     private boolean isCheckYeuThich = false;
     public static JLabel anhNhac;
 
     public ItemMusic(BaiHat bh, int stt, String from_to) {
         initComponents();
+        this.bh = bh;
+        this.from_to = from_to;
+        this.stt = stt;
+        this.isShowStt = true;
+
+        setUI();
+    }
+
+    public ItemMusic(BaiHat bh, int stt, String from_to, boolean isShowStt) {
+        initComponents();
 
         this.bh = bh;
         this.from_to = from_to;
         this.stt = stt;
+        this.isShowStt = isShowStt;
 
+        setUI();
+
+    }
+
+    public void setUI() {
         lbStt.setText(String.valueOf(stt));
         lbTenBaiHat.setText(bh.getTenBaiHat());
         lbTenCaSi.setText(getStringTenCaSi());
         lbThoiGian.setText(Utils.getThoiGianBaiHat((int) bh.getThoiGian() / 1000));
+        lblTheLoai.setText(bh.getTheLoai());
 
         if (from_to.equals("DaTai")) {
             new Thread(() -> {
@@ -73,6 +91,7 @@ public class ItemMusic extends javax.swing.JPanel {
 
         }
 
+        lbStt.setVisible(isShowStt);
     }
 
     public String getStringTenCaSi() {
@@ -108,6 +127,8 @@ public class ItemMusic extends javax.swing.JPanel {
         lbTenCaSi = new javax.swing.JLabel();
         lbThoiGian = new javax.swing.JLabel();
         btnOption = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        lblTheLoai = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(23, 15, 35));
         setMaximumSize(new java.awt.Dimension(32767, 70));
@@ -122,8 +143,9 @@ public class ItemMusic extends javax.swing.JPanel {
             }
         });
 
-        lbStt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lbStt.setFont(new java.awt.Font("Snap ITC", 1, 18)); // NOI18N
         lbStt.setForeground(new java.awt.Color(0, 102, 255));
+        lbStt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbStt.setText("10");
         lbStt.setMaximumSize(new java.awt.Dimension(40, 32));
 
@@ -194,20 +216,33 @@ public class ItemMusic extends javax.swing.JPanel {
             }
         });
 
+        jSeparator1.setBackground(new java.awt.Color(51, 51, 51));
+        jSeparator1.setForeground(new java.awt.Color(51, 51, 51));
+
+        lblTheLoai.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        lblTheLoai.setForeground(new java.awt.Color(102, 102, 102));
+        lblTheLoai.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTheLoai.setText("the loai");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(69, 69, 69)
-                .addComponent(lbStt, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbStt, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(imageBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbTenBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbTenCaSi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbTenBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTheLoai, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbTenCaSi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnOption)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbThoiGian)
@@ -219,12 +254,14 @@ public class ItemMusic extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbTenBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbTenBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTheLoai))
                         .addGap(8, 8, 8)
                         .addComponent(lbTenCaSi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(lbStt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(imageBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(imageBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbStt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(10, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -337,7 +374,7 @@ public class ItemMusic extends javax.swing.JPanel {
     private void lbTenCaSiMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTenCaSiMouseExited
         // TODO add your handling code here:
         endHover();
-        lbTenCaSi.setForeground(new Color(153,153,153));
+        lbTenCaSi.setForeground(new Color(153, 153, 153));
     }//GEN-LAST:event_lbTenCaSiMouseExited
 
     public void onHover() {
@@ -371,11 +408,9 @@ public class ItemMusic extends javax.swing.JPanel {
                 MyMusicPlayer.initMusicPlayer(ChiTietPlaylist.dsBaiHat, stt - 1);
             } else if (from_to.equals("YeuThich")) {
                 MyMusicPlayer.initMusicPlayer(YeuThich.dsBaiHat, stt - 1);
-            } 
-            else if (from_to.equals("DaNghe")) {
+            } else if (from_to.equals("DaNghe")) {
                 MyMusicPlayer.initMusicPlayer(ThuVien.listDaNghe, stt - 1);
-            }
-            else if (from_to.equals("DaTai")) {
+            } else if (from_to.equals("DaTai")) {
                 System.out.println("phat nhac offline");
                 ArrayList<BaiHat> listBH = LocalData.getListDownload();
 
@@ -388,9 +423,11 @@ public class ItemMusic extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOption;
     private javax.swing.JLabel imageBaiHat;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbStt;
     private javax.swing.JLabel lbTenBaiHat;
     private javax.swing.JLabel lbTenCaSi;
     private javax.swing.JLabel lbThoiGian;
+    private javax.swing.JLabel lblTheLoai;
     // End of variables declaration//GEN-END:variables
 }

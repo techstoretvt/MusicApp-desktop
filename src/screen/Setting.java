@@ -6,15 +6,12 @@ package screen;
 
 import component.CustomScrollBarUI;
 import component.ModelHenGio;
-import javax.swing.ImageIcon;
 import helpers.LocalData;
 import frame.MainJFrame;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
 import component.MyCustomDialog;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JPanel;
 
 /**
  *
@@ -235,8 +232,17 @@ public class Setting extends javax.swing.JPanel {
 
     private void btnHenGioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHenGioMouseClicked
         // TODO add your handling code here:
-        MyCustomDialog customDialog = new MyCustomDialog(null, "", new ModelHenGio());
-        customDialog.show(true);
+        ModelHenGio modelHenGio = new ModelHenGio();
+
+        MyCustomDialog customDialog = new MyCustomDialog(null, "", modelHenGio);
+        modelHenGio.btnOk.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                modelHenGio.xuLyHenGio();
+                customDialog.dispose();
+            }
+        });
+        customDialog.setVisible(true);
     }//GEN-LAST:event_btnHenGioMouseClicked
 
     public void BatDKGiongNoi() {

@@ -92,7 +92,7 @@ public class ItemMV extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbTenBaiHat)
                             .addComponent(lbTenCaSi))
-                        .addGap(0, 308, Short.MAX_VALUE))
+                        .addGap(0, 91, Short.MAX_VALUE))
                     .addComponent(imgBaiHat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );

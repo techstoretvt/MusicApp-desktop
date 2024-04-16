@@ -31,7 +31,7 @@
                           <Component id="lbTenBaiHat" min="-2" max="-2" attributes="0"/>
                           <Component id="lbTenCaSi" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="308" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="91" max="32767" attributes="0"/>
                   </Group>
                   <Component id="imgBaiHat" max="32767" attributes="0"/>
               </Group>

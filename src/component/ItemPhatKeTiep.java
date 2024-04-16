@@ -7,17 +7,16 @@ package component;
 import model.BaiHat;
 import model.BaiHat_CaSi;
 import model.Casi;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import services.MyMusicPlayer;
 import helpers.Utils;
-import frame.MainJFrame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -49,21 +48,28 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
         }).start();
 
         new Thread(() -> {
-            if (active) {
-                setBackground(new Color(204, 0, 204));
-                lbTenCaSi.setForeground(new Color(200, 200, 200));
-                btnDelete.setVisible(false);
-            }
+            try {
 
-            if (!showArrow) {
-                btnUp.setVisible(false);
-                btnDown.setVisible(false);
-            }
+                Thread.sleep(500);
 
-            if (index == 0) {
-                btnUp.setVisible(false);
-            } else if (index == MyMusicPlayer.dsBaiHat.size() - 1) {
-                btnDown.setVisible(false);
+                if (active) {
+                    setBackground(new Color(204, 0, 204));
+                    lbTenCaSi.setForeground(new Color(200, 200, 200));
+                    btnDelete.setVisible(false);
+                }
+
+                if (!showArrow) {
+                    btnUp.setVisible(false);
+                    btnDown.setVisible(false);
+                }
+
+                if (index == 0) {
+                    btnUp.setVisible(false);
+                } else if (index == MyMusicPlayer.dsBaiHat.size() - 1) {
+                    btnDown.setVisible(false);
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ItemPhatKeTiep.class.getName()).log(Level.SEVERE, null, ex);
             }
         }).start();
 
@@ -356,7 +362,7 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
                     MyMusicPlayer.position = MyMusicPlayer.position + 1;
                 }
 
-                phatKeTiepPanel.swapItem(index, index -1);
+                phatKeTiepPanel.swapItem(index, index - 1);
             }
 
         });
@@ -501,8 +507,7 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
             btnUp.setVisible(false);
         } else if (index == MyMusicPlayer.dsBaiHat.size() - 1) {
             btnDown.setVisible(false);
-        }
-        else {
+        } else {
             btnUp.setVisible(true);
             btnDown.setVisible(true);
         }

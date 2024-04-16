@@ -18,6 +18,7 @@ public class MyError extends javax.swing.JFrame {
         
         lbErrMessage.setText(message);
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

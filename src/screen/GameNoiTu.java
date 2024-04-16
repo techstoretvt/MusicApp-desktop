@@ -10,10 +10,8 @@ import com.teamdev.jxbrowser.engine.EngineOptions;
 import com.teamdev.jxbrowser.engine.RenderingMode;
 import com.teamdev.jxbrowser.view.swing.BrowserView;
 import helpers.AppConstants;
-import io.socket.client.Socket;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import services.MySocketClient;
 
 /**
  *

@@ -4,7 +4,9 @@
  */
 package screen;
 
+import Interface.UpdateListMusic;
 import component.CustomScrollBarUI;
+import component.FilterListMusic;
 import component.ItemMusic;
 import model.BaiHat;
 import java.util.ArrayList;
@@ -15,12 +17,24 @@ import helpers.LocalData;
  *
  * @author tranv
  */
-public class DaTai extends javax.swing.JPanel {
+public class DaTai extends javax.swing.JPanel implements UpdateListMusic {
 
     public static ArrayList<BaiHat> dsBaiHat;
-    /**
-     * Creates new form DaTaiPanel
-     */
+
+    @Override
+    public void updateListMusic() {
+        int size = dsBaiHat.size();
+
+        PanelListMusic.removeAll();
+        for (int i = 0; i < size; i++) {
+            BaiHat bh = dsBaiHat.get(i);
+            JPanel pn = new ItemMusic(bh, i + 1, "DaTai");
+            PanelListMusic.add(pn);
+        }
+        PanelListMusic.revalidate();
+        PanelListMusic.repaint();
+    }
+
     public DaTai() {
         initComponents();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
@@ -32,14 +46,18 @@ public class DaTai extends javax.swing.JPanel {
     public void getListMusic() {
         dsBaiHat = LocalData.getListDownload();
         int size = dsBaiHat.size();
-        
-        for (int i=0;i<size;i++) {
+
+        for (int i = 0; i < size; i++) {
             BaiHat bh = dsBaiHat.get(i);
-            JPanel pn = new ItemMusic(bh, i+1, "DaTai");
+            JPanel pn = new ItemMusic(bh, i + 1, "DaTai");
             PanelListMusic.add(pn);
         }
         PanelListMusic.revalidate();
         PanelListMusic.repaint();
+
+        pnBoLoc.add(new FilterListMusic(dsBaiHat, this));
+        pnBoLoc.revalidate();
+        pnBoLoc.repaint();
     }
 
     /**
@@ -55,6 +73,7 @@ public class DaTai extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         PanelListMusic = new javax.swing.JPanel();
+        pnBoLoc = new javax.swing.JPanel();
 
         jScrollPane1.setBackground(new java.awt.Color(23, 15, 35));
         jScrollPane1.setBorder(null);
@@ -68,15 +87,18 @@ public class DaTai extends javax.swing.JPanel {
         PanelListMusic.setBackground(new java.awt.Color(23, 15, 35));
         PanelListMusic.setLayout(new javax.swing.BoxLayout(PanelListMusic, javax.swing.BoxLayout.PAGE_AXIS));
 
+        pnBoLoc.setLayout(new java.awt.BorderLayout());
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PanelListMusic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(0, 171, Short.MAX_VALUE))
-            .addComponent(PanelListMusic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnBoLoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,7 +106,9 @@ public class DaTai extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PanelListMusic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnBoLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PanelListMusic, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -107,5 +131,7 @@ public class DaTai extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel pnBoLoc;
     // End of variables declaration//GEN-END:variables
+
 }

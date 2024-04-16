@@ -4,7 +4,6 @@
  */
 package component;
 
-import component.ItemMV;
 import model.BaiHat;
 import javax.swing.JPanel;
 

@@ -36,6 +36,8 @@ public class KaraokePanel extends javax.swing.JPanel {
     public KaraokePanel() {
         initComponents();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+        jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBarUI());
 
         getLoiBaiHat();
 
@@ -63,11 +65,19 @@ public class KaraokePanel extends javax.swing.JPanel {
                     int sizeLoiBH = res.getData().size();
                     if (sizeLoiBH != 0) {
                         GridLayout la = (GridLayout) PanelListLoiBH.getLayout();
-                        la.setRows(sizeLoiBH+1);
+                        la.setRows(sizeLoiBH + 1);
                         PanelListLoiBH.setLayout(la);
 
                         // add ui
-                        
+//                        JButton loiBH1 = new JButton();
+//                        loiBH1.setText("hello");
+//                        loiBH1.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+//                        loiBH1.setForeground(Color.WHITE);
+//                        loiBH1.setBackground(new Color(0, 0, 0));
+//                        loiBH1.setFocusPainted(false);
+//                        loiBH1.setBorder(null);
+//                        PanelListLoiBH.add(loiBH1);
+
                         for (int i = 0; i < sizeLoiBH; i++) {
                             LoiBaiHat currentLoiBH = res.getData().get(i);
                             JButton loiBH = new JButton();
@@ -89,7 +99,12 @@ public class KaraokePanel extends javax.swing.JPanel {
                                     loiBH.scrollRectToVisible(rect);
 
                                     KaraokePanel.dsItemLoiBH.get(KaraokePanel.currentIndexLoiBH).setForeground(Color.WHITE);
-                                    MyMusicPlayer.setTimeBaiHat2(currentLoiBH.getThoiGian());
+                                    double tg = currentLoiBH.getThoiGian();
+                                    if (index == 0) {
+                                        tg -= 1.0;
+                                    }
+                                    MyMusicPlayer.setTimeBaiHat2(tg);
+                                    System.out.println("thoigian: " + currentLoiBH.getThoiGian());
                                     KaraokePanel.currentIndexLoiBH = index;
 
                                 }

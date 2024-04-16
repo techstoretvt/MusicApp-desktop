@@ -12,18 +12,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import static screen.ThuVien.listDaNghe;
 import api.ApiServiceV1;
 import helpers.LocalData;
-import helpers.Utils;
 
 /**
  *
@@ -51,12 +48,12 @@ public class KhamPha extends javax.swing.JPanel {
 
     public void getListDaNghe() {
         listDaNghe = LocalData.getListDaNghe();
-        if (listDaNghe != null && listDaNghe.size() != 0) {
+        if (listDaNghe != null && !listDaNghe.isEmpty()) {
             pnDaNghe.removeAll();
             int height = 0;
             int size = listDaNghe.size();
             for (int i = 0; i < size && i < maxCountDaNghe; i++) {
-                ItemMusic itemBH = new ItemMusic(listDaNghe.get(i), (i + 1), "DaNghe");
+                ItemMusic itemBH = new ItemMusic(listDaNghe.get(i), (i + 1), "DaNghe", false);
                 pnDaNghe.add(itemBH);
                 height += 71;
             }
@@ -77,7 +74,7 @@ public class KhamPha extends javax.swing.JPanel {
         lbLoading.setHorizontalAlignment(SwingConstants.RIGHT);
         panelListMusic.add(lbLoading);
 
-        ApiServiceV1.apiServiceV1.getTop10MusicKhamPha(10).enqueue(new Callback<GetListBaiHat>() {
+        ApiServiceV1.apiServiceV1.getTop10MusicKhamPha(15).enqueue(new Callback<GetListBaiHat>() {
             @Override
             public void onResponse(Call<GetListBaiHat> call, Response<GetListBaiHat> rspns) {
                 GetListBaiHat res = rspns.body();
@@ -148,10 +145,8 @@ public class KhamPha extends javax.swing.JPanel {
         pnDaNghe = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         btnTop100 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         btnMore = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(23, 15, 35));
         setMinimumSize(new java.awt.Dimension(100, 100));
@@ -164,6 +159,7 @@ public class KhamPha extends javax.swing.JPanel {
         panelContainer.setBackground(new java.awt.Color(23, 15, 35));
 
         panelListMusic.setBackground(new java.awt.Color(23, 15, 35));
+        panelListMusic.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 204)), "PHỔ BIẾN NHẤT", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18), new java.awt.Color(204, 0, 204))); // NOI18N
         panelListMusic.setLayout(new javax.swing.BoxLayout(panelListMusic, javax.swing.BoxLayout.Y_AXIS));
 
         pnDaNghe.setBackground(new java.awt.Color(23, 15, 35));
@@ -174,7 +170,10 @@ public class KhamPha extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("NGHE GẤN ĐÂY");
 
+        btnTop100.setBackground(new java.awt.Color(204, 0, 204));
         btnTop100.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnTop100.setForeground(new java.awt.Color(255, 255, 255));
+        btnTop100.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-100-20.png"))); // NOI18N
         btnTop100.setText("Xem top 100");
         btnTop100.setFocusPainted(false);
         btnTop100.addActionListener(new java.awt.event.ActionListener() {
@@ -182,10 +181,6 @@ public class KhamPha extends javax.swing.JPanel {
                 btnTop100ActionPerformed(evt);
             }
         });
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("PHỔ BIẾN NHẤT");
 
         btnMore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-down.png"))); // NOI18N
         btnMore.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -198,32 +193,21 @@ public class KhamPha extends javax.swing.JPanel {
         jSeparator1.setBackground(new java.awt.Color(153, 153, 153));
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
 
-        jSeparator2.setBackground(new java.awt.Color(153, 153, 153));
-        jSeparator2.setForeground(new java.awt.Color(102, 102, 102));
-
         javax.swing.GroupLayout panelContainerLayout = new javax.swing.GroupLayout(panelContainer);
         panelContainer.setLayout(panelContainerLayout);
         panelContainerLayout.setHorizontalGroup(
             panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelContainerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelContainerLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnMore)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE))
-                    .addGroup(panelContainerLayout.createSequentialGroup()
-                        .addComponent(btnTop100)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(panelContainerLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSeparator2)))
-                .addContainerGap())
             .addComponent(pnDaNghe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelListMusic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelContainerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnMore)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(btnTop100, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelContainerLayout.setVerticalGroup(
             panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,15 +220,11 @@ public class KhamPha extends javax.swing.JPanel {
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnDaNghe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelListMusic, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(panelListMusic, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnTop100)
-                .addGap(0, 193, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jScrollPane1.setViewportView(panelContainer);
@@ -253,7 +233,7 @@ public class KhamPha extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,10 +270,8 @@ public class KhamPha extends javax.swing.JPanel {
     private javax.swing.JLabel btnMore;
     private javax.swing.JButton btnTop100;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPanel panelContainer;
     private javax.swing.JPanel panelListMusic;
     private javax.swing.JPanel pnDaNghe;

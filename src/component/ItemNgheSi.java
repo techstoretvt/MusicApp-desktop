@@ -4,7 +4,6 @@
  */
 package component;
 
-import component.CircleImage;
 import model.Casi;
 import java.awt.Color;
 import java.awt.FlowLayout;

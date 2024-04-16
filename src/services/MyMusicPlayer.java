@@ -152,10 +152,7 @@ public class MyMusicPlayer {
                     if (totalTime == currentTime) {
                         myThread.interrupt();
                         isPlay = false;
-                        if (MainJFrame.btnPlayPause != null) {
-                            ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-play.png"));
-                            MainJFrame.btnPlayPause.setIcon(icon);
-                        }
+                        MainJFrame.subjectBtnMusic.notifyObservers();
                         player.close();
 
                         // next nhac
@@ -285,20 +282,10 @@ public class MyMusicPlayer {
             try {
                 pauseLocation = fileInputStream.available();
 
-                //test
-//                System.out.println("pause: " + String.valueOf(pauseLocation) + " : " + String.valueOf(songTotalLength));
-//                System.out.println("time: " + String.valueOf(songTotalLength - pauseLocation));
-//
-//                double tgBaiHat = dsBaiHat.get(position).getThoiGian();
-//                System.out.println("tg: " + String.valueOf(tgBaiHat));
-                //end test
                 player.close();
                 isPlay = false;
 
-//                if (MainJFrame.btnPlayPause != null) {
-//                    ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-play.png"));
-//                    MainJFrame.btnPlayPause.setIcon(icon);
-//                }
+                MainJFrame.subjectBtnMusic.notifyObservers();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -318,11 +305,6 @@ public class MyMusicPlayer {
             fileInputStream.skip(songTotalLength - pauseLocation);
             player = new Player(fileInputStream);
             isPlay = true;
-
-//            if (MainJFrame.btnPlayPause != null) {
-//                ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-pause.png"));
-//                MainJFrame.btnPlayPause.setIcon(icon);
-//            }
 
         } catch (JavaLayerException | java.io.IOException e) {
             e.printStackTrace();
@@ -375,10 +357,7 @@ public class MyMusicPlayer {
             player = new Player(fileInputStream);
             isPlay = true;
 
-            if (MainJFrame.btnPlayPause != null) {
-                ImageIcon icon = new ImageIcon(MyMusicPlayer.class.getResource("/icon/icon-pause.png"));
-                MainJFrame.btnPlayPause.setIcon(icon);
-            }
+            MainJFrame.subjectBtnMusic.notifyObservers();
 
         } catch (JavaLayerException | java.io.IOException e) {
             e.printStackTrace();
@@ -477,7 +456,9 @@ public class MyMusicPlayer {
                     dsBaiHat = newList;
                     position = 0;
 
-                    phatKeTiepObserver.update();
+                    if (phatKeTiepObserver != null) {
+                        phatKeTiepObserver.update();
+                    }
                 } else {
 
                 }

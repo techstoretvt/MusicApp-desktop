@@ -4,6 +4,7 @@
  */
 package screen;
 
+import Interface.UpdateListMusic;
 import component.CustomScrollBarUI;
 import component.ItemMusic;
 import model.BaiHat;
@@ -15,22 +16,36 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import api.ApiServiceV1;
+import component.FilterListMusic;
 import helpers.Utils;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author tranv
  */
-public class YeuThich extends javax.swing.JPanel {
-    
+public class YeuThich extends javax.swing.JPanel implements UpdateListMusic {
+
     public static ArrayList<BaiHat> dsBaiHat;
 
-    /**
-     * Creates new form YeuThichPanel
-     */
+    @Override
+    public void updateListMusic() {
+        PanelListMusic.removeAll();
+        
+        int size = dsBaiHat.size();
+        for (int i = 0; i < size; i++) {
+            BaiHat bh = dsBaiHat.get(i);
+            JPanel pn = new ItemMusic(bh, i + 1, "YeuThich");
+            PanelListMusic.add(pn);
+        }
+        PanelListMusic.revalidate();
+        PanelListMusic.repaint();
+    }
+
     public YeuThich() {
         initComponents();
-        
+
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
@@ -49,14 +64,19 @@ public class YeuThich extends javax.swing.JPanel {
                     PanelListMusic.removeAll();
                     ArrayList<YeuThichBaiHat> data = res.getData();
                     int size = data.size();
-                    for(int i =0;i<size;i++){
+                    for (int i = 0; i < size; i++) {
                         BaiHat bh = data.get(i).getBaihat();
                         dsBaiHat.add(bh);
-                        JPanel pn = new ItemMusic(bh,i+1,"YeuThich");
+                        JPanel pn = new ItemMusic(bh, i + 1, "YeuThich");
                         PanelListMusic.add(pn);
                     }
                     PanelListMusic.revalidate();
                     PanelListMusic.repaint();
+                    
+                    pnFilter.removeAll();
+                    pnFilter.add(new FilterListMusic(dsBaiHat, YeuThich.this));
+                    pnFilter.revalidate();
+                    pnFilter.repaint();
                 } else {
                     System.out.println("ko tim thay ds bai hat yeu thich");
                 }
@@ -83,6 +103,7 @@ public class YeuThich extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         PanelListMusic = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        pnFilter = new javax.swing.JPanel();
 
         jScrollPane1.setBorder(null);
 
@@ -99,15 +120,18 @@ public class YeuThich extends javax.swing.JPanel {
         jLabel2.setText("Đang tải...");
         PanelListMusic.add(jLabel2);
 
+        pnFilter.setLayout(new java.awt.BorderLayout());
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PanelListMusic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(0, 110, Short.MAX_VALUE))
-            .addComponent(PanelListMusic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnFilter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,7 +139,9 @@ public class YeuThich extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PanelListMusic, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE))
+                .addComponent(pnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PanelListMusic, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -139,5 +165,7 @@ public class YeuThich extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel pnFilter;
     // End of variables declaration//GEN-END:variables
+
 }

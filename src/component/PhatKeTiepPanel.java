@@ -4,17 +4,13 @@
  */
 package component;
 
-import component.ItemPhatKeTiep;
 import model.BaiHat;
 import java.awt.BorderLayout;
 import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import services.MyMusicPlayer;
 
 /**
@@ -32,6 +28,8 @@ public class PhatKeTiepPanel extends javax.swing.JPanel {
     public PhatKeTiepPanel(boolean showCurent) {
         initComponents();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+        
         loadData();
         setBorder(null);
         PanelCurrent.setVisible(false);
@@ -40,6 +38,7 @@ public class PhatKeTiepPanel extends javax.swing.JPanel {
     public PhatKeTiepPanel() {
         initComponents();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
         loadData();
     }
 

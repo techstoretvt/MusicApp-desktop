@@ -4,16 +4,17 @@
  */
 package observer;
 
+import component.PhatKeTiepPanel;
 import java.util.ArrayList;
 import java.util.List;
-import model.BaiHat;
 
 /**
  *
  * @author tranv
  */
 public class Subject {
-     private List<Observer> observers = new ArrayList<>();
+
+    private final List<Observer> observers = new ArrayList<>();
 
     public void attach(Observer observer) {
         observers.add(observer);
@@ -27,5 +28,6 @@ public class Subject {
         for (Observer observer : observers) {
             observer.update();
         }
+        PhatKeTiepPanel.isUpdate = true;
     }
 }

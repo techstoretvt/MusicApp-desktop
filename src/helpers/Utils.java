@@ -150,6 +150,7 @@ public class Utils {
         if(!MainJFrame.isLogin) {
             MyCustomDialog dialog = new MyCustomDialog(null, "Đăng nhập", new PanelLogin());
             PanelLogin.dialog = dialog;
+            dialog.setResizable(false);
             dialog.setVisible(true);
         }
 

@@ -33,21 +33,23 @@ public class ChiTietCaSi extends javax.swing.JPanel {
 
     /**
      * Creates new form ChiTietCaSiPanel
+     * @param idCaSi
      */
     public ChiTietCaSi(String idCaSi) {
         initComponents();
 
-        this.idCaSi = idCaSi;
+        ChiTietCaSi.idCaSi = idCaSi;
 
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+        jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBarUI());
 
         handleGetCaSi(idCaSi);
         handleLayBaiHatCaSi(idCaSi);
         checkQuamTamCS();
     }
 
-    public void checkQuamTamCS() {
+    public final void checkQuamTamCS() {
         String header = Utils.getHeader();
 
         ApiServiceV1.apiServiceV1.kiemTraQuanTamCaSi(idCaSi, header).enqueue(new Callback<ResponseDefault>() {
@@ -55,6 +57,7 @@ public class ChiTietCaSi extends javax.swing.JPanel {
             public void onResponse(Call<ResponseDefault> call, Response<ResponseDefault> rspns) {
                 ResponseDefault res = rspns.body();
                 if (res != null && res.getErrCode() == 0) {
+                    System.out.println(res.getErrMessage());
                     if (res.getErrMessage().equals("yes")) {
                         btnQuanTam.setText("Bỏ quan tâm");
                     } else {
@@ -72,7 +75,7 @@ public class ChiTietCaSi extends javax.swing.JPanel {
         });
     }
 
-    public void handleGetCaSi(String id) {
+    public final void handleGetCaSi(String id) {
 
         ApiServiceV1.apiServiceV1.layCaSiById(id).enqueue(new Callback<GetCaSiByID>() {
             @Override
@@ -102,7 +105,7 @@ public class ChiTietCaSi extends javax.swing.JPanel {
         });
     }
 
-    public void handleLayBaiHatCaSi(String id) {
+    public final void handleLayBaiHatCaSi(String id) {
 
         ApiServiceV1.apiServiceV1.layBaiHatCuaCaSi(id).enqueue(new Callback<GetListBaiHat>() {
             @Override

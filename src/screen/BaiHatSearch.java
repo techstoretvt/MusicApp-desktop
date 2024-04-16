@@ -20,12 +20,13 @@ import api.ApiServiceV1;
  *
  * @author tranv
  */
-public class BaiHatSearch extends javax.swing.JPanel {
+public final class BaiHatSearch extends javax.swing.JPanel {
     
     public static ArrayList<BaiHat> dsBaiHat;
 
     /**
      * Creates new form BaiHatSearchPanel
+     * @param keyword
      */
     public BaiHatSearch(String keyword) {
         initComponents();

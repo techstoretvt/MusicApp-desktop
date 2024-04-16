@@ -4,7 +4,6 @@
  */
 package component;
 
-import component.CircleImage;
 import model.LiveItem;
 import java.awt.Color;
 import java.awt.FlowLayout;

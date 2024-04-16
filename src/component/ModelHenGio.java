@@ -5,8 +5,6 @@
 package component;
 
 import frame.MainJFrame;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import services.MyMusicPlayer;
 
 /**
@@ -63,11 +61,6 @@ public class ModelHenGio extends javax.swing.JPanel {
         jLabel4.setText("giây");
 
         btnOk.setText("OK");
-        btnOk.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOkActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -111,13 +104,16 @@ public class ModelHenGio extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
-        // TODO add your handling code here:
+   
+    
+    
+    
+    public void xuLyHenGio() {
         int phut = (int) jsPhut.getValue();
         int giay = (int) jsGiay.getValue();
         System.out.printf("Phut: %d, giay: %d", phut, giay);
 
-        if (giay != 0) {
+        if (giay != 0 || phut != 0) {
             phut_hengio = phut;
             giay_hengio = giay;
 
@@ -140,7 +136,7 @@ public class ModelHenGio extends javax.swing.JPanel {
                             MainJFrame.lblHenGio.setText("");
                             break;
                         } else {
-                            String strGiay = giay_hengio < 10 ? "0" +giay_hengio:""+giay_hengio;
+                            String strGiay = giay_hengio < 10 ? "0" + giay_hengio : "" + giay_hengio;
                             MainJFrame.lblHenGio.setText(String.format("%d:%s", phut_hengio, strGiay));
                         }
 
@@ -152,18 +148,11 @@ public class ModelHenGio extends javax.swing.JPanel {
             });
 
             threadHenGio.start();
-            
-            
-
-            
         }
-
-
-    }//GEN-LAST:event_btnOkActionPerformed
-
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnOk;
+    public javax.swing.JButton btnOk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

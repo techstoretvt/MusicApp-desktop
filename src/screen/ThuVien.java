@@ -6,9 +6,7 @@ package screen;
 
 import component.ItemPlaylist;
 import component.ItemNgheSi;
-import bodyapi.BodyThemDSPhat;
 import component.CustomScrollBarUI;
-import component.ItemMusic;
 import model.BaiHat;
 import model.DanhSachPhat;
 import model.GetListCSQuanTam;
@@ -26,7 +24,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import api.ApiServiceV1;
-import helpers.LocalData;
 import helpers.Utils;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;

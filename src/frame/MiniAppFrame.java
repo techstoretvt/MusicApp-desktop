@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import component.PhatKeTiepPanel;
 import services.MyMusicPlayer;
 import helpers.Utils;
+import observer.BtnPauseObserver;
 import observer.MiniAppObserver;
 import observer.PhatKeTiepObserver;
 
@@ -28,6 +29,7 @@ public class MiniAppFrame extends javax.swing.JFrame {
     private PhatKeTiepPanel phatKeTiepPanel;
     private PhatKeTiepObserver phatKeTiepObserver;
     private boolean isZoom = true;
+    private BtnPauseObserver btnMiniAppObserver;
 
     /**
      * Creates new form MiniAppFrame
@@ -57,11 +59,15 @@ public class MiniAppFrame extends javax.swing.JFrame {
             @Override
             public void windowClosed(WindowEvent e) {
                 MainJFrame.subject.detach(miniAppObserver);
+                MainJFrame.subjectBtnMusic.detach(btnMiniAppObserver);
             }
 
         });
 
         handeZoom();
+        
+        btnMiniAppObserver = new BtnPauseObserver(btnPause);
+        MainJFrame.subjectBtnMusic.attach(btnMiniAppObserver);
 
         pack();
 
@@ -101,6 +107,7 @@ public class MiniAppFrame extends javax.swing.JFrame {
     }
 
     public void updatePhatKeTiep() {
+        PhatKeTiepPanel.isUpdate = false;
         phatKeTiepObserver.update();
     }
 
@@ -237,12 +244,11 @@ public class MiniAppFrame extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addComponent(lblTenBaiHat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(lblTenCaSi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addComponent(imgBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(lblTenBaiHat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTenCaSi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(imgBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
@@ -275,6 +281,7 @@ public class MiniAppFrame extends javax.swing.JFrame {
         MiniAppFrame.isOpen = false;
         dispose();
         Main.rootFrame.setVisible(true);
+        MainJFrame.subjectBtnMusic.detach(miniAppObserver);
     }//GEN-LAST:event_btnShowMainAppMouseClicked
 
     private void btnPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrevMouseClicked
@@ -315,6 +322,7 @@ public class MiniAppFrame extends javax.swing.JFrame {
 
             ImageIcon icon = new ImageIcon(getClass().getResource("/icon/menu-music-active.png"));
             btnPhatKeTiep.setIcon(icon);
+            
 
         } else {
 

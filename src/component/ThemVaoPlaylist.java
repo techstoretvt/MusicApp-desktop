@@ -7,7 +7,6 @@ package component;
 import bodyapi.BodyThemBHVaoDS;
 import bodyapi.BodyThemDSPhat;
 import frame.MainJFrame;
-import static frame.MainJFrame.historyPanel;
 import model.DanhSachPhat;
 import model.GetListPlaylist;
 import model.ThemBHVaoDS;

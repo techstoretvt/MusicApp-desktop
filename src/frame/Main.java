@@ -23,7 +23,7 @@ public class Main {
     public static JFrame rootFrame;
 
     public static void main(String[] args) {
-//       LoginJFrame loginJFrame = new LoginJFrame();
+//       FrameTest loginJFrame = new FrameTest();
 //       loginJFrame.setLocationRelativeTo(null);
 //       loginJFrame.setVisible(true);
 
@@ -31,8 +31,7 @@ public class Main {
             MainJFrame homeJFrame = new MainJFrame();
             homeJFrame.setLocationRelativeTo(null);
             homeJFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//            homeJFrame.setAlwaysOnTop(true);
-//            homeJFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+
 
             if (SystemTray.isSupported()) {
                 SystemTray systemTray = SystemTray.getSystemTray();
