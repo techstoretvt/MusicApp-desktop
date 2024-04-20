@@ -32,9 +32,17 @@ import retrofit2.Response;
 import screen.ChiTietMV;
 import screen.ChiTietPlaylist;
 import api.ApiServiceV1;
+import com.google.gson.Gson;
 import helpers.LocalData;
 import services.MyMusicPlayer;
 import helpers.Utils;
+import services.MySql;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import model.BaiHat_CaSi;
+import model.Casi;
 
 /**
  *
@@ -301,6 +309,84 @@ public class OptionBaiHat extends JPopupMenu {
 
     }
 
+    public void handleDownloadV2() {
+        try {
+            if (kiemTraTonTaiV2()) {
+                JOptionPane.showMessageDialog(this, "Bài hát đã tồn tại.", "Download thất bại",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String urlBH = bh.getLinkBaiHat();
+
+            URL songURL = new URL(urlBH);
+            URL songURLImage = new URL(bh.getAnhBia());
+
+            String newName = bh.getId() + ".mp3";
+
+            String file_path = System.getProperty("user.dir")
+                    + File.separator + "src"
+                    + File.separator + "download" + File.separator + newName;
+
+            String file_path_image = System.getProperty("user.dir")
+                    + File.separator + "src"
+                    + File.separator + "download" + File.separator + bh.getId() + ".jpg";
+
+            String filePathLocal = LocalData.getData("file_path_download");
+            if (filePathLocal != null) {
+                file_path = filePathLocal;
+            }
+
+            File destination = new File(file_path);
+            File destination_image = new File(file_path_image);
+            new Thread(() -> {
+                JPanel pnLoading = new LoadingTaiBaiHat();
+                MyCustomDialog customDialog = new MyCustomDialog(null, "Tải bài hát", pnLoading);
+
+                try {
+                    new Thread(() -> {
+                        customDialog.show(true);
+                    }).start();
+
+                    FileUtils.copyURLToFile(songURL, destination);
+                    FileUtils.copyURLToFile(songURLImage, destination_image);
+
+//                    ArrayList<BaiHat> listBH = LocalData.getListDownload();
+//                    listBH.add(bh);
+//                    LocalData.saveListDownLoad(listBH);
+                    Gson gson = new Gson();
+                    String listCaSi = gson.toJson(bh.getBaiHat_caSis());
+
+
+                    String sql = String.format("insert into download (idBaiHat, TenBaiHat,anhBia,linkBaiHat,linkMV,tenNhacSi,theLoai,ngayPhatHanh,nhaCungCap,thoiGian,listCaSi) values "
+                            + "('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s')",
+                            bh.getId(), bh.getTenBaiHat(), bh.getAnhBia(), bh.getLinkBaiHat(), bh.getLinkMV(), bh.getTenNhacSi(), bh.getTheLoai(), bh.getNgayPhatHanh(), bh.getNhaCungCap(), bh.getThoiGian(), listCaSi);
+
+                    int kq = MySql.excuteQuery(sql);
+
+                    if (kq == 0) {
+                        JOptionPane.showMessageDialog(this, "Insert thất bại", "Lỗi rồi",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    customDialog.show(false);
+                    LoadingTaiBaiHat.closeThread();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "Download thất bại", "Lỗi rồi",
+                            JOptionPane.ERROR_MESSAGE);
+                    customDialog.show(false);
+                    LoadingTaiBaiHat.closeThread();
+                    Logger.getLogger(ItemMusic.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }).start();
+
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ItemMusic.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public boolean kiemTraTonTai() {
         ArrayList<BaiHat> listBH = LocalData.getListDownload();
         boolean check = false;
@@ -310,6 +396,22 @@ public class OptionBaiHat extends JPopupMenu {
             }
         }
 
+        return check;
+    }
+
+    public boolean kiemTraTonTaiV2() {
+        boolean check = false;
+        try {
+
+            String sql = String.format("select * from download where idBaiHat = '%s'", bh.getId());
+            ResultSet kq = MySql.queryData(sql);
+            if (kq != null && kq.next()) {
+                check = true;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(OptionBaiHat.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return check;
     }
 
@@ -365,7 +467,7 @@ public class OptionBaiHat extends JPopupMenu {
 
     }
 
-     public void handleXoaBHKhoiPlaylist() {
+    public void handleXoaBHKhoiPlaylist() {
         String header = Utils.getHeader();
 
         ApiServiceV1.apiServiceV1.xoaBaiHatKhoiDS(ChiTietPlaylist.idPlaylist, bh.getId(), header).enqueue(new Callback<ResponseDefault>() {
@@ -387,8 +489,8 @@ public class OptionBaiHat extends JPopupMenu {
             }
         });
     }
-    
-     public void handleXoaKhoiDaTai() {
+
+    public void handleXoaKhoiDaTai() {
         ArrayList<BaiHat> listBH = LocalData.getListDownload();
 
         ArrayList<BaiHat> newListBH = new ArrayList<>();

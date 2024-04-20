@@ -5,6 +5,8 @@
 package screen;
 
 import Interface.UpdateListMusic;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import component.CustomScrollBarUI;
 import component.FilterListMusic;
 import component.ItemMusic;
@@ -12,6 +14,13 @@ import model.BaiHat;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import helpers.LocalData;
+import java.lang.reflect.Type;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.BaiHat_CaSi;
+import services.MySql;
 
 /**
  *
@@ -58,6 +67,53 @@ public class DaTai extends javax.swing.JPanel implements UpdateListMusic {
         pnBoLoc.add(new FilterListMusic(dsBaiHat, this));
         pnBoLoc.revalidate();
         pnBoLoc.repaint();
+    }
+
+    public void getListMusicV2() {
+
+        try {
+            String sql = String.format("select * from download");
+            ResultSet kq = MySql.queryData(sql);
+            dsBaiHat = new ArrayList<>();
+            if (kq != null && kq.next()) {
+                String idBaiHat = kq.getString("idBaiHat");
+                String TenBaiHat = kq.getString("TenBaiHat");
+                String anhBia = kq.getString("anhBia");
+                String linkBaiHat = kq.getString("linkBaiHat");
+                String linkMV = kq.getString("linkMV");
+                String tenNhacSi = kq.getString("tenNhacSi");
+                String theLoai = kq.getString("theLoai");
+                String ngayPhatHanh = kq.getString("ngayPhatHanh");
+                String nhaCungCap = kq.getString("nhaCungCap");
+                double thoiGian = kq.getDouble("thoiGian");
+                String listCaSi = kq.getString("listCaSi");
+
+                Gson gson = new Gson();
+                Type type = new TypeToken<ArrayList<BaiHat_CaSi>>() {}.getType();
+                ArrayList<BaiHat_CaSi> listBaiHatCaSi = gson.fromJson(listCaSi, type);
+                
+                BaiHat bh = new BaiHat(idBaiHat, TenBaiHat, "", anhBia, linkBaiHat, listBaiHatCaSi);
+                
+                dsBaiHat.add(bh);
+            }
+
+            
+            int size = dsBaiHat.size();
+
+            for (int i = 0; i < size; i++) {
+                BaiHat bh = dsBaiHat.get(i);
+                JPanel pn = new ItemMusic(bh, i + 1, "DaTai");
+                PanelListMusic.add(pn);
+            }
+            PanelListMusic.revalidate();
+            PanelListMusic.repaint();
+
+            pnBoLoc.add(new FilterListMusic(dsBaiHat, this));
+            pnBoLoc.revalidate();
+            pnBoLoc.repaint();
+        } catch (SQLException ex) {
+            Logger.getLogger(DaTai.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
