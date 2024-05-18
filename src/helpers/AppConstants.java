@@ -29,7 +29,7 @@ public class AppConstants {
     public static String licenseKey_browser
             = "OK6AEKNYF1EJ8GAVIH56GM8LGL6UFI8LQDEIR5NVXJW6BYLWH3TC1UMCPIS0LH6NBVQP50WD7COT3IXC8GF6F0XFPUPNJ2FO3SA9QQIJZ6G6HHSVECW2M1T30KY4URESFWTWNZPBH1DLASHPA";
 
-    public static String DB_URL = "jdbc:mysql://sql6.freemysqlhosting.net/sql6697289";
-    public static String DB_USER_NAME = "sql6697289";
-    public static String DB_PASSWORD = "bfB5BbhPbV";
+    public static String DB_URL = "jdbc:mysql://localhost:3306/musicapp";
+    public static String DB_USER_NAME = "root";
+    public static String DB_PASSWORD = "";
 }

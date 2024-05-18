@@ -10,6 +10,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import javax.swing.ImageIcon;
 import helpers.Utils;
+import java.awt.BorderLayout;
+import javax.swing.JLabel;
 
 /**
  *
@@ -24,31 +26,39 @@ public class CircleImage extends javax.swing.JPanel {
     public CircleImage(String url, int w,int h) {
         initComponents();
         setPreferredSize(new Dimension(w,h));
+        setLayout(new BorderLayout());
+        
+        JLabel img = new JLabel();
+        ImageIcon icon = Utils.getImageBaiHat(url, w, h);
+        img.setIcon(icon);
+        
+        add(img);
+        
         this.url = url;
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        drawCircularImage(g);
-    }
-
-    public void drawCircularImage(Graphics g) {
-        int w = getWidth();
-        int h = getHeight();
-
-        // Tạo hình tròn
-        Ellipse2D.Double circle = new Ellipse2D.Double(0, 0, w, h); // Thay đổi kích thước và vị trí nếu cần
-
-        // Sử dụng hình tròn như một clip để cắt ảnh
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setClip(circle);
-
-        ImageIcon img = Utils.getImageBaiHat(url, w, h);
-
-        // Vẽ ảnh trong phạm vi hình tròn
-        g.drawImage(img.getImage(), 0, 0, null);
-    }
+//    @Override
+//    protected void paintComponent(Graphics g) {
+//        super.paintComponent(g);
+//        drawCircularImage(g);
+//    }
+//
+//    public void drawCircularImage(Graphics g) {
+//        int w = getWidth();
+//        int h = getHeight();
+//
+//        // Tạo hình tròn
+//        Ellipse2D.Double circle = new Ellipse2D.Double(0, 0, w, h); // Thay đổi kích thước và vị trí nếu cần
+//
+//        // Sử dụng hình tròn như một clip để cắt ảnh
+//        Graphics2D g2 = (Graphics2D) g;
+//        g2.setClip(circle);
+//
+//        ImageIcon img = Utils.getImageBaiHat(url, w, h);
+//
+//        // Vẽ ảnh trong phạm vi hình tròn
+//        g.drawImage(img.getImage(), 0, 0, null);
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.

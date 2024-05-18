@@ -4,7 +4,13 @@
  */
 package screen;
 
+import component.CustomScrollBarUI;
+import frame.Main;
 import frame.MainJFrame;
+import gameduoihinhbatchu.TrangChu;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 
 /**
  *
@@ -17,6 +23,8 @@ public class MiniGame extends javax.swing.JPanel {
      */
     public MiniGame() {
         initComponents();
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(20);
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
     }
 
     /**
@@ -32,9 +40,31 @@ public class MiniGame extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         btnNoiTu = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
         btnNetVe = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextArea3 = new javax.swing.JTextArea();
         btnCutTheRope = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTextArea4 = new javax.swing.JTextArea();
+        btnDuoiHinhBatChu = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTextArea5 = new javax.swing.JTextArea();
+        btnLatBai = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(23, 15, 35));
 
@@ -50,58 +80,294 @@ public class MiniGame extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(23, 15, 35));
 
+        jPanel2.setBackground(new java.awt.Color(0, 204, 204));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/anh-noi-tu.jpg"))); // NOI18N
+
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("Trò chơi nối từ là một trải nghiệm đầy thú vị và bổ ích cho mọi lứa tuổi. Bạn sẽ bắt đầu với một từ và phải nối nó với một từ khác thông qua việc chia sẻ một phần của từ đầu tiên để tạo thành từ mới. Thách thức không chỉ đến từ việc tìm kiếm từ thích hợp mà còn từ việc tạo ra mối liên kết ý nghĩa giữa các từ. Trò chơi không chỉ giúp cải thiện vốn từ vựng và kỹ năng ngôn ngữ mà còn khám phá ra những mối quan hệ không ngờ giữa các từ. Với sự linh hoạt và sáng tạo, bạn có thể tạo ra những chuỗi từ phức tạp và hấp dẫn. Trò chơi nối từ không chỉ là một thử thách mà còn là một cách tuyệt vời để thư giãn và giải trí cùng bạn bè và gia đình. Hãy tham gia ngay và khám phá thế giới phong phú của từ vựng và kiến thức!");
+        jTextArea1.setToolTipText("");
+        jTextArea1.setWrapStyleWord(true);
+        jTextArea1.setCaretPosition(0);
+        jScrollPane2.setViewportView(jTextArea1);
+
         btnNoiTu.setBackground(new java.awt.Color(204, 0, 204));
         btnNoiTu.setForeground(new java.awt.Color(255, 255, 255));
-        btnNoiTu.setText("Nối từ");
+        btnNoiTu.setText("Chơi");
         btnNoiTu.setBorder(null);
+        btnNoiTu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNoiTu.setFocusPainted(false);
         btnNoiTu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNoiTuActionPerformed(evt);
             }
         });
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnNoiTu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNoiTu, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBackground(new java.awt.Color(0, 204, 204));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/LandLines_v2.jpg"))); // NOI18N
+
+        jTextArea2.setEditable(false);
+        jTextArea2.setColumns(20);
+        jTextArea2.setLineWrap(true);
+        jTextArea2.setRows(5);
+        jTextArea2.setText("LandLines là một trò chơi trực tuyến độc đáo và thú vị, nơi người chơi có thể thể hiện sự sáng tạo của mình thông qua việc vẽ đường thẳng hoặc cong trên màn hình. Trò chơi này kết hợp giữa nghệ thuật và khoa học máy tính để tạo ra một trải nghiệm độc đáo và hấp dẫn.  Người chơi sử dụng chuột để vẽ các đoạn đường trên màn hình, mỗi đường vẽ sẽ được xử lý và biến đổi thành một hình dạng tương ứng trên bản đồ. Khi người chơi hoàn thành một đoạn đường, họ sẽ được thưởng bằng việc hiển thị một phần của bản đồ có hình dạng tương tự với đoạn đường họ vừa vẽ.  Với đồ họa đẹp mắt và cơ chế chơi độc đáo, LandLines không chỉ là một cách tuyệt vời để thư giãn mà còn là một cơ hội để khám phá và thể hiện sự sáng tạo của bản thân. Hãy tham gia ngay để khám phá vẻ đẹp ẩn sau từng đường vẽ!");
+        jTextArea2.setToolTipText("");
+        jTextArea2.setWrapStyleWord(true);
+        jTextArea2.setCaretPosition(0);
+        jScrollPane3.setViewportView(jTextArea2);
+
         btnNetVe.setBackground(new java.awt.Color(204, 0, 204));
         btnNetVe.setForeground(new java.awt.Color(255, 255, 255));
-        btnNetVe.setText("Nét vẽ");
+        btnNetVe.setText("Chơi");
         btnNetVe.setBorder(null);
+        btnNetVe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNetVe.setFocusPainted(false);
         btnNetVe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNetVeActionPerformed(evt);
             }
         });
 
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnNetVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNetVe, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(8, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBackground(new java.awt.Color(0, 204, 204));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Cut The Rope.jpg"))); // NOI18N
+
+        jTextArea3.setEditable(false);
+        jTextArea3.setColumns(20);
+        jTextArea3.setLineWrap(true);
+        jTextArea3.setRows(5);
+        jTextArea3.setText("Cut The Rope là một trò chơi giải đố lôi cuốn và thú vị, nơi người chơi sẽ phải sử dụng sự logic và kỹ năng để giúp một nhân vật nhỏ xinh xắn là Om Nom ăn được những viên kẹo ngọt ngào. Trò chơi này đã nhanh chóng trở thành một hiện tượng toàn cầu với hàng triệu lượt tải và hàng tỷ lượt chơi trên nhiều nền tảng khác nhau.  Trong mỗi cấp độ của Cut The Rope, người chơi sẽ phải cắt các dây và hoạt động các cơ chế khác nhau để đưa viên kẹo vào miệng của Om Nom. Tuy nhiên, điều thách thức là cần phải tính toán thời điểm và cách cắt dây sao cho viên kẹo có thể đến được Om Nom mà không gặp trở ngại nào.  Với đồ họa đẹp mắt, âm nhạc vui nhộn và cơ chế chơi đầy sáng tạo, Cut The Rope không chỉ là một trò chơi giải đố mà còn là một trải nghiệm giải trí độc đáo và thú vị. Hãy tham gia ngay để thách thức bản thân và khám phá thế giới đầy màu sắc của Om Nom!");
+        jTextArea3.setToolTipText("");
+        jTextArea3.setWrapStyleWord(true);
+        jTextArea3.setCaretPosition(0);
+        jScrollPane4.setViewportView(jTextArea3);
+
         btnCutTheRope.setBackground(new java.awt.Color(204, 0, 204));
         btnCutTheRope.setForeground(new java.awt.Color(255, 255, 255));
-        btnCutTheRope.setText("Cut The Rope");
+        btnCutTheRope.setText("Chơi");
         btnCutTheRope.setBorder(null);
+        btnCutTheRope.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCutTheRope.setFocusPainted(false);
         btnCutTheRope.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCutTheRopeActionPerformed(evt);
             }
         });
 
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCutTheRope, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCutTheRope, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBackground(new java.awt.Color(0, 204, 204));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/duoi-hinh-bat-chu.jpg"))); // NOI18N
+
+        jTextArea4.setEditable(false);
+        jTextArea4.setColumns(20);
+        jTextArea4.setLineWrap(true);
+        jTextArea4.setRows(5);
+        jTextArea4.setTabSize(0);
+        jTextArea4.setText("\"Đuổi hình bắt chữ\" là một trò chơi giải đố phổ biến, kích thích trí não và làm giàu vốn từ vựng của người chơi. \nTrò chơi này đưa người chơi vào thế giới của các ô chữ, nơi họ phải đoán từ dựa trên các dấu hiệu và gợi ý được cung cấp.  Mỗi câu hỏi trong \"Đuổi hình bắt chữ\" thường đi kèm với một hình ảnh hoặc một đoạn văn ngắn, từ đó người chơi phải suy luận và tìm ra từ cần tìm. Thách thức không chỉ đến từ việc đoán từ mà còn từ việc nối các chữ cái lại với nhau để tạo thành từ đúng.  Trò chơi này không chỉ là một cách tuyệt vời để nâng cao vốn từ vựng mà còn là một cách thú vị để thư giãn và giải trí. Với hàng nghìn câu hỏi khác nhau và cấp độ khó dần, \"Đuổi hình bắt chữ\" luôn đem lại những trải nghiệm mới lạ và thú vị cho người chơi. Hãy tham gia ngay để thách thức bản thân và khám phá thế giới phong phú của ngôn ngữ!");
+        jTextArea4.setToolTipText("");
+        jTextArea4.setWrapStyleWord(true);
+        jTextArea4.setCaretPosition(0);
+        jScrollPane5.setViewportView(jTextArea4);
+
+        btnDuoiHinhBatChu.setBackground(new java.awt.Color(204, 0, 204));
+        btnDuoiHinhBatChu.setForeground(new java.awt.Color(255, 255, 255));
+        btnDuoiHinhBatChu.setText("Chơi");
+        btnDuoiHinhBatChu.setBorder(null);
+        btnDuoiHinhBatChu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDuoiHinhBatChu.setFocusPainted(false);
+        btnDuoiHinhBatChu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDuoiHinhBatChuActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDuoiHinhBatChu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDuoiHinhBatChu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        jPanel6.setBackground(new java.awt.Color(0, 204, 204));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/lat-bai.jpg"))); // NOI18N
+
+        jTextArea5.setEditable(false);
+        jTextArea5.setColumns(20);
+        jTextArea5.setLineWrap(true);
+        jTextArea5.setRows(5);
+        jTextArea5.setText("\"Game lật bài\" là một trò chơi trí tuệ phổ biến, thu hút người chơi bằng cách kết hợp giữa trí nhớ và sự tập trung. Trò chơi này thường được chơi trên một bàn có nhiều lá bài được đặt ngửa xuống, mỗi lá bài có một hình ảnh hoặc một con số được ẩn dưới mặt.  Người chơi sẽ lần lượt lật các lá bài để tìm ra các cặp lá bài giống nhau. Khi tìm thấy một cặp lá bài giống nhau, người chơi sẽ giữ chúng và tiếp tục lật những lá bài khác. Mục tiêu cuối cùng là lật hết tất cả các lá bài trên bàn trong thời gian ngắn nhất và với ít lần lật lá bài nhất có thể.  Trò chơi lật bài không chỉ giúp rèn luyện trí nhớ mà còn thú vị và thư giãn. Với đa dạng các bộ bài và cấp độ khó dần, người chơi luôn được thách thức và có cơ hội cải thiện kỹ năng của mình. Hãy tham gia ngay để trải nghiệm niềm vui và sự hứng thú của trò chơi lật bài!");
+        jTextArea5.setToolTipText("");
+        jTextArea5.setWrapStyleWord(true);
+        jTextArea5.setCaretPosition(0);
+        jScrollPane6.setViewportView(jTextArea5);
+
+        btnLatBai.setBackground(new java.awt.Color(204, 0, 204));
+        btnLatBai.setForeground(new java.awt.Color(255, 255, 255));
+        btnLatBai.setText("Chơi");
+        btnLatBai.setBorder(null);
+        btnLatBai.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLatBai.setFocusPainted(false);
+        btnLatBai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLatBaiActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLatBai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLatBai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNoiTu, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNetVe, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCutTheRope, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(310, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 204, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(btnNoiTu, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnNetVe, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCutTheRope, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 182, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(256, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -113,12 +379,12 @@ public class MiniGame extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
-                        .addGap(0, 265, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -129,7 +395,7 @@ public class MiniGame extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -145,17 +411,71 @@ public class MiniGame extends javax.swing.JPanel {
 
     private void btnCutTheRopeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCutTheRopeActionPerformed
         // TODO add your handling code here:
-         MainJFrame.ShowPanel("GameCutTheRope", new GameCutTheRope());
+        MainJFrame.ShowPanel("GameCutTheRope", new GameCutTheRope());
     }//GEN-LAST:event_btnCutTheRopeActionPerformed
+
+    private void btnDuoiHinhBatChuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDuoiHinhBatChuActionPerformed
+        // TODO add your handling code here:
+        JFrame frame = new TrangChu();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                Main.rootFrame.setVisible(true);
+            }
+
+        });
+
+        Main.rootFrame.setVisible(false);
+    }//GEN-LAST:event_btnDuoiHinhBatChuActionPerformed
+
+    private void btnLatBaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLatBaiActionPerformed
+        // TODO add your handling code here:
+         JFrame frame = new gamelatbai.TrangChu();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                Main.rootFrame.setVisible(true);
+            }
+
+        });
+
+        Main.rootFrame.setVisible(false);
+    }//GEN-LAST:event_btnLatBaiActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCutTheRope;
+    private javax.swing.JButton btnDuoiHinhBatChu;
+    private javax.swing.JButton btnLatBai;
     private javax.swing.JButton btnNetVe;
     private javax.swing.JButton btnNoiTu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jTextArea3;
+    private javax.swing.JTextArea jTextArea4;
+    private javax.swing.JTextArea jTextArea5;
     // End of variables declaration//GEN-END:variables
 }

@@ -42,7 +42,7 @@ public class ThuVien extends javax.swing.JPanel {
      */
     public ThuVien() {
         initComponents();
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(20);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 //        jScrollPane2.getVerticalScrollBar().setUnitIncrement(10);
         getListCaSi();

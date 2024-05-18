@@ -62,9 +62,7 @@ public class BaiHat implements Serializable{
         this.loiBaiHat = loiBaiHat;
         this.anhBia = anhBia;
         this.linkBaiHat = linkBaiHat;
-        this.linkMV = linkMV;
         this.baiHat_caSis = baiHat_caSis;
-        this.thoiGian = thoiGian;
     }
 
     public ArrayList<BaiHat_CaSi> getBaiHat_caSis() {

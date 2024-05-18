@@ -24,13 +24,13 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="569" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="265" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -45,7 +45,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="237" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="774" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -92,83 +92,503 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnNoiTu" min="-2" pref="82" max="-2" attributes="0"/>
-                          <Component id="btnNetVe" alignment="0" min="-2" pref="82" max="-2" attributes="0"/>
-                          <Component id="btnCutTheRope" alignment="0" min="-2" pref="82" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jPanel4" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jPanel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jPanel6" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="310" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="204" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Component id="btnNoiTu" min="-2" pref="29" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnNetVe" min="-2" pref="29" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnCutTheRope" min="-2" pref="29" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="182" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel2" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel3" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel4" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="256" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="btnNoiTu">
+            <Container class="javax.swing.JPanel" name="jPanel2">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="cc" green="0" red="cc" type="rgb"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="N&#x1ed1;i t&#x1eeb;"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
+                  <Color blue="cc" green="cc" red="0" type="rgb"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNoiTuActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnNetVe">
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jLabel3" max="32767" attributes="0"/>
+                              <Component id="btnNoiTu" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" pref="348" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel3" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnNoiTu" min="-2" pref="29" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jScrollPane2" min="-2" pref="121" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="14" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLabel3">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/icon/anh-noi-tu.jpg"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JTextArea" name="jTextArea1">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="columns" type="int" value="20"/>
+                        <Property name="lineWrap" type="boolean" value="true"/>
+                        <Property name="rows" type="int" value="5"/>
+                        <Property name="text" type="java.lang.String" value="Tr&#xf2; ch&#x1a1;i n&#x1ed1;i t&#x1eeb; l&#xe0; m&#x1ed9;t tr&#x1ea3;i nghi&#x1ec7;m &#x111;&#x1ea7;y th&#xfa; v&#x1ecb; v&#xe0; b&#x1ed5; &#xed;ch cho m&#x1ecd;i l&#x1ee9;a tu&#x1ed5;i. B&#x1ea1;n s&#x1ebd; b&#x1eaf;t &#x111;&#x1ea7;u v&#x1edb;i m&#x1ed9;t t&#x1eeb; v&#xe0; ph&#x1ea3;i n&#x1ed1;i n&#xf3; v&#x1edb;i m&#x1ed9;t t&#x1eeb; kh&#xe1;c th&#xf4;ng qua vi&#x1ec7;c chia s&#x1ebb; m&#x1ed9;t ph&#x1ea7;n c&#x1ee7;a t&#x1eeb; &#x111;&#x1ea7;u ti&#xea;n &#x111;&#x1ec3; t&#x1ea1;o th&#xe0;nh t&#x1eeb; m&#x1edb;i. Th&#xe1;ch th&#x1ee9;c kh&#xf4;ng ch&#x1ec9; &#x111;&#x1ebf;n t&#x1eeb; vi&#x1ec7;c t&#xec;m ki&#x1ebf;m t&#x1eeb; th&#xed;ch h&#x1ee3;p m&#xe0; c&#xf2;n t&#x1eeb; vi&#x1ec7;c t&#x1ea1;o ra m&#x1ed1;i li&#xea;n k&#x1ebf;t &#xfd; ngh&#x129;a gi&#x1eef;a c&#xe1;c t&#x1eeb;. Tr&#xf2; ch&#x1a1;i kh&#xf4;ng ch&#x1ec9; gi&#xfa;p c&#x1ea3;i thi&#x1ec7;n v&#x1ed1;n t&#x1eeb; v&#x1ef1;ng v&#xe0; k&#x1ef9; n&#x103;ng ng&#xf4;n ng&#x1eef; m&#xe0; c&#xf2;n kh&#xe1;m ph&#xe1; ra nh&#x1eef;ng m&#x1ed1;i quan h&#x1ec7; kh&#xf4;ng ng&#x1edd; gi&#x1eef;a c&#xe1;c t&#x1eeb;. V&#x1edb;i s&#x1ef1; linh ho&#x1ea1;t v&#xe0; s&#xe1;ng t&#x1ea1;o, b&#x1ea1;n c&#xf3; th&#x1ec3; t&#x1ea1;o ra nh&#x1eef;ng chu&#x1ed7;i t&#x1eeb; ph&#x1ee9;c t&#x1ea1;p v&#xe0; h&#x1ea5;p d&#x1eab;n. Tr&#xf2; ch&#x1a1;i n&#x1ed1;i t&#x1eeb; kh&#xf4;ng ch&#x1ec9; l&#xe0; m&#x1ed9;t th&#x1eed; th&#xe1;ch m&#xe0; c&#xf2;n l&#xe0; m&#x1ed9;t c&#xe1;ch tuy&#x1ec7;t v&#x1edd;i &#x111;&#x1ec3; th&#x1b0; gi&#xe3;n v&#xe0; gi&#x1ea3;i tr&#xed; c&#xf9;ng b&#x1ea1;n b&#xe8; v&#xe0; gia &#x111;&#xec;nh. H&#xe3;y tham gia ngay v&#xe0; kh&#xe1;m ph&#xe1; th&#x1ebf; gi&#x1edb;i phong ph&#xfa; c&#x1ee7;a t&#x1eeb; v&#x1ef1;ng v&#xe0; ki&#x1ebf;n th&#x1ee9;c!"/>
+                        <Property name="toolTipText" type="java.lang.String" value=""/>
+                        <Property name="wrapStyleWord" type="boolean" value="true"/>
+                        <Property name="caretPosition" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="0" type="code"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Component class="javax.swing.JButton" name="btnNoiTu">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="cc" green="0" red="cc" type="rgb"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Ch&#x1a1;i"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="null"/>
+                    </Property>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Hand Cursor"/>
+                    </Property>
+                    <Property name="focusPainted" type="boolean" value="false"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNoiTuActionPerformed"/>
+                  </Events>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel3">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="cc" green="0" red="cc" type="rgb"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="N&#xe9;t v&#x1ebd;"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
+                  <Color blue="cc" green="cc" red="0" type="rgb"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNetVeActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnCutTheRope">
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jLabel4" max="32767" attributes="0"/>
+                              <Component id="btnNetVe" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jScrollPane3" min="-2" pref="350" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel4" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnNetVe" min="-2" pref="29" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jScrollPane3" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="8" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLabel4">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/icon/LandLines_v2.jpg"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JTextArea" name="jTextArea2">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="columns" type="int" value="20"/>
+                        <Property name="lineWrap" type="boolean" value="true"/>
+                        <Property name="rows" type="int" value="5"/>
+                        <Property name="text" type="java.lang.String" value="LandLines l&#xe0; m&#x1ed9;t tr&#xf2; ch&#x1a1;i tr&#x1ef1;c tuy&#x1ebf;n &#x111;&#x1ed9;c &#x111;&#xe1;o v&#xe0; th&#xfa; v&#x1ecb;, n&#x1a1;i ng&#x1b0;&#x1edd;i ch&#x1a1;i c&#xf3; th&#x1ec3; th&#x1ec3; hi&#x1ec7;n s&#x1ef1; s&#xe1;ng t&#x1ea1;o c&#x1ee7;a m&#xec;nh th&#xf4;ng qua vi&#x1ec7;c v&#x1ebd; &#x111;&#x1b0;&#x1edd;ng th&#x1eb3;ng ho&#x1eb7;c cong tr&#xea;n m&#xe0;n h&#xec;nh. Tr&#xf2; ch&#x1a1;i n&#xe0;y k&#x1ebf;t h&#x1ee3;p gi&#x1eef;a ngh&#x1ec7; thu&#x1ead;t v&#xe0; khoa h&#x1ecd;c m&#xe1;y t&#xed;nh &#x111;&#x1ec3; t&#x1ea1;o ra m&#x1ed9;t tr&#x1ea3;i nghi&#x1ec7;m &#x111;&#x1ed9;c &#x111;&#xe1;o v&#xe0; h&#x1ea5;p d&#x1eab;n.  Ng&#x1b0;&#x1edd;i ch&#x1a1;i s&#x1eed; d&#x1ee5;ng chu&#x1ed9;t &#x111;&#x1ec3; v&#x1ebd; c&#xe1;c &#x111;o&#x1ea1;n &#x111;&#x1b0;&#x1edd;ng tr&#xea;n m&#xe0;n h&#xec;nh, m&#x1ed7;i &#x111;&#x1b0;&#x1edd;ng v&#x1ebd; s&#x1ebd; &#x111;&#x1b0;&#x1ee3;c x&#x1eed; l&#xfd; v&#xe0; bi&#x1ebf;n &#x111;&#x1ed5;i th&#xe0;nh m&#x1ed9;t h&#xec;nh d&#x1ea1;ng t&#x1b0;&#x1a1;ng &#x1ee9;ng tr&#xea;n b&#x1ea3;n &#x111;&#x1ed3;. Khi ng&#x1b0;&#x1edd;i ch&#x1a1;i ho&#xe0;n th&#xe0;nh m&#x1ed9;t &#x111;o&#x1ea1;n &#x111;&#x1b0;&#x1edd;ng, h&#x1ecd; s&#x1ebd; &#x111;&#x1b0;&#x1ee3;c th&#x1b0;&#x1edf;ng b&#x1eb1;ng vi&#x1ec7;c hi&#x1ec3;n th&#x1ecb; m&#x1ed9;t ph&#x1ea7;n c&#x1ee7;a b&#x1ea3;n &#x111;&#x1ed3; c&#xf3; h&#xec;nh d&#x1ea1;ng t&#x1b0;&#x1a1;ng t&#x1ef1; v&#x1edb;i &#x111;o&#x1ea1;n &#x111;&#x1b0;&#x1edd;ng h&#x1ecd; v&#x1eeb;a v&#x1ebd;.  V&#x1edb;i &#x111;&#x1ed3; h&#x1ecd;a &#x111;&#x1eb9;p m&#x1eaf;t v&#xe0; c&#x1a1; ch&#x1ebf; ch&#x1a1;i &#x111;&#x1ed9;c &#x111;&#xe1;o, LandLines kh&#xf4;ng ch&#x1ec9; l&#xe0; m&#x1ed9;t c&#xe1;ch tuy&#x1ec7;t v&#x1edd;i &#x111;&#x1ec3; th&#x1b0; gi&#xe3;n m&#xe0; c&#xf2;n l&#xe0; m&#x1ed9;t c&#x1a1; h&#x1ed9;i &#x111;&#x1ec3; kh&#xe1;m ph&#xe1; v&#xe0; th&#x1ec3; hi&#x1ec7;n s&#x1ef1; s&#xe1;ng t&#x1ea1;o c&#x1ee7;a b&#x1ea3;n th&#xe2;n. H&#xe3;y tham gia ngay &#x111;&#x1ec3; kh&#xe1;m ph&#xe1; v&#x1ebb; &#x111;&#x1eb9;p &#x1ea9;n sau t&#x1eeb;ng &#x111;&#x1b0;&#x1edd;ng v&#x1ebd;!"/>
+                        <Property name="toolTipText" type="java.lang.String" value=""/>
+                        <Property name="wrapStyleWord" type="boolean" value="true"/>
+                        <Property name="caretPosition" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="0" type="code"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Component class="javax.swing.JButton" name="btnNetVe">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="cc" green="0" red="cc" type="rgb"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Ch&#x1a1;i"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="null"/>
+                    </Property>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Hand Cursor"/>
+                    </Property>
+                    <Property name="focusPainted" type="boolean" value="false"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNetVeActionPerformed"/>
+                  </Events>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel4">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="cc" green="0" red="cc" type="rgb"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Cut The Rope"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
+                  <Color blue="cc" green="cc" red="0" type="rgb"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCutTheRopeActionPerformed"/>
-              </Events>
-            </Component>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jLabel5" max="32767" attributes="0"/>
+                              <Component id="btnCutTheRope" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jScrollPane4" min="-2" pref="350" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel5" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnCutTheRope" min="-2" pref="29" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jScrollPane4" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="14" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLabel5">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/icon/Cut The Rope.jpg"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JTextArea" name="jTextArea3">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="columns" type="int" value="20"/>
+                        <Property name="lineWrap" type="boolean" value="true"/>
+                        <Property name="rows" type="int" value="5"/>
+                        <Property name="text" type="java.lang.String" value="Cut The Rope l&#xe0; m&#x1ed9;t tr&#xf2; ch&#x1a1;i gi&#x1ea3;i &#x111;&#x1ed1; l&#xf4;i cu&#x1ed1;n v&#xe0; th&#xfa; v&#x1ecb;, n&#x1a1;i ng&#x1b0;&#x1edd;i ch&#x1a1;i s&#x1ebd; ph&#x1ea3;i s&#x1eed; d&#x1ee5;ng s&#x1ef1; logic v&#xe0; k&#x1ef9; n&#x103;ng &#x111;&#x1ec3; gi&#xfa;p m&#x1ed9;t nh&#xe2;n v&#x1ead;t nh&#x1ecf; xinh x&#x1eaf;n l&#xe0; Om Nom &#x103;n &#x111;&#x1b0;&#x1ee3;c nh&#x1eef;ng vi&#xea;n k&#x1eb9;o ng&#x1ecd;t ng&#xe0;o. Tr&#xf2; ch&#x1a1;i n&#xe0;y &#x111;&#xe3; nhanh ch&#xf3;ng tr&#x1edf; th&#xe0;nh m&#x1ed9;t hi&#x1ec7;n t&#x1b0;&#x1ee3;ng to&#xe0;n c&#x1ea7;u v&#x1edb;i h&#xe0;ng tri&#x1ec7;u l&#x1b0;&#x1ee3;t t&#x1ea3;i v&#xe0; h&#xe0;ng t&#x1ef7; l&#x1b0;&#x1ee3;t ch&#x1a1;i tr&#xea;n nhi&#x1ec1;u n&#x1ec1;n t&#x1ea3;ng kh&#xe1;c nhau.  Trong m&#x1ed7;i c&#x1ea5;p &#x111;&#x1ed9; c&#x1ee7;a Cut The Rope, ng&#x1b0;&#x1edd;i ch&#x1a1;i s&#x1ebd; ph&#x1ea3;i c&#x1eaf;t c&#xe1;c d&#xe2;y v&#xe0; ho&#x1ea1;t &#x111;&#x1ed9;ng c&#xe1;c c&#x1a1; ch&#x1ebf; kh&#xe1;c nhau &#x111;&#x1ec3; &#x111;&#x1b0;a vi&#xea;n k&#x1eb9;o v&#xe0;o mi&#x1ec7;ng c&#x1ee7;a Om Nom. Tuy nhi&#xea;n, &#x111;i&#x1ec1;u th&#xe1;ch th&#x1ee9;c l&#xe0; c&#x1ea7;n ph&#x1ea3;i t&#xed;nh to&#xe1;n th&#x1edd;i &#x111;i&#x1ec3;m v&#xe0; c&#xe1;ch c&#x1eaf;t d&#xe2;y sao cho vi&#xea;n k&#x1eb9;o c&#xf3; th&#x1ec3; &#x111;&#x1ebf;n &#x111;&#x1b0;&#x1ee3;c Om Nom m&#xe0; kh&#xf4;ng g&#x1eb7;p tr&#x1edf; ng&#x1ea1;i n&#xe0;o.  V&#x1edb;i &#x111;&#x1ed3; h&#x1ecd;a &#x111;&#x1eb9;p m&#x1eaf;t, &#xe2;m nh&#x1ea1;c vui nh&#x1ed9;n v&#xe0; c&#x1a1; ch&#x1ebf; ch&#x1a1;i &#x111;&#x1ea7;y s&#xe1;ng t&#x1ea1;o, Cut The Rope kh&#xf4;ng ch&#x1ec9; l&#xe0; m&#x1ed9;t tr&#xf2; ch&#x1a1;i gi&#x1ea3;i &#x111;&#x1ed1; m&#xe0; c&#xf2;n l&#xe0; m&#x1ed9;t tr&#x1ea3;i nghi&#x1ec7;m gi&#x1ea3;i tr&#xed; &#x111;&#x1ed9;c &#x111;&#xe1;o v&#xe0; th&#xfa; v&#x1ecb;. H&#xe3;y tham gia ngay &#x111;&#x1ec3; th&#xe1;ch th&#x1ee9;c b&#x1ea3;n th&#xe2;n v&#xe0; kh&#xe1;m ph&#xe1; th&#x1ebf; gi&#x1edb;i &#x111;&#x1ea7;y m&#xe0;u s&#x1eaf;c c&#x1ee7;a Om Nom!"/>
+                        <Property name="toolTipText" type="java.lang.String" value=""/>
+                        <Property name="wrapStyleWord" type="boolean" value="true"/>
+                        <Property name="caretPosition" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="0" type="code"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Component class="javax.swing.JButton" name="btnCutTheRope">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="cc" green="0" red="cc" type="rgb"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Ch&#x1a1;i"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="null"/>
+                    </Property>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Hand Cursor"/>
+                    </Property>
+                    <Property name="focusPainted" type="boolean" value="false"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCutTheRopeActionPerformed"/>
+                  </Events>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel5">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="cc" red="0" type="rgb"/>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jLabel6" max="32767" attributes="0"/>
+                              <Component id="btnDuoiHinhBatChu" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jScrollPane5" pref="350" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel6" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnDuoiHinhBatChu" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="jScrollPane5" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="14" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLabel6">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/icon/duoi-hinh-bat-chu.jpg"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Container class="javax.swing.JScrollPane" name="jScrollPane5">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JTextArea" name="jTextArea4">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="columns" type="int" value="20"/>
+                        <Property name="lineWrap" type="boolean" value="true"/>
+                        <Property name="rows" type="int" value="5"/>
+                        <Property name="tabSize" type="int" value="0"/>
+                        <Property name="text" type="java.lang.String" value="&quot;&#x110;u&#x1ed5;i h&#xec;nh b&#x1eaf;t ch&#x1eef;&quot; l&#xe0; m&#x1ed9;t tr&#xf2; ch&#x1a1;i gi&#x1ea3;i &#x111;&#x1ed1; ph&#x1ed5; bi&#x1ebf;n, k&#xed;ch th&#xed;ch tr&#xed; n&#xe3;o v&#xe0; l&#xe0;m gi&#xe0;u v&#x1ed1;n t&#x1eeb; v&#x1ef1;ng c&#x1ee7;a ng&#x1b0;&#x1edd;i ch&#x1a1;i. &#xa;Tr&#xf2; ch&#x1a1;i n&#xe0;y &#x111;&#x1b0;a ng&#x1b0;&#x1edd;i ch&#x1a1;i v&#xe0;o th&#x1ebf; gi&#x1edb;i c&#x1ee7;a c&#xe1;c &#xf4; ch&#x1eef;, n&#x1a1;i h&#x1ecd; ph&#x1ea3;i &#x111;o&#xe1;n t&#x1eeb; d&#x1ef1;a tr&#xea;n c&#xe1;c d&#x1ea5;u hi&#x1ec7;u v&#xe0; g&#x1ee3;i &#xfd; &#x111;&#x1b0;&#x1ee3;c cung c&#x1ea5;p.  M&#x1ed7;i c&#xe2;u h&#x1ecf;i trong &quot;&#x110;u&#x1ed5;i h&#xec;nh b&#x1eaf;t ch&#x1eef;&quot; th&#x1b0;&#x1edd;ng &#x111;i k&#xe8;m v&#x1edb;i m&#x1ed9;t h&#xec;nh &#x1ea3;nh ho&#x1eb7;c m&#x1ed9;t &#x111;o&#x1ea1;n v&#x103;n ng&#x1eaf;n, t&#x1eeb; &#x111;&#xf3; ng&#x1b0;&#x1edd;i ch&#x1a1;i ph&#x1ea3;i suy lu&#x1ead;n v&#xe0; t&#xec;m ra t&#x1eeb; c&#x1ea7;n t&#xec;m. Th&#xe1;ch th&#x1ee9;c kh&#xf4;ng ch&#x1ec9; &#x111;&#x1ebf;n t&#x1eeb; vi&#x1ec7;c &#x111;o&#xe1;n t&#x1eeb; m&#xe0; c&#xf2;n t&#x1eeb; vi&#x1ec7;c n&#x1ed1;i c&#xe1;c ch&#x1eef; c&#xe1;i l&#x1ea1;i v&#x1edb;i nhau &#x111;&#x1ec3; t&#x1ea1;o th&#xe0;nh t&#x1eeb; &#x111;&#xfa;ng.  Tr&#xf2; ch&#x1a1;i n&#xe0;y kh&#xf4;ng ch&#x1ec9; l&#xe0; m&#x1ed9;t c&#xe1;ch tuy&#x1ec7;t v&#x1edd;i &#x111;&#x1ec3; n&#xe2;ng cao v&#x1ed1;n t&#x1eeb; v&#x1ef1;ng m&#xe0; c&#xf2;n l&#xe0; m&#x1ed9;t c&#xe1;ch th&#xfa; v&#x1ecb; &#x111;&#x1ec3; th&#x1b0; gi&#xe3;n v&#xe0; gi&#x1ea3;i tr&#xed;. V&#x1edb;i h&#xe0;ng ngh&#xec;n c&#xe2;u h&#x1ecf;i kh&#xe1;c nhau v&#xe0; c&#x1ea5;p &#x111;&#x1ed9; kh&#xf3; d&#x1ea7;n, &quot;&#x110;u&#x1ed5;i h&#xec;nh b&#x1eaf;t ch&#x1eef;&quot; lu&#xf4;n &#x111;em l&#x1ea1;i nh&#x1eef;ng tr&#x1ea3;i nghi&#x1ec7;m m&#x1edb;i l&#x1ea1; v&#xe0; th&#xfa; v&#x1ecb; cho ng&#x1b0;&#x1edd;i ch&#x1a1;i. H&#xe3;y tham gia ngay &#x111;&#x1ec3; th&#xe1;ch th&#x1ee9;c b&#x1ea3;n th&#xe2;n v&#xe0; kh&#xe1;m ph&#xe1; th&#x1ebf; gi&#x1edb;i phong ph&#xfa; c&#x1ee7;a ng&#xf4;n ng&#x1eef;!"/>
+                        <Property name="toolTipText" type="java.lang.String" value=""/>
+                        <Property name="wrapStyleWord" type="boolean" value="true"/>
+                        <Property name="caretPosition" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="0" type="code"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Component class="javax.swing.JButton" name="btnDuoiHinhBatChu">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="cc" green="0" red="cc" type="rgb"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Ch&#x1a1;i"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="null"/>
+                    </Property>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Hand Cursor"/>
+                    </Property>
+                    <Property name="focusPainted" type="boolean" value="false"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDuoiHinhBatChuActionPerformed"/>
+                  </Events>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel6">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="cc" red="0" type="rgb"/>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jLabel7" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnLatBai" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jScrollPane6" pref="350" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel7" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnLatBai" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="jScrollPane6" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="14" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLabel7">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/icon/lat-bai.jpg"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Container class="javax.swing.JScrollPane" name="jScrollPane6">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JTextArea" name="jTextArea5">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="columns" type="int" value="20"/>
+                        <Property name="lineWrap" type="boolean" value="true"/>
+                        <Property name="rows" type="int" value="5"/>
+                        <Property name="text" type="java.lang.String" value="&quot;Game l&#x1ead;t b&#xe0;i&quot; l&#xe0; m&#x1ed9;t tr&#xf2; ch&#x1a1;i tr&#xed; tu&#x1ec7; ph&#x1ed5; bi&#x1ebf;n, thu h&#xfa;t ng&#x1b0;&#x1edd;i ch&#x1a1;i b&#x1eb1;ng c&#xe1;ch k&#x1ebf;t h&#x1ee3;p gi&#x1eef;a tr&#xed; nh&#x1edb; v&#xe0; s&#x1ef1; t&#x1ead;p trung. Tr&#xf2; ch&#x1a1;i n&#xe0;y th&#x1b0;&#x1edd;ng &#x111;&#x1b0;&#x1ee3;c ch&#x1a1;i tr&#xea;n m&#x1ed9;t b&#xe0;n c&#xf3; nhi&#x1ec1;u l&#xe1; b&#xe0;i &#x111;&#x1b0;&#x1ee3;c &#x111;&#x1eb7;t ng&#x1eed;a xu&#x1ed1;ng, m&#x1ed7;i l&#xe1; b&#xe0;i c&#xf3; m&#x1ed9;t h&#xec;nh &#x1ea3;nh ho&#x1eb7;c m&#x1ed9;t con s&#x1ed1; &#x111;&#x1b0;&#x1ee3;c &#x1ea9;n d&#x1b0;&#x1edb;i m&#x1eb7;t.  Ng&#x1b0;&#x1edd;i ch&#x1a1;i s&#x1ebd; l&#x1ea7;n l&#x1b0;&#x1ee3;t l&#x1ead;t c&#xe1;c l&#xe1; b&#xe0;i &#x111;&#x1ec3; t&#xec;m ra c&#xe1;c c&#x1eb7;p l&#xe1; b&#xe0;i gi&#x1ed1;ng nhau. Khi t&#xec;m th&#x1ea5;y m&#x1ed9;t c&#x1eb7;p l&#xe1; b&#xe0;i gi&#x1ed1;ng nhau, ng&#x1b0;&#x1edd;i ch&#x1a1;i s&#x1ebd; gi&#x1eef; ch&#xfa;ng v&#xe0; ti&#x1ebf;p t&#x1ee5;c l&#x1ead;t nh&#x1eef;ng l&#xe1; b&#xe0;i kh&#xe1;c. M&#x1ee5;c ti&#xea;u cu&#x1ed1;i c&#xf9;ng l&#xe0; l&#x1ead;t h&#x1ebf;t t&#x1ea5;t c&#x1ea3; c&#xe1;c l&#xe1; b&#xe0;i tr&#xea;n b&#xe0;n trong th&#x1edd;i gian ng&#x1eaf;n nh&#x1ea5;t v&#xe0; v&#x1edb;i &#xed;t l&#x1ea7;n l&#x1ead;t l&#xe1; b&#xe0;i nh&#x1ea5;t c&#xf3; th&#x1ec3;.  Tr&#xf2; ch&#x1a1;i l&#x1ead;t b&#xe0;i kh&#xf4;ng ch&#x1ec9; gi&#xfa;p r&#xe8;n luy&#x1ec7;n tr&#xed; nh&#x1edb; m&#xe0; c&#xf2;n th&#xfa; v&#x1ecb; v&#xe0; th&#x1b0; gi&#xe3;n. V&#x1edb;i &#x111;a d&#x1ea1;ng c&#xe1;c b&#x1ed9; b&#xe0;i v&#xe0; c&#x1ea5;p &#x111;&#x1ed9; kh&#xf3; d&#x1ea7;n, ng&#x1b0;&#x1edd;i ch&#x1a1;i lu&#xf4;n &#x111;&#x1b0;&#x1ee3;c th&#xe1;ch th&#x1ee9;c v&#xe0; c&#xf3; c&#x1a1; h&#x1ed9;i c&#x1ea3;i thi&#x1ec7;n k&#x1ef9; n&#x103;ng c&#x1ee7;a m&#xec;nh. H&#xe3;y tham gia ngay &#x111;&#x1ec3; tr&#x1ea3;i nghi&#x1ec7;m ni&#x1ec1;m vui v&#xe0; s&#x1ef1; h&#x1ee9;ng th&#xfa; c&#x1ee7;a tr&#xf2; ch&#x1a1;i l&#x1ead;t b&#xe0;i!"/>
+                        <Property name="toolTipText" type="java.lang.String" value=""/>
+                        <Property name="wrapStyleWord" type="boolean" value="true"/>
+                        <Property name="caretPosition" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="0" type="code"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Component class="javax.swing.JButton" name="btnLatBai">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="cc" green="0" red="cc" type="rgb"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Ch&#x1a1;i"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="null"/>
+                    </Property>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Hand Cursor"/>
+                    </Property>
+                    <Property name="focusPainted" type="boolean" value="false"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLatBaiActionPerformed"/>
+                  </Events>
+                </Component>
+              </SubComponents>
+            </Container>
           </SubComponents>
         </Container>
       </SubComponents>

@@ -29,7 +29,7 @@ public class ListLive extends javax.swing.JPanel {
     public ListLive() {
         initComponents();
 
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(20);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
 //        ArrayList<LiveItem> listLive = new ArrayList<>();

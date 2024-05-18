@@ -34,7 +34,7 @@ public class KhamPha extends javax.swing.JPanel {
     public KhamPha() {
         initComponents();
 
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(20);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         loadTop10Music();
@@ -169,6 +169,12 @@ public class KhamPha extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("NGHE GẤN ĐÂY");
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         btnTop100.setBackground(new java.awt.Color(204, 0, 204));
         btnTop100.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -252,6 +258,15 @@ public class KhamPha extends javax.swing.JPanel {
 
     private void btnMoreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMoreMouseClicked
         // TODO add your handling code here:
+        toggleShowMoreDaNghe();
+    }//GEN-LAST:event_btnMoreMouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+        toggleShowMoreDaNghe();
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    public void toggleShowMoreDaNghe() {
         if (maxCountDaNghe == 3) {
             maxCountDaNghe = 10;
             getListDaNghe();
@@ -263,8 +278,7 @@ public class KhamPha extends javax.swing.JPanel {
             ImageIcon icon = new ImageIcon(getClass().getResource("/icon/icons-down.png"));
             btnMore.setIcon(icon);
         }
-    }//GEN-LAST:event_btnMoreMouseClicked
-
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnMore;

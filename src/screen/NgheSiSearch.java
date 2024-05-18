@@ -26,7 +26,7 @@ public class NgheSiSearch extends javax.swing.JPanel {
     public NgheSiSearch(String keyword) {
         initComponents();
 
-        jScrollPane1.getHorizontalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getHorizontalScrollBar().setUnitIncrement(20);
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 

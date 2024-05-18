@@ -117,6 +117,7 @@ public class OptionBaiHat extends JPopupMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 handleDownload();
+//                handleDownloadV2();
             }
         });
 
@@ -355,11 +356,17 @@ public class OptionBaiHat extends JPopupMenu {
 //                    listBH.add(bh);
 //                    LocalData.saveListDownLoad(listBH);
                     Gson gson = new Gson();
-                    String listCaSi = gson.toJson(bh.getBaiHat_caSis());
 
+                    ArrayList<Casi> listCS = new ArrayList<>();
+                    for (BaiHat_CaSi bh_cs : bh.getBaiHat_caSis()) {
+                        Casi getCs = new Casi(bh_cs.getCasi().getId(), bh_cs.getCasi().getTenCaSi(), "", bh_cs.getCasi().getAnh());
+                        listCS.add(getCs);
+                    }
+                    String listCaSi = gson.toJson(listCS);
+                    System.out.println("json: " + listCaSi);
 
                     String sql = String.format("insert into download (idBaiHat, TenBaiHat,anhBia,linkBaiHat,linkMV,tenNhacSi,theLoai,ngayPhatHanh,nhaCungCap,thoiGian,listCaSi) values "
-                            + "('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s')",
+                            + "('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%f', '%s')",
                             bh.getId(), bh.getTenBaiHat(), bh.getAnhBia(), bh.getLinkBaiHat(), bh.getLinkMV(), bh.getTenNhacSi(), bh.getTheLoai(), bh.getNgayPhatHanh(), bh.getNhaCungCap(), bh.getThoiGian(), listCaSi);
 
                     int kq = MySql.excuteQuery(sql);

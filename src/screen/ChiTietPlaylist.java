@@ -23,6 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import api.ApiServiceV1;
+import component.ItemPlaylist;
 import services.MyMusicPlayer;
 import helpers.Utils;
 import frame.MainJFrame;
@@ -45,7 +46,7 @@ public class ChiTietPlaylist extends javax.swing.JPanel {
         initComponents();
 
         this.idPlaylist = idPlaylist;
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(20);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         //test
@@ -290,6 +291,9 @@ public class ChiTietPlaylist extends javax.swing.JPanel {
                 if(res!=null && res.getErrCode() == 0){
                     lbTenDS.setText(name);
                     playlist.setTenDanhSach(name);
+                    if(ItemPlaylist.tenDS != null) {
+                        ItemPlaylist.tenDS.setText(name);
+                    }
                     
                 }
                 else {

@@ -30,7 +30,7 @@ public final class BaiHatSearch extends javax.swing.JPanel {
      */
     public BaiHatSearch(String keyword) {
         initComponents();
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(20);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
         handleTimBaiHat(keyword);
     }

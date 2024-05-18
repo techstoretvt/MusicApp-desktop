@@ -4,6 +4,7 @@
  */
 package component;
 
+import static component.ItemMusic.anhNhac;
 import model.BaiHat;
 import model.BaiHat_CaSi;
 import model.Casi;
@@ -23,21 +24,21 @@ import java.util.logging.Logger;
  * @author tranv
  */
 public class ItemPhatKeTiep extends javax.swing.JPanel {
-
+    
     private BaiHat bh = null;
     private int index = 1;
     boolean active = false;
-
+    
     public ItemPhatKeTiep(BaiHat bh, int index, boolean active, boolean showArrow) {
         initComponents();
-
+        
         this.bh = bh;
         this.index = index;
         this.active = active;
-
+        
         lbTenBaiHat.setText(bh.getTenBaiHat());
         lbTenCaSi.setText(getStringTenCaSi());
-
+        
         new Thread(() -> {
             String urlAnh = bh.getAnhBia();
             if (MyMusicPlayer.typeMusic.equals("off")) {
@@ -46,23 +47,23 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
             ImageIcon icon = Utils.getImageBaiHat(urlAnh, 40, 40);
             imageBaiHat.setIcon(icon);
         }).start();
-
+        
         new Thread(() -> {
             try {
-
+                
                 Thread.sleep(500);
-
+                
                 if (active) {
                     setBackground(new Color(204, 0, 204));
                     lbTenCaSi.setForeground(new Color(200, 200, 200));
                     btnDelete.setVisible(false);
                 }
-
+                
                 if (!showArrow) {
                     btnUp.setVisible(false);
                     btnDown.setVisible(false);
                 }
-
+                
                 if (index == 0) {
                     btnUp.setVisible(false);
                 } else if (index == MyMusicPlayer.dsBaiHat.size() - 1) {
@@ -72,9 +73,9 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
                 Logger.getLogger(ItemPhatKeTiep.class.getName()).log(Level.SEVERE, null, ex);
             }
         }).start();
-
+        
     }
-
+    
     public void setActive(boolean active) {
         this.active = active;
         if (active) {
@@ -87,12 +88,12 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
             btnDelete.setVisible(true);
         }
     }
-
+    
     public String getStringTenCaSi() {
         if (bh == null) {
             return "";
         }
-
+        
         String tencs = "";
         ArrayList<BaiHat_CaSi> listcs = bh.getBaiHat_caSis();
         for (int i = 0; i < listcs.size(); i++) {
@@ -101,9 +102,9 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
                 tencs += (i == 0 ? "" : ", ") + cs.getTenCaSi();
             }
         }
-
+        
         return tencs;
-
+        
     }
 
     /**
@@ -198,7 +199,7 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
         lbTenBaiHat.setForeground(new java.awt.Color(255, 255, 255));
         lbTenBaiHat.setText("Ten bai hat");
         lbTenBaiHat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbTenBaiHat.setMaximumSize(new java.awt.Dimension(190, 16));
+        lbTenBaiHat.setMaximumSize(new java.awt.Dimension(130, 16));
         lbTenBaiHat.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 lbTenBaiHatMouseMoved(evt);
@@ -252,8 +253,10 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
                 .addComponent(imageBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbTenBaiHat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbTenCaSi, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE))
+                    .addComponent(lbTenCaSi, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lbTenBaiHat, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -314,7 +317,7 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
             System.out.println("Right mouse button clicked");
         }
     }//GEN-LAST:event_jPanel1MouseClicked
-
+    
     public void initBtnUpDownClick(PhatKeTiepPanel phatKeTiepPanel) {
         btnDown.addMouseListener(new MouseAdapter() {
             @Override
@@ -322,23 +325,23 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
                 ArrayList<BaiHat> dsBaiHats = MyMusicPlayer.dsBaiHat;
                 BaiHat bh1 = dsBaiHats.get(index);
                 BaiHat bh2 = dsBaiHats.get(index + 1);
-
+                
                 dsBaiHats.set(index, bh2);
                 dsBaiHats.set(index + 1, bh1);
-
+                
                 MyMusicPlayer.dsBaiHat = dsBaiHats;
-
+                
                 if (index == MyMusicPlayer.position) {
                     MyMusicPlayer.position = MyMusicPlayer.position + 1;
                 } else if (index + 1 == MyMusicPlayer.position) {
                     MyMusicPlayer.position = MyMusicPlayer.position - 1;
                 }
-
+                
                 phatKeTiepPanel.swapItem(index, index + 1);
             }
-
+            
         });
-
+        
         btnUp.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -353,21 +356,21 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
 //                dsBaiHats.add(index, bh1);
                 dsBaiHats.set(index - 1, bh2);
                 dsBaiHats.set(index, bh1);
-
+                
                 MyMusicPlayer.dsBaiHat = dsBaiHats;
-
+                
                 if (index == MyMusicPlayer.position) {
                     MyMusicPlayer.position = MyMusicPlayer.position - 1;
                 } else if (index - 1 == MyMusicPlayer.position) {
                     MyMusicPlayer.position = MyMusicPlayer.position + 1;
                 }
-
+                
                 phatKeTiepPanel.swapItem(index, index - 1);
             }
-
+            
         });
     }
-
+    
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
         // TODO add your handling code here:
@@ -470,37 +473,59 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
             System.out.println("Right mouse button clicked");
         }
     }//GEN-LAST:event_lbTenBaiHatMouseClicked
-
+    
     public void onHover() {
         if (active) {
             return;
         }
         setBackground(new Color(47, 39, 57));
     }
-
+    
     public void endHover() {
         if (active) {
             return;
         }
         setBackground(new Color(0, 0, 102));
     }
-
+    
     public void handlePlayBaiHat() {
+        if (MyMusicPlayer.loadingPlay) {
+            return;
+        }
+        new Thread(() -> {
+            try {
+                Thread.sleep(5000);
+                
+                if (imageBaiHat.getIcon().toString().contains("loadingBH.gif")) {
+                    return;
+                }
+                System.out.println("vao");
+                BaiHat bh = MyMusicPlayer.dsBaiHat.get(MyMusicPlayer.position);
+                String urlAnh = bh.getAnhBia();
+                ImageIcon anhBH = Utils.getImageBaiHat(urlAnh, 50, 50);
+                imageBaiHat.setIcon(anhBH);
+                
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ItemMusic.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }).start();
+        
         PhatKeTiepPanel.isUpdate = false;
         new Thread(() -> {
             ImageIcon icon = new ImageIcon(getClass().getResource("/icon/loadingBH.gif"));
             imageBaiHat.setIcon(icon);
-
+            
             ItemMusic.anhNhac = imageBaiHat;
-
+            
         }).start();
-
+        
         new Thread(() -> {
             MyMusicPlayer.initMusicPlayer(MyMusicPlayer.dsBaiHat, index, MyMusicPlayer.typeMusic);
         }).start();
-
+        
     }
-
+    
     public void setIndex(int newIndex) {
         this.index = newIndex;
         if (index == 0) {

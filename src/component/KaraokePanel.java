@@ -19,6 +19,7 @@ import retrofit2.Response;
 import api.ApiServiceV1;
 import services.MyMusicPlayer;
 import helpers.Utils;
+import java.awt.Cursor;
 
 /**
  *
@@ -87,6 +88,8 @@ public class KaraokePanel extends javax.swing.JPanel {
                             loiBH.setBackground(new Color(0, 0, 0));
                             loiBH.setFocusPainted(false);
                             loiBH.setBorder(null);
+                            loiBH.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                            
 
                             int index = i;
 
@@ -99,10 +102,10 @@ public class KaraokePanel extends javax.swing.JPanel {
                                     loiBH.scrollRectToVisible(rect);
 
                                     KaraokePanel.dsItemLoiBH.get(KaraokePanel.currentIndexLoiBH).setForeground(Color.WHITE);
-                                    double tg = currentLoiBH.getThoiGian();
-                                    if (index == 0) {
-                                        tg -= 1.0;
-                                    }
+                                    double tg = currentLoiBH.getThoiGian() + 1.0;
+//                                    if (index == 0) {
+//                                        tg -= 1.0;
+//                                    }
                                     MyMusicPlayer.setTimeBaiHat2(tg);
                                     System.out.println("thoigian: " + currentLoiBH.getThoiGian());
                                     KaraokePanel.currentIndexLoiBH = index;
@@ -119,6 +122,10 @@ public class KaraokePanel extends javax.swing.JPanel {
                         PanelListLoiBH.repaint();
 
                     } else {
+                        GridLayout la = (GridLayout) PanelListLoiBH.getLayout();
+                        la.setRows(5);
+                        PanelListLoiBH.setLayout(la);
+                        
                         JButton loiBH = new JButton();
                         loiBH.setText("Chưa cập nhật cho bài hát này!");
                         loiBH.setFont(new Font("Segoe UI", Font.PLAIN, 20));

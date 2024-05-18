@@ -22,11 +22,11 @@ public class PhatKeTiepObserver implements Observer {
     @Override
     public void update() {
         if (PhatKeTiepPanel.isUpdate) {
-            System.out.println("load data");
+//            System.out.println("load data");
             phatKeTiep.loadData();
         }
         else {
-            System.out.println("update index");
+//            System.out.println("update index");
             phatKeTiep.updateIndex();
             
         }

@@ -46,7 +46,7 @@ public class YeuThich extends javax.swing.JPanel implements UpdateListMusic {
     public YeuThich() {
         initComponents();
 
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(20);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         loadListMusic();

@@ -109,8 +109,11 @@
                   <Component id="imageBaiHat" min="-2" pref="41" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lbTenBaiHat" max="32767" attributes="0"/>
                       <Component id="lbTenCaSi" pref="178" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="lbTenBaiHat" min="-2" pref="144" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnDelete" min="-2" pref="29" max="-2" attributes="0"/>
@@ -164,7 +167,7 @@
               <Color id="Hand Cursor"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[190, 16]"/>
+              <Dimension value="[130, 16]"/>
             </Property>
           </Properties>
           <Events>

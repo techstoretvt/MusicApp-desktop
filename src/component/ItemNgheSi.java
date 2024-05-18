@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import frame.MainJFrame;
+import java.awt.Dimension;
 import screen.ChiTietCaSi;
 
 /**

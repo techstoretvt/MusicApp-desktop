@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import helpers.Utils;
 import frame.MainJFrame;
+import javax.swing.JLabel;
 import screen.ChiTietPlaylist;
 
 /**
@@ -19,6 +20,7 @@ import screen.ChiTietPlaylist;
 public class ItemPlaylist extends javax.swing.JPanel {
 
     private DanhSachPhat playlist;
+    public static JLabel tenDS;
 
     /**
      * Creates new form ItemPlaylistPanel
@@ -101,6 +103,7 @@ public class ItemPlaylist extends javax.swing.JPanel {
         // TODO add your handling code here:
         System.out.println("id: "+playlist.getId());
         MainJFrame.ShowPanel("ChiTietPlaylist", new ChiTietPlaylist(playlist.getId()));
+        tenDS = lbTenPlaylist;
     }//GEN-LAST:event_imgPlaylistMouseClicked
 
 

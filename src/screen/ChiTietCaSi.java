@@ -40,7 +40,7 @@ public class ChiTietCaSi extends javax.swing.JPanel {
 
         ChiTietCaSi.idCaSi = idCaSi;
 
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(20);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
         jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBarUI());
 

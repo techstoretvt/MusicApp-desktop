@@ -19,9 +19,12 @@ import services.MyMusicPlayer;
 import helpers.Utils;
 import frame.MainJFrame;
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import screen.BaiHatSearch;
 import screen.ChiTietCaSi;
 import screen.ChiTietPlaylist;
+import screen.DaTai;
 import screen.KhamPha;
 import screen.ThuVien;
 import screen.YeuThich;
@@ -69,6 +72,7 @@ public class ItemMusic extends javax.swing.JPanel {
         lbThoiGian.setText(Utils.getThoiGianBaiHat((int) bh.getThoiGian() / 1000));
         lblTheLoai.setText(bh.getTheLoai());
 
+//        System.out.println("id: "+bh.getId());
         if (from_to.equals("DaTai")) {
             new Thread(() -> {
                 String urlAnh2 = "";
@@ -387,16 +391,38 @@ public class ItemMusic extends javax.swing.JPanel {
 
     public void handlePlayBaiHat() {
         new Thread(() -> {
-            if (!from_to.equals("DaTai")) {
-                ImageIcon icon = new ImageIcon(getClass().getResource("/icon/loadingBH.gif"));
-                imageBaiHat.setIcon(icon);
+            try {
+                Thread.sleep(5000);
 
-                anhNhac = imageBaiHat;
+                if (imageBaiHat.getIcon().toString().contains("loadingBH.gif")) {
+                    return;
+                }
+
+                BaiHat bh = MyMusicPlayer.dsBaiHat.get(MyMusicPlayer.position);
+                String urlAnh = bh.getAnhBia();
+                ImageIcon anhBH = Utils.getImageBaiHat(urlAnh, 50, 50);
+                imageBaiHat.setIcon(anhBH);
+
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ItemMusic.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }).start();
 
+        if (MyMusicPlayer.loadingPlay) {
+            return;
+        }
+
         new Thread(() -> {
+
+            if (!from_to.equals("DaTai")) {
+                ImageIcon icon = new ImageIcon(getClass().getResource("/icon/loadingBH.gif"));
+                imageBaiHat.setIcon(icon);
+//                System.out.println(imageBaiHat.getIcon());
+
+                anhNhac = imageBaiHat;
+            }
+
             if (from_to.equals("khampha")) {
                 MyMusicPlayer.initMusicPlayer(KhamPha.dsBaiHat, stt - 1);
             } else if (from_to.equals("timKiem")) {
@@ -412,7 +438,7 @@ public class ItemMusic extends javax.swing.JPanel {
                 MyMusicPlayer.initMusicPlayer(ThuVien.listDaNghe, stt - 1);
             } else if (from_to.equals("DaTai")) {
                 System.out.println("phat nhac offline");
-                ArrayList<BaiHat> listBH = LocalData.getListDownload();
+                ArrayList<BaiHat> listBH = DaTai.dsBaiHat;
 
                 MyMusicPlayer.initMusicPlayer(listBH, stt - 1, "off");
             }

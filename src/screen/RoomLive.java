@@ -39,9 +39,9 @@ public class RoomLive extends javax.swing.JPanel {
      */
     public RoomLive(String name, String avatar) {
         initComponents();
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(20);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
-        jScrollPane2.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane2.getVerticalScrollBar().setUnitIncrement(20);
         jScrollPane2.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         idRoom = Utils.randomKeyLogin();

@@ -44,7 +44,7 @@ public class ChiTietMV extends javax.swing.JPanel {
     public ChiTietMV(String idMV) {
         initComponents();
         this.idMV = idMV;
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(20);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         //init browser

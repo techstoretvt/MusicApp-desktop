@@ -50,7 +50,7 @@ public class ChiTietLive extends javax.swing.JPanel {
         this.idRoom = idRoom;
         this.avatarRoom = avatarRoom;
 
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(20);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         new Thread(() -> {

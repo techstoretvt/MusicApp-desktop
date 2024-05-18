@@ -56,7 +56,7 @@ public class Utils {
         try {
             imageUrl = new URL(url);
         } catch (MalformedURLException ex) {
-            System.out.println("loi url");
+            System.out.println("loi url: " + url);
             Logger.getLogger(ItemMusic.class.getName()).log(Level.SEVERE, null, ex);
         }
         ImageIcon originalIcon = new ImageIcon(imageUrl);
@@ -92,7 +92,9 @@ public class Utils {
 
         for (int i = 0; i < sizeLoiBH; i++) {
             LoiBaiHat current = listLoiBH.get(i);
-            int tg = (int) current.getThoiGian().intValue();
+//            int tg = (int) current.getThoiGian().intValue() + 1;            
+            double tg = Math.round(current.getThoiGian() * 10.0) / 10.0;
+
             map.put(String.valueOf(tg), i);
 
         }
@@ -144,10 +146,9 @@ public class Utils {
 
     public static boolean getIsLogin() {
         // check login
-        
-        
+
         // show login
-        if(!MainJFrame.isLogin) {
+        if (!MainJFrame.isLogin) {
             MyCustomDialog dialog = new MyCustomDialog(null, "Đăng nhập", new PanelLogin());
             PanelLogin.dialog = dialog;
             dialog.setResizable(false);
@@ -182,7 +183,7 @@ public class Utils {
 
         return urlAnh;
     }
-    
+
     public static String randomKeyLogin() {
         int length = 10;
         // Chuỗi chứa các ký tự mà bạn muốn sử dụng
@@ -207,34 +208,73 @@ public class Utils {
         // Trả về chuỗi ngẫu nhiên
         return sb.toString();
     }
-    
+
     public static String getAnhBHDownload(String id) {
         String a = null;
         try {
-            a = MainJFrame.class.getResource("/download/"+id+".jpg").toString();
-        }
-        catch(Exception e) {
-            
+            a = MainJFrame.class.getResource("/download/" + id + ".jpg").toString();
+        } catch (Exception e) {
+
         }
         return a;
     }
-    
+
     public static String getUrlBHDownload(String id) {
         String file_path = System.getProperty("user.dir")
-                    + File.separator + "src"
-                    + File.separator + "download" + File.separator + id +".mp3";
+                + File.separator + "src"
+                + File.separator + "download" + File.separator + id + ".mp3";
         return file_path;
     }
-    
+
     public static String randomKeyRemoteControl() {
         Random rand = new Random();
         // Tạo số ngẫu nhiên từ 100000 đến 999999 (6 chữ số)
         return String.valueOf(rand.nextInt(900000) + 100000);
     }
-    
+
     public static JFrame layFrameCha(Component c) {
         JFrame frame = (MainJFrame) SwingUtilities.getWindowAncestor(c);
         return frame;
     }
-    
+
+    public static String randomId() {
+        int length = 10;
+        // Chuỗi chứa các ký tự mà bạn muốn sử dụng
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        // Tạo một đối tượng SecureRandom để tạo số ngẫu nhiên
+        SecureRandom random = new SecureRandom();
+
+        // Tạo một StringBuilder để xây dựng chuỗi ngẫu nhiên
+        StringBuilder sb = new StringBuilder(length);
+
+        // Tạo chuỗi ngẫu nhiên với độ dài cho trước
+        for (int i = 0; i < length; i++) {
+            // Lấy một ký tự ngẫu nhiên từ chuỗi characters
+            int randomIndex = random.nextInt(characters.length());
+            char randomChar = characters.charAt(randomIndex);
+
+            // Thêm ký tự ngẫu nhiên vào chuỗi
+            sb.append(randomChar);
+        }
+
+        // Trả về chuỗi ngẫu nhiên
+        return sb.toString();
+    }
+
+    public static ImageIcon layImageIcon(String url, int w, int h) {
+        URL imageUrl = null;
+        try {
+            imageUrl = new URL(url);
+        } catch (MalformedURLException ex) {
+            System.out.println("loi url");
+        }
+        ImageIcon originalIcon = new ImageIcon(imageUrl);
+
+        // Thu nhỏ ảnh
+        Image scaledImage = originalIcon.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        return scaledIcon;
+    }
+
 }

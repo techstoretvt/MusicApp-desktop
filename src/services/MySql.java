@@ -23,7 +23,7 @@ public class MySql {
     public static Connection getConnection() {
         Connection conn = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+//            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection(AppConstants.DB_URL + "?useUnicode=true&characterEncoding=utf-8",
                     AppConstants.DB_USER_NAME, AppConstants.DB_PASSWORD);
             System.out.println("connect successful!");
@@ -54,30 +54,7 @@ public class MySql {
         } catch (SQLException ex) {
             System.out.println("Lỗi truy vấn");
             Logger.getLogger(MySql.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            // Đảm bảo đóng tất cả các tài nguyên mở
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        } 
         return resultSet;
     }
 

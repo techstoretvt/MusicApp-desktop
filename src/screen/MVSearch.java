@@ -25,7 +25,7 @@ public class MVSearch extends javax.swing.JPanel {
      */
     public MVSearch(String keyword) {
         initComponents();
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(20);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         //test
