@@ -390,23 +390,23 @@ public class ItemMusic extends javax.swing.JPanel {
     }
 
     public void handlePlayBaiHat() {
-        new Thread(() -> {
+       new Thread(() -> {
             try {
                 Thread.sleep(5000);
-
-                if (imageBaiHat.getIcon().toString().contains("loadingBH.gif")) {
+                
+                if (!imageBaiHat.getIcon().toString().contains("loadingBH.gif")) {
                     return;
                 }
-
+               
                 BaiHat bh = MyMusicPlayer.dsBaiHat.get(MyMusicPlayer.position);
                 String urlAnh = bh.getAnhBia();
                 ImageIcon anhBH = Utils.getImageBaiHat(urlAnh, 50, 50);
                 imageBaiHat.setIcon(anhBH);
-
+                
             } catch (InterruptedException ex) {
                 Logger.getLogger(ItemMusic.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            
         }).start();
 
         if (MyMusicPlayer.loadingPlay) {

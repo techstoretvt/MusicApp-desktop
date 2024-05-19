@@ -72,6 +72,7 @@ import screen.CommentPanel;
 import screen.MVSearch;
 import screen.MiniGame;
 import screen.Radio;
+import screen.ThongBaoPanel;
 
 /**
  *
@@ -138,21 +139,8 @@ public class MainJFrame extends javax.swing.JFrame {
 
         loadBaiHatOld();
 
-        //test
-//        new Thread(() -> {
-//            while (true) {
-//                try {
-//                    Thread.sleep(1000);
-//                    if (MyMusicPlayer.player != null) {
-//                        System.out.println("position: " + MyMusicPlayer.player.getPosition());
-//                    }
-//
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(MainJFrame.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//
-//        }).start();
+        initSocketThongBao();
+
     }
 
     public void loadBaiHatOld() {
@@ -259,6 +247,35 @@ public class MainJFrame extends javax.swing.JFrame {
                 // Xử lý dữ liệu từ máy chủ ở đây
                 MyMusicPlayer.resume();
 
+            }
+        });
+
+    }
+
+    public void initSocketThongBao() {
+        Socket mSocket = MySocketClient.getSocket();
+
+        mSocket.on("new_thong_bao", new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                // Xử lý dữ liệu từ máy chủ ở đây
+                ImageIcon icon = new ImageIcon(getClass().getResource("/icon/icons-bell2.gif"));
+                btnThongBao.setIcon(icon);
+
+                JPopupMenu popupMenu = new JPopupMenu();
+                JMenuItem option1 = new JMenuItem("Có thông báo mới");
+
+                popupMenu.add(option1);
+
+                popupMenu.show(btnThongBao, -120, popupMenu.getHeight() + 20 );
+                new Thread(()-> {
+                    try {
+                        Thread.sleep(2000);
+                        popupMenu.hide();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MainJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }).start();
             }
         });
 
@@ -397,6 +414,9 @@ public class MainJFrame extends javax.swing.JFrame {
                 break;
             case "MV":
                 newPN = new MVSearch("a");
+                break;
+            case "ThongBao":
+                newPN = new ThongBaoPanel();
                 break;
             default:
                 newPN = new KhamPha();
@@ -537,6 +557,7 @@ public class MainJFrame extends javax.swing.JFrame {
         btnMiniGame = new javax.swing.JButton();
         btnEvent = new javax.swing.JButton();
         btnKhoaHoc = new javax.swing.JButton();
+        btnNoiBat = new javax.swing.JButton();
         PanelFooter = new javax.swing.JPanel();
         PanelFooterChill = new javax.swing.JPanel();
         PanelFooterLeft = new javax.swing.JPanel();
@@ -929,6 +950,32 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        btnNoiBat.setBackground(null);
+        btnNoiBat.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnNoiBat.setForeground(new java.awt.Color(255, 255, 255));
+        btnNoiBat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons-trend-20.png"))); // NOI18N
+        btnNoiBat.setText("Nổi bật");
+        btnNoiBat.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnNoiBat.setBorderPainted(false);
+        btnNoiBat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNoiBat.setFocusPainted(false);
+        btnNoiBat.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnNoiBat.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btnNoiBatMouseMoved(evt);
+            }
+        });
+        btnNoiBat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnNoiBatMouseExited(evt);
+            }
+        });
+        btnNoiBat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNoiBatActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -944,11 +991,14 @@ public class MainJFrame extends javax.swing.JFrame {
             .addComponent(btnMiniGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnEvent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnKhoaHoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnNoiBat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(btnKhamPha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnNoiBat, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnThuVien, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1086,6 +1136,7 @@ public class MainJFrame extends javax.swing.JFrame {
         lbTongThoiGian.setForeground(new java.awt.Color(255, 255, 255));
         lbTongThoiGian.setText("0:00");
 
+        progessTimeBaiHat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         progessTimeBaiHat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 progessTimeBaiHatMouseClicked(evt);
@@ -2072,7 +2123,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnThongBaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongBaoActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Tình năng này chưa được cập nhật, vui lòng thử lại sau!", "Chưa cập nhật", JOptionPane.WARNING_MESSAGE);
+        ImageIcon icon = new ImageIcon(getClass().getResource("/icon/icons-bell-30.png"));
+        btnThongBao.setIcon(icon);
+        ShowPanel("ThongBao", new ThongBaoPanel());
     }//GEN-LAST:event_btnThongBaoActionPerformed
 
     private void btnEventMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEventMouseMoved
@@ -2146,6 +2199,20 @@ public class MainJFrame extends javax.swing.JFrame {
             popupMenu.show(lbTenCaSi, 0, -popupMenu.getHeight() - 70);
         }
     }//GEN-LAST:event_lbTenCaSiMouseClicked
+
+    private void btnNoiBatMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNoiBatMouseMoved
+        // TODO add your handling code here:
+        onHoverMenu(btnNoiBat);
+    }//GEN-LAST:event_btnNoiBatMouseMoved
+
+    private void btnNoiBatMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNoiBatMouseExited
+        // TODO add your handling code here:
+        endHoverMenu(btnNoiBat);
+    }//GEN-LAST:event_btnNoiBatMouseExited
+
+    private void btnNoiBatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoiBatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNoiBatActionPerformed
 
     public void onHoverMenu(JButton btn) {
         btn.setForeground(Color.red);
@@ -2306,6 +2373,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnMore;
     private javax.swing.JButton btnNextMusic;
     private javax.swing.JButton btnNhacNen;
+    private javax.swing.JButton btnNoiBat;
     public static javax.swing.JButton btnOption;
     public static javax.swing.JButton btnPlayPause;
     private javax.swing.JButton btnPrevBaiHat;

@@ -496,10 +496,10 @@ public class ItemPhatKeTiep extends javax.swing.JPanel {
             try {
                 Thread.sleep(5000);
                 
-                if (imageBaiHat.getIcon().toString().contains("loadingBH.gif")) {
+                if (!imageBaiHat.getIcon().toString().contains("loadingBH.gif")) {
                     return;
                 }
-                System.out.println("vao");
+              
                 BaiHat bh = MyMusicPlayer.dsBaiHat.get(MyMusicPlayer.position);
                 String urlAnh = bh.getAnhBia();
                 ImageIcon anhBH = Utils.getImageBaiHat(urlAnh, 50, 50);

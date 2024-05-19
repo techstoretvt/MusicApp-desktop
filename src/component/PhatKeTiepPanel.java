@@ -29,7 +29,7 @@ public class PhatKeTiepPanel extends javax.swing.JPanel {
         initComponents();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(10);
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
-        
+
         loadData();
         setBorder(null);
         PanelCurrent.setVisible(false);
@@ -96,6 +96,14 @@ public class PhatKeTiepPanel extends javax.swing.JPanel {
             ItemPhatKeTiep item = listItemBH.get(i);
             item.setActive(i == MyMusicPlayer.position);
         }
+        // load current bai hat
+        ArrayList<BaiHat> dsBaiHat = MyMusicPlayer.dsBaiHat;
+        BaiHat currentBH = dsBaiHat.get(MyMusicPlayer.position);
+        JPanel currentPhatKeTiep = new ItemPhatKeTiep(currentBH, MyMusicPlayer.position, true, false);
+        PanelCurrent.removeAll();
+        PanelCurrent.add(currentPhatKeTiep, BorderLayout.CENTER);
+        PanelCurrent.revalidate();
+        PanelCurrent.repaint();
     }
 
     public void swapItem(int indexOld, int indexNew) {

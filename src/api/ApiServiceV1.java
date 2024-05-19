@@ -37,6 +37,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
 import helpers.AppConstants;
+import model.LayDsThongBao;
 import okhttp3.RequestBody;
 
 /**
@@ -176,4 +177,7 @@ public interface ApiServiceV1 {
     @POST("/api/v2/them-danh-sach-phat")
     Call<ThemDSPhat> themDanhSachPhat2(@Body RequestBody postData, @Header("authorization") String authorization);
 
+    @GET("/api/v2/lay-danh-sach-thong-bao")
+    Call<LayDsThongBao> layDanhSachTB(
+            @Header("authorization") String authorization);
 }
