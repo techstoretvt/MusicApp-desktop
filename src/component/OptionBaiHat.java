@@ -191,7 +191,7 @@ public class OptionBaiHat extends JPopupMenu {
         }
 
         if (from_to.equals("DaTai")) {
-            JMenuItem optXoaDaTai = new JMenuItem("Xóa khỏi playlist");
+            JMenuItem optXoaDaTai = new JMenuItem("Xóa khỏi tải xuống");
             ImageIcon iconRemove = new ImageIcon(getClass().getResource("/icon/icon-delete-black.png"));
             optXoaDaTai.setIcon(iconRemove);
 
