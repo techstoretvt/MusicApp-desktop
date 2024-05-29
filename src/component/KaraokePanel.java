@@ -20,6 +20,14 @@ import api.ApiServiceV1;
 import services.MyMusicPlayer;
 import helpers.Utils;
 import java.awt.Cursor;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.ContainerEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import javax.swing.JScrollBar;
 
 /**
  *
@@ -30,6 +38,7 @@ public class KaraokePanel extends javax.swing.JPanel {
     public static ArrayList<JButton> dsItemLoiBH;
     public static HashMap<String, Integer> listIndexLoiBaiHat;
     public static int currentIndexLoiBH = 0;
+    public static int positionScroll = 0;
 
     /**
      * Creates new form KaraokePanel
@@ -42,6 +51,19 @@ public class KaraokePanel extends javax.swing.JPanel {
 
         getLoiBaiHat();
 
+        // Lấy thanh cuộn dọc và thêm AdjustmentListener
+//        JScrollBar verticalScrollBar = jScrollPane1.getVerticalScrollBar();
+//        verticalScrollBar.addAdjustmentListener(new AdjustmentListener() {
+//            @Override
+//            public void adjustmentValueChanged(AdjustmentEvent e) {
+//                if (!e.getValueIsAdjusting()) {
+//                    System.out.println("Vertical ScrollBar value: " + e.getValue());
+//                    positionScroll = e.getValue();
+//                    System.out.println(PanelListLoiBH.getHeight());
+//                    
+//                }
+//            }
+//        });
     }
 
     public void getLoiBaiHat() {
@@ -78,7 +100,6 @@ public class KaraokePanel extends javax.swing.JPanel {
 //                        loiBH1.setFocusPainted(false);
 //                        loiBH1.setBorder(null);
 //                        PanelListLoiBH.add(loiBH1);
-
                         for (int i = 0; i < sizeLoiBH; i++) {
                             LoiBaiHat currentLoiBH = res.getData().get(i);
                             JButton loiBH = new JButton();
@@ -89,7 +110,6 @@ public class KaraokePanel extends javax.swing.JPanel {
                             loiBH.setFocusPainted(false);
                             loiBH.setBorder(null);
                             loiBH.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                            
 
                             int index = i;
 
@@ -111,6 +131,24 @@ public class KaraokePanel extends javax.swing.JPanel {
                                     KaraokePanel.currentIndexLoiBH = index;
 
                                 }
+
+                                @Override
+                                public void mouseExited(MouseEvent e) {
+                                    if (index != currentIndexLoiBH) {
+                                        loiBH.setForeground(Color.WHITE);
+                                    } else {
+                                        loiBH.setForeground(Color.YELLOW);
+                                    }
+                                }
+
+                            });
+
+                            loiBH.addMouseMotionListener(new MouseAdapter() {
+                                @Override
+                                public void mouseMoved(MouseEvent e) {
+                                    loiBH.setForeground(Color.ORANGE);
+                                }
+
                             });
 
                             PanelListLoiBH.add(loiBH);
@@ -125,7 +163,7 @@ public class KaraokePanel extends javax.swing.JPanel {
                         GridLayout la = (GridLayout) PanelListLoiBH.getLayout();
                         la.setRows(5);
                         PanelListLoiBH.setLayout(la);
-                        
+
                         JButton loiBH = new JButton();
                         loiBH.setText("Chưa cập nhật cho bài hát này!");
                         loiBH.setFont(new Font("Segoe UI", Font.PLAIN, 20));

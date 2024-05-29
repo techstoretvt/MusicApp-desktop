@@ -90,6 +90,7 @@ public class MainJFrame extends javax.swing.JFrame {
     public static Stack<String> historyPanel = new Stack<>(); //.pop() .peek() .push()
     public static boolean isLogin = false;
     public static TaiKhoan userInfo;
+    public static int heightPanelContent = 0;
 
     public static Browser browser;
     public static Socket mSocket_DKGionNoi;
@@ -140,7 +141,9 @@ public class MainJFrame extends javax.swing.JFrame {
         loadBaiHatOld();
 
         initSocketThongBao();
-
+        
+        
+        
     }
 
     public void loadBaiHatOld() {
@@ -1563,6 +1566,13 @@ public class MainJFrame extends javax.swing.JFrame {
         );
 
         PanelWrap.setBackground(new java.awt.Color(23, 15, 35));
+        PanelWrap.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
+            public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
+            }
+            public void ancestorResized(java.awt.event.HierarchyEvent evt) {
+                PanelWrapAncestorResized(evt);
+            }
+        });
         PanelWrap.setLayout(new java.awt.BorderLayout());
 
         PanelContent.setBackground(new java.awt.Color(23, 15, 35));
@@ -1642,7 +1652,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 return true;
             }
             Engine engine = Engine.newInstance(EngineOptions.newBuilder(RenderingMode.OFF_SCREEN)
-                    .licenseKey("1BNDHFSC1G8RA8PYZSNW76QPH8UUQU4FTUIGJE23Y1HZ5EEYND8BED4IUWACS012LYXTSS").build());
+                    .licenseKey(AppConstants.licenseKey_browser).build());
             browser = engine.newBrowser();
             return true;
         } catch (Exception e) {
@@ -2213,6 +2223,12 @@ public class MainJFrame extends javax.swing.JFrame {
     private void btnNoiBatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoiBatActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNoiBatActionPerformed
+
+    private void PanelWrapAncestorResized(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_PanelWrapAncestorResized
+        // TODO add your handling code here:
+        int heightPan = PanelWrap.getHeight();
+        heightPanelContent = heightPan;
+    }//GEN-LAST:event_PanelWrapAncestorResized
 
     public void onHoverMenu(JButton btn) {
         btn.setForeground(Color.red);

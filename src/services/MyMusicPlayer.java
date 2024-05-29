@@ -58,6 +58,7 @@ public class MyMusicPlayer {
 
     public static double currentTime = 0;
     public static int totalTime = 10000;
+    public static int currentPositionScroll = 0;
     public static boolean isLoop = false;
     public static boolean isRandom = false;
     public static boolean loadingPlay = false;
@@ -197,20 +198,42 @@ public class MyMusicPlayer {
                                 && KaraokePanel.dsItemLoiBH.size() != 0
                                 && KaraokePanel.listIndexLoiBaiHat != null) {
 
-                            Rectangle rect = new Rectangle(0, 200, 10, 10);
+                            int heightPan = MainJFrame.heightPanelContent / 2;
 
                             Integer indexLoiBH = KaraokePanel.listIndexLoiBaiHat.get(String.valueOf(currentTime));
                             if (indexLoiBH != null) {
-                                new Thread(() -> {
-                                    int lastIndex = KaraokePanel.currentIndexLoiBH;
-                                    KaraokePanel.dsItemLoiBH.get(lastIndex).setForeground(Color.WHITE);
 
-                                    KaraokePanel.dsItemLoiBH.get(indexLoiBH).setForeground(Color.YELLOW);
+                                int lastIndex = KaraokePanel.currentIndexLoiBH;
+                                
+                                 new Thread(() -> {
+                                    int i = 0;
+                                    while (i < 10) {
+                                        try {
+                                            if (i >= 7) {
+                                                Thread.sleep(120);
+                                            }
+                                            i++;
 
-                                    KaraokePanel.dsItemLoiBH.get(indexLoiBH).scrollRectToVisible(rect);
+                                            Rectangle rect = new Rectangle(0, heightPan / 10 * i, 0, 0);
 
-                                    KaraokePanel.currentIndexLoiBH = indexLoiBH;
+                                            KaraokePanel.dsItemLoiBH.get(indexLoiBH).scrollRectToVisible(rect);
+
+                                        } catch (InterruptedException ex) {
+                                            Logger.getLogger(MyMusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
+                                            break;
+                                        }
+                                    }
+
                                 }).start();
+                                
+                                
+                                KaraokePanel.dsItemLoiBH.get(lastIndex).setForeground(Color.WHITE);
+
+                                KaraokePanel.dsItemLoiBH.get(indexLoiBH).setForeground(Color.YELLOW);
+
+                                KaraokePanel.currentIndexLoiBH = indexLoiBH;
+
+                               
 
                             }
 
@@ -513,6 +536,7 @@ public class MyMusicPlayer {
 
             @Override
             public void onFailure(Call<GetListBaiHat> call, Throwable thrwbl) {
+                loadingPlay = false;
                 throw new UnsupportedOperationException("Not supported yet.");
                 // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
             }
