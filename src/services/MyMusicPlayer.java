@@ -201,11 +201,10 @@ public class MyMusicPlayer {
                             int heightPan = MainJFrame.heightPanelContent / 2;
 
                             Integer indexLoiBH = KaraokePanel.listIndexLoiBaiHat.get(String.valueOf(currentTime));
-                            if (indexLoiBH != null) {
-
-                                int lastIndex = KaraokePanel.currentIndexLoiBH;
-
-                                new Thread(() -> {
+                            Integer indexLoiBHNext = KaraokePanel.listIndexLoiBaiHat.get(String.valueOf(currentTime + 0.5));
+                            
+                            if (indexLoiBHNext != null) {
+                                 new Thread(() -> {
                                     int i = 0;
                                     while (i < 100) {
                                         try {
@@ -219,7 +218,7 @@ public class MyMusicPlayer {
 
                                             Rectangle rect = new Rectangle(0, heightPan / 100 * i, 0, 0);
 
-                                            KaraokePanel.dsItemLoiBH.get(indexLoiBH).scrollRectToVisible(rect);
+                                            KaraokePanel.dsItemLoiBH.get(indexLoiBHNext).scrollRectToVisible(rect);
 
                                         } catch (InterruptedException ex) {
                                             Logger.getLogger(MyMusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
@@ -228,6 +227,35 @@ public class MyMusicPlayer {
                                     }
 
                                 }).start();
+                            }
+                            
+                            if (indexLoiBH != null) {
+
+                                int lastIndex = KaraokePanel.currentIndexLoiBH;
+
+//                                new Thread(() -> {
+//                                    int i = 0;
+//                                    while (i < 100) {
+//                                        try {
+//                                            if (i >= 75 && i <= 85) {
+//                                                Thread.sleep(10);
+//                                            } else if (i >= 85) {
+//                                                Thread.sleep(40);
+//                                            }
+//
+//                                            i++;
+//
+//                                            Rectangle rect = new Rectangle(0, heightPan / 100 * i, 0, 0);
+//
+//                                            KaraokePanel.dsItemLoiBH.get(indexLoiBH).scrollRectToVisible(rect);
+//
+//                                        } catch (InterruptedException ex) {
+//                                            Logger.getLogger(MyMusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
+//                                            break;
+//                                        }
+//                                    }
+//
+//                                }).start();
 
                                 KaraokePanel.dsItemLoiBH.get(lastIndex).setForeground(Color.WHITE);
 
