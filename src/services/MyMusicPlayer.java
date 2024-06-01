@@ -204,17 +204,20 @@ public class MyMusicPlayer {
                             if (indexLoiBH != null) {
 
                                 int lastIndex = KaraokePanel.currentIndexLoiBH;
-                                
-                                 new Thread(() -> {
+
+                                new Thread(() -> {
                                     int i = 0;
-                                    while (i < 10) {
+                                    while (i < 100) {
                                         try {
-                                            if (i >= 7) {
-                                                Thread.sleep(120);
+                                            if (i >= 75 && i <= 85) {
+                                                Thread.sleep(10);
+                                            } else if (i >= 85) {
+                                                Thread.sleep(40);
                                             }
+
                                             i++;
 
-                                            Rectangle rect = new Rectangle(0, heightPan / 10 * i, 0, 0);
+                                            Rectangle rect = new Rectangle(0, heightPan / 100 * i, 0, 0);
 
                                             KaraokePanel.dsItemLoiBH.get(indexLoiBH).scrollRectToVisible(rect);
 
@@ -225,15 +228,12 @@ public class MyMusicPlayer {
                                     }
 
                                 }).start();
-                                
-                                
+
                                 KaraokePanel.dsItemLoiBH.get(lastIndex).setForeground(Color.WHITE);
 
                                 KaraokePanel.dsItemLoiBH.get(indexLoiBH).setForeground(Color.YELLOW);
 
                                 KaraokePanel.currentIndexLoiBH = indexLoiBH;
-
-                               
 
                             }
 

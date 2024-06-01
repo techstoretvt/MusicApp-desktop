@@ -59,6 +59,8 @@ public class OptionBaiHat extends JPopupMenu {
         this.bh = bh;
         this.from_to = from_to;
         this.c = c;
+        
+        pack();
     }
 
     public void show() {

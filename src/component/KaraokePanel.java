@@ -17,9 +17,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import api.ApiServiceV1;
+import frame.MainJFrame;
+import static frame.MainJFrame.heightPanelContent;
 import services.MyMusicPlayer;
 import helpers.Utils;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.ContainerAdapter;
@@ -64,6 +67,9 @@ public class KaraokePanel extends javax.swing.JPanel {
 //                }
 //            }
 //        });
+
+
+        jPanel5.setPreferredSize(new Dimension(200,MainJFrame.heightPanelContent / 2));
     }
 
     public void getLoiBaiHat() {
@@ -92,14 +98,6 @@ public class KaraokePanel extends javax.swing.JPanel {
                         PanelListLoiBH.setLayout(la);
 
                         // add ui
-//                        JButton loiBH1 = new JButton();
-//                        loiBH1.setText("hello");
-//                        loiBH1.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-//                        loiBH1.setForeground(Color.WHITE);
-//                        loiBH1.setBackground(new Color(0, 0, 0));
-//                        loiBH1.setFocusPainted(false);
-//                        loiBH1.setBorder(null);
-//                        PanelListLoiBH.add(loiBH1);
                         for (int i = 0; i < sizeLoiBH; i++) {
                             LoiBaiHat currentLoiBH = res.getData().get(i);
                             JButton loiBH = new JButton();
